@@ -114,3 +114,7 @@ proj.win32/Release.*/
 # others
 cocos2d/
 proj.win32/HelloCpp.VC.db
+proj.android/
+proj.android-studio/
+proj.ios_mac/
+proj.linux/
