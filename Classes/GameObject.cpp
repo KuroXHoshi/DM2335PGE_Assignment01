@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+#include "GameObjectManager.h"
+
 USING_NS_CC;
 
 int GameObject::idCounter = 0;
@@ -7,7 +9,12 @@ int GameObject::idCounter = 0;
 GameObject::GameObject() : id(idCounter++), position(0, 0), direction(1, 0),
 scale(1, 1), active(true), sprite(nullptr)
 {
+	GameObjectManager::GetInstance()->AddGameObject(this);
+}
 
+GameObject::~GameObject()
+{
+	//GameObjectManager::GetInstance()->RemoveGameObject(this->id);
 }
 
 void GameObject::SetSprite(std::string filename, std::string name)
@@ -35,4 +42,14 @@ void GameObject::SetAnimFrames(Vector<SpriteFrame*> spriteFrameList, float delay
 	Animation* animation = Animation::createWithSpriteFrames(animFrames, delay);
 	animate = Animate::create(animation);
 	animate->retain();
+}
+
+void GameObject::Destroy()
+{
+	this->isDone = true;
+}
+
+bool GameObject::isDead()
+{
+	return this->isDone;
 }

@@ -13,6 +13,8 @@ enum TAGENUM
 
 class GameObject
 {
+	//deletion Flag. if true, deletes gameobject at the end of the frame update
+	bool isDone;
 public:
 	//unique ID for gameobjects
 	int id;
@@ -45,10 +47,19 @@ public:
 	TAGENUM tag;
 
 	cocos2d::Vector<SpriteFrame*> animFrames;
+
 public:
 	GameObject();
+	~GameObject();
 	virtual void Update(double dt) {};
 
 	void SetSprite(std::string filename, std::string nodeName);
 	void SetAnimFrames(Vector<SpriteFrame*> spriteFrameList, float delay);
+
+	//Destroys the gameobject at the end of the update frame
+	void Destroy();
+
+	//Returns true if this gameobject is going to be destroyed at the end of update frame
+	//useful for things like projectile, check if projectile is dead to avoid/checks for collision response
+	bool isDead();
 };
