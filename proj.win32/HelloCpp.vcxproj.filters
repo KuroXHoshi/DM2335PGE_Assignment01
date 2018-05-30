@@ -24,17 +24,11 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GameObject.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\GameScene.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Weapon.cpp">
       <Filter>src\GameObjects</Filter>
@@ -46,6 +40,9 @@
       <Filter>src\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SceneManager.cpp" />
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -82,6 +79,9 @@
       <Filter>src\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SceneManager.h">
+      <Filter>src\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Functions.h">
       <Filter>src\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,8 @@
 #include "Projectile.h"
 
+#include "HelloWorldScene.h"
+#include "Functions.h"
+
 Projectile::Projectile() : distTravelled(0), damage(0), speed(10.0f), range(100), factionTag(-1)
 {
 
@@ -26,7 +29,29 @@ Projectile * Projectile::Create(cocos2d::Vec2 pos, cocos2d::Vec2 dir, int damage
 	proj->factionTag = factionTag;
 
 	proj->SetSprite("Blue_Front1.png", "proj");
-	
+	proj->SetPhysics(true, dir * speed, false);
 
 	return proj;
+}
+
+
+bool Projectile::OnContactBegin(cocos2d::PhysicsContact & contact)
+{
+
+	PhysicsShape* shapeA = contact.getShapeA();
+	PhysicsShape* shapeB = contact.getShapeB();
+
+	void* userDataA = shapeA->getBody()->getNode()->getUserData();
+	void* userDataB = shapeB->getBody()->getNode()->getUserData();
+	Projectile* proj = GetData<Projectile*>(userDataA, userDataB);
+	
+	if (!proj)
+		return false;
+
+	if (proj->isDead())
+		return false;
+
+
+	proj->Destroy();
+	return true;
 }

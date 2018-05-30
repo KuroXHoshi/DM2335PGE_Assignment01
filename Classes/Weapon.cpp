@@ -41,7 +41,7 @@ int Weapon::GetDamage()
 
 void Weapon::Discharge()
 {
-	if (!attackspeed_timer >= attackspeed_triggerTime)
+	if (!(attackspeed_timer >= attackspeed_triggerTime))
 		return;
 
 	Projectile* proj = Projectile::Create(position, direction, this->GetDamage(), this->bulletSpeed, 1000, this->factionTag);

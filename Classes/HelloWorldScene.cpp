@@ -8,12 +8,20 @@ Animate* animateMouse;
 
 #include "Weapon.h"
 Weapon* weapon;
+Weapon* weapon2;
 #include "SceneManager.h"
 #include "GameObjectManager.h"
+#include "Projectile.h"
+#include "Functions.h"
 
 Scene* HelloWorld::createScene()
 {
-    return HelloWorld::create();
+	auto scene = Scene::createWithPhysics();
+	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98.0f));
+	auto layer = HelloWorld::create();
+	scene->addChild(layer);
+	return scene;
+	//return HelloWorld::createWithPhysics();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -28,10 +36,12 @@ bool HelloWorld::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Scene::init() )
+	if (!Layer::init() )
     {
         return false;
     }
+
+	//HelloWorld::createWithPhysics();
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -120,8 +130,14 @@ bool HelloWorld::init()
 	//Sequence::create(MoveBy)
 
 	weapon = new Weapon();
-	weapon->Set(1, 10, 2, 0, 300, 0);
+	weapon->Set(1, 10, 5, 0, 300, 0);
 	
+	weapon2 = new Weapon();
+	weapon2->Set(1, 10, 5, 0, 100, 0);
+
+	//auto contactListener = EventListenerPhysicsContact::create();
+	//contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::OnContactBegin, this);
+	//_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -274,6 +290,17 @@ void HelloWorld::onMousePressed(cocos2d::Event * event_)
 		weapon->direction.normalize();
 		weapon->Discharge();
 	}
+
+	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_RIGHT)
+	{
+		//aka screem size
+		auto visibleSize = Director::getInstance()->getVisibleSize();
+
+		weapon2->position.set(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
+		weapon2->direction.set(e->getCursorX() - weapon2->position.x, e->getCursorY() - weapon2->position.y);
+		weapon2->direction.normalize();
+		weapon2->Discharge();
+	}
 }
 
 void HelloWorld::onMouseReleased(cocos2d::Event * event_)
@@ -310,3 +337,27 @@ void HelloWorld::update(float delta)
 	SceneManager::GetInstance()->Update(delta);
 	GameObjectManager::GetInstance()->Update(delta);
 }
+
+//bool HelloWorld::OnContactBegin(PhysicsContact & contact)
+//{
+//	
+//	PhysicsShape* shapeA = contact.getShapeA();
+//	PhysicsShape* shapeB = contact.getShapeB();
+//
+//	void* userDataA = shapeA->getBody()->getNode()->getUserData();
+//	void* userDataB = shapeB->getBody()->getNode()->getUserData();
+//	Projectile* proj = GetData<Projectile*>(userDataA, userDataB);
+//
+//	if (!proj)
+//		return false;
+//
+//	if (proj->isDead())
+//		return false;
+//
+//
+//	proj->Destroy();
+//	return true;
+//
+//	return false;
+//}
+
