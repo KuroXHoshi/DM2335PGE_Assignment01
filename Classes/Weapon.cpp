@@ -1,5 +1,6 @@
 #include "Weapon.h"
 
+#include "Projectile.h"
 
 Weapon::Weapon()
 {
@@ -40,25 +41,18 @@ int Weapon::GetDamage()
 
 void Weapon::Discharge()
 {
-	//if (!attackspeed_timer >= attackspeed_triggerTime)
-	//	return;
+	if (!attackspeed_timer >= attackspeed_triggerTime)
+		return;
 
-	//DmgHitBox* temp_proj = DmgHitBoxManager::GetInstance()->get_hitbox(proj_type);
-	//if (!temp_proj)
-	//	return;
-	//temp_proj->set(this->pos, this->dir, this->faction.side, power.force, damage.get_damage(), damage.get_type());
-
-	////i let u travel 50units bah
-	//temp_proj->set_die_condition(new DieToDistance(100, power.force));
-	//temp_proj->active = true;
+	Projectile* proj = Projectile::Create(this->GetDamage(), this->bulletSpeed, 1000, this->factionTag);
 
 	//PhysicsManager::GetInstance()->add_object(temp_proj, temp_proj->get_physics_component());
 	//CollisionManager::GetInstance()->add_collider(temp_proj->get_collider_component());
 	//RenderManager::GetInstance()->attach_renderable(temp_proj, 1);
 
-	////AudioPlayer::GetInstance()->PlaySound2D("PewPew", 0.2);
-	////must reset timer
-	//attackspeed_timer - 0.0;
+	//AudioPlayer::GetInstance()->PlaySound2D("PewPew", 0.2);
+	//must reset timer
+	attackspeed_timer - 0.0;
 }
 
 void Weapon::Set(int min_dmg, int max_dmg, double attacks_per_sec, int bulletType, float bulletSpeed, int factionSide)
