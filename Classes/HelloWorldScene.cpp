@@ -3,6 +3,9 @@
 
 USING_NS_CC;
 
+Animate* animateIdle;
+Animate* animateMouse;
+
 Scene* HelloWorld::createScene()
 {
     return HelloWorld::create();
@@ -28,115 +31,150 @@ bool HelloWorld::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-	/*
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-	
-    if (closeItem == nullptr ||
-        closeItem->getContentSize().width <= 0 ||
-        closeItem->getContentSize().height <= 0)
-    {
-        problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
-    }
-    else
-    {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-        float y = origin.y + closeItem->getContentSize().height/2;
-        closeItem->setPosition(Vec2(x,y));
-    }
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
-	*/
-
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-
-	/*
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-    if (label == nullptr)
-    {
-        problemLoading("'fonts/Marker Felt.ttf'");
-    }
-    else
-    {
-        // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y + visibleSize.height - label->getContentSize().height));
-
-        // add the label as a child to this layer
-        this->addChild(label, 1);
-    }
-
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-    if (sprite == nullptr)
-    {
-        problemLoading("'HelloWorld.png'");
-    }
-    else
-    {
-        // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-        // add the sprite as a child to this layer
-        this->addChild(sprite, 0);
-    }
-	*/
-
 	Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
 
+	auto sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+	int x = sprite->getContentSize().width;
+	int numOftiles = playingSize.width / x;
+
 	auto nodeItems = Node::create();
-	nodeItems->setName("nodeItems");
+	nodeItems->setName("nodeItems" + std::to_string(0));
 
-	auto baseSprite = Sprite::create("ZigzagGrass_Mud_Round.png");
-	float x = 0;
-
-	while (x < playingSize.width)
+	for (int i = 0; i < numOftiles; ++i)
 	{
-		auto sprite = Sprite::createWithTexture(baseSprite->getTexture());
+		sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
 		sprite->setAnchorPoint(Vec2::ZERO);
-		sprite->setPosition(x, playingSize.height * 0.5f);
-		nodeItems->addChild(sprite, 0);
+		sprite->setPosition(x * i, playingSize.height / 2);
 
-		x += sprite->getContentSize().width;
+		nodeItems->addChild(sprite, 0);
 	}
+	this->addChild(nodeItems, 1);
 
 	auto spriteNode = Node::create();
 	spriteNode->setName("spriteNode");
 
 	auto mainSprite = Sprite::create("Blue_Front1.png");
-	mainSprite->setAnchorPoint(Vec2::ZERO);
-	mainSprite->setPosition(0, playingSize.height * 0.5f + baseSprite->getContentSize().height);
+	mainSprite->setAnchorPoint(Vec2(0, 0));
+	mainSprite->setPosition(0, playingSize.height/2 + sprite->getContentSize().height);
 	mainSprite->setName("mainSprite");
-
+	
 	spriteNode->addChild(mainSprite, 1);
-
-	this->addChild(nodeItems, 1);
 	this->addChild(spriteNode, 1);
 
-	/*auto moveEvent = MoveBy::create(5, Vec2(playingSize.width - mainSprite->getContentSize().width, 0));
+	auto moveEvent = MoveBy::create(5, Vec2(200, 0));
+	////mainSprite->runAction(moveEvent);
+
+	//auto delay = DelayTime::create(5.0f);
+	//auto delaySequence = Sequence::create(delay, delay->clone(), nullptr);
+	//auto sequence = Sequence::create(moveEvent, moveEvent->reverse(), delaySequence, nullptr);
+	//mainSprite->runAction(sequence);
+
+	auto listener = EventListenerKeyboard::create();
+	listener->onKeyPressed = CC_CALLBACK_2(HelloWorld::onKeyPressed, this);
+	listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+	auto mouseListener = EventListenerMouse::create();
+	mouseListener->onMouseDown = CC_CALLBACK_1(HelloWorld::onMousePressed, this);
+	mouseListener->onMouseUp = CC_CALLBACK_1(HelloWorld::onMouseReleased, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
+	this->scheduleUpdate();
+
+	cocos2d::Vector<SpriteFrame*> animFrames;
+	animFrames.reserve(4);
+	animFrames.pushBack(SpriteFrame::create("Blue_Front2.png", Rect(0, 0, 65, 81)));
+	animFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
+	animFrames.pushBack(SpriteFrame::create("Blue_Front3.png", Rect(0, 0, 65, 81)));
+	animFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
+
+	Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.5f);
+	animateIdle = Animate::create(animation);
+	animateIdle->retain();
+
+	mainSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
+
+	cocos2d::Vector<SpriteFrame*> mouseAnimFrames;
+	mouseAnimFrames.reserve(4);
+	mouseAnimFrames.pushBack(SpriteFrame::create("Blue_Back1.png", Rect(0, 0, 65, 82)));
+	mouseAnimFrames.pushBack(SpriteFrame::create("Blue_Back2.png", Rect(0, 0, 64, 81)));
+	mouseAnimFrames.pushBack(SpriteFrame::create("Blue_Back1.png", Rect(0, 0, 65, 82)));
+	mouseAnimFrames.pushBack(SpriteFrame::create("Blue_Back3.png", Rect(0, 0, 65, 81)));
+
+	Animation* mouseanimation = Animation::createWithSpriteFrames(mouseAnimFrames, 0.5f);
+	animateMouse = Animate::create(mouseanimation);
+	animateMouse->retain();
+
 	
-	auto delay = DelayTime::create(5.0f);
-	auto delaySequence = Sequence::create(delay, delay->clone(), nullptr);
-	auto sequence = Sequence::create(moveEvent, moveEvent->reverse(), delaySequence, nullptr);
+	//Sequence::create(MoveBy)
 
-	mainSprite->runAction(sequence);*/
 
+    /////////////////////////////
+    // 2. add a menu item with "X" image, which is clicked to quit the program
+    //    you may modify it.
+
+    // add a "close" icon to exit the progress. it's an autorelease object
+    //auto closeItem = MenuItemImage::create(
+    //                                       "CloseNormal.png",
+    //                                       "CloseSelected.png",
+    //                                       CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+
+    //if (closeItem == nullptr ||
+    //    closeItem->getContentSize().width <= 0 ||
+    //    closeItem->getContentSize().height <= 0)
+    //{
+    //    problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
+    //}
+    //else
+    //{
+    //    float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
+    //    float y = origin.y + closeItem->getContentSize().height/2;
+    //    closeItem->setPosition(Vec2(x,y));
+    //}
+
+    //// create menu, it's an autorelease object
+    //auto menu = Menu::create(closeItem, NULL);
+    //menu->setPosition(Vec2::ZERO);
+    //this->addChild(menu, 1);
+
+    ///////////////////////////////
+    //// 3. add your codes below...
+
+    //// add a label shows "Hello World"
+    //// create and initialize a label
+
+    //auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+    //if (label == nullptr)
+    //{
+    //    problemLoading("'fonts/Marker Felt.ttf'");
+    //}
+    //else
+    //{
+    //    // position the label on the center of the screen
+    //    label->setPosition(Vec2(origin.x + visibleSize.width/2,
+    //                            origin.y + visibleSize.height - label->getContentSize().height));
+
+    //    // add the label as a child to this layer
+    //    this->addChild(label, 1);
+    //}
+
+    //// add "HelloWorld" splash screen"
+    //auto sprite = Sprite::create("HelloWorld.png");
+    //if (sprite == nullptr)
+    //{
+    //    problemLoading("'HelloWorld.png'");
+    //}
+    //else
+    //{
+    //    // position the sprite on the center of the screen
+    //    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+
+    //    // add the sprite as a child to this layer
+    //    this->addChild(sprite, 0);
+    //}
     return true;
 }
+
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
@@ -153,4 +191,98 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
 
+}
+
+void HelloWorld::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
+{
+	if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_W)
+	{
+		auto curSprite = this->getChildByName("spriteNode")->getChildByName("mainSprite");
+		auto moveEvent = MoveBy::create(5.0f, Vec2(1000.0f, 0.f));
+		curSprite->runAction(moveEvent)->setTag(1);
+
+		curSprite->stopActionByTag(0);
+		curSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
+	}
+	else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_S)
+	{
+		auto curSprite = this->getChildByName("spriteNode")->getChildByName("mainSprite");
+		auto moveEvent = MoveBy::create(5.0f, Vec2(-1000.0f, 0.f));
+		curSprite->runAction(moveEvent)->setTag(1);
+
+		curSprite->stopActionByTag(0);
+		curSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
+	}
+	else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_A)
+	{
+		auto curSprite = this->getChildByName("spriteNode")->getChildByName("mainSprite");
+		auto moveEvent = MoveBy::create(5.0f, Vec2(-1000.0f, 0.f));
+		curSprite->runAction(moveEvent)->setTag(1);
+
+		curSprite->stopActionByTag(0);
+		curSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
+	}
+	else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_D)
+	{
+		auto curSprite = this->getChildByName("spriteNode")->getChildByName("mainSprite");
+		auto moveEvent = MoveBy::create(5.0f, Vec2(-1000.0f, 0.f));
+		curSprite->runAction(moveEvent)->setTag(1);
+
+		curSprite->stopActionByTag(0);
+		curSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
+	}
+}
+
+void HelloWorld::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
+{
+	if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW || keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+	{
+		auto curSprite = this->getChildByName("spriteNode")->getChildByName("mainSprite");
+		curSprite->stopActionByTag(1);
+
+	}
+
+}
+
+//should store action if not using when created
+//Vec2* moveDirPtr = nullptr;
+
+void HelloWorld::onMousePressed(cocos2d::Event * event_)
+{
+	EventMouse* e = (EventMouse*)event_;
+	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
+	{
+	}
+}
+
+void HelloWorld::onMouseReleased(cocos2d::Event * event_)
+{
+	EventMouse* e = (EventMouse*)event_;
+	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
+	{
+		auto curSprite = this->getChildByName("spriteNode")->getChildByName("mainSprite");
+		curSprite->stopActionByTag(1);
+		int displacement = e->getCursorX() - curSprite->getPositionX();
+
+		auto moveEvent = MoveBy::create(abs(displacement) / 300.0f, Vec2(displacement, 0));
+
+		auto callbackStop = CallFunc::create([curSprite]() {
+			curSprite->stopAllActions();
+			curSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
+		});
+
+		auto seq = Sequence::create(moveEvent, callbackStop, nullptr);
+
+		curSprite->runAction(seq)->setTag(1);
+
+		curSprite->stopActionByTag(0);
+		curSprite->runAction(RepeatForever::create(animateMouse))->setTag(0);
+	}
+}
+
+void HelloWorld::update(float delta)
+{
+	//auto curSprite = this->getChildByName("spriteNode")->getChildByName("mainSprite");
+	//auto moveEvent = MoveBy::create(1.0f, Vec2(10,0));
+	//curSprite->runAction(moveEvent);
 }

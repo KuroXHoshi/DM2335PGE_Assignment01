@@ -2,9 +2,15 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "GameObject.h"
+#include "Player.h"
+
+using namespace cocos2d;
 
 class HelloWorld : public cocos2d::Scene
 {
+	std::vector<GameObject*> gameObjList;
+	Player* player;
 public:
     static cocos2d::Scene* createScene();
 
@@ -15,6 +21,13 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+
+	virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event_);
+	virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event_);
+	virtual void onMousePressed(cocos2d::Event* event_);
+	virtual void onMouseReleased(cocos2d::Event* event_);
+
+	void update(float delta);
 };
 
 #endif // __HELLOWORLD_SCENE_H__
