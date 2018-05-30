@@ -49,17 +49,22 @@ bool HelloWorld::init()
 		nodeItems->addChild(sprite, 0);
 	}
 	this->addChild(nodeItems, 1);
-
-	auto spriteNode = Node::create();
-	spriteNode->setName("spriteNode");
-
-	auto mainSprite = Sprite::create("Blue_Front1.png");
-	mainSprite->setAnchorPoint(Vec2(0, 0));
-	mainSprite->setPosition(0, playingSize.height/2 + sprite->getContentSize().height);
-	mainSprite->setName("mainSprite");
 	
-	spriteNode->addChild(mainSprite, 1);
-	this->addChild(spriteNode, 1);
+	player = new Player();
+	this->addChild(player->spriteNode);
+	player->sprite->setPosition(0, playingSize.height / 2 + sprite->getContentSize().height);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetKbListener(), this);
+
+	//auto spriteNode = Node::create();
+	//spriteNode->setName("spriteNode");
+
+	//auto mainSprite = Sprite::create("Blue_Front1.png");
+	//mainSprite->setAnchorPoint(Vec2(0, 0));
+	//mainSprite->setPosition(0, playingSize.height/2 + sprite->getContentSize().height);
+	//mainSprite->setName("mainSprite");
+	//
+	//spriteNode->addChild(mainSprite, 1);
+	//this->addChild(spriteNode, 1);
 
 	auto moveEvent = MoveBy::create(5, Vec2(200, 0));
 	////mainSprite->runAction(moveEvent);
@@ -69,15 +74,15 @@ bool HelloWorld::init()
 	//auto sequence = Sequence::create(moveEvent, moveEvent->reverse(), delaySequence, nullptr);
 	//mainSprite->runAction(sequence);
 
-	auto listener = EventListenerKeyboard::create();
-	listener->onKeyPressed = CC_CALLBACK_2(HelloWorld::onKeyPressed, this);
-	listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+	//auto listener = EventListenerKeyboard::create();
+	//listener->onKeyPressed = CC_CALLBACK_2(HelloWorld::onKeyPressed, this);
+	//listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
+	//_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-	auto mouseListener = EventListenerMouse::create();
-	mouseListener->onMouseDown = CC_CALLBACK_1(HelloWorld::onMousePressed, this);
-	mouseListener->onMouseUp = CC_CALLBACK_1(HelloWorld::onMouseReleased, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+	//auto mouseListener = EventListenerMouse::create();
+	//mouseListener->onMouseDown = CC_CALLBACK_1(HelloWorld::onMousePressed, this);
+	//mouseListener->onMouseUp = CC_CALLBACK_1(HelloWorld::onMouseReleased, this);
+	//_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
 	this->scheduleUpdate();
 
@@ -91,8 +96,9 @@ bool HelloWorld::init()
 	Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.5f);
 	animateIdle = Animate::create(animation);
 	animateIdle->retain();
-
-	mainSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
+	player->SetAnimFrames(animFrames, 0.5f);
+	player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
+	//mainSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
 
 	cocos2d::Vector<SpriteFrame*> mouseAnimFrames;
 	mouseAnimFrames.reserve(4);
