@@ -39,7 +39,13 @@
     <ClCompile Include="..\Classes\Weapon.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameObjectManager.cpp" />
+    <ClCompile Include="..\Classes\GameObjectManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Projectile.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -73,6 +79,9 @@
       <Filter>src\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Projectile.h">
+      <Filter>src\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SceneManager.h">
       <Filter>src\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

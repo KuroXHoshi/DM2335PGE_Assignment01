@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 #include "GameObjectManager.h"
+#include "SceneManager.h"
 
 USING_NS_CC;
 
@@ -23,14 +24,14 @@ void GameObject::SetSprite(std::string filename, std::string name)
 	spriteNode->setName(name);
 	
 	sprite = Sprite::create(filename);
-	sprite->setAnchorPoint(Vec2(0, 0));
+	sprite->setAnchorPoint(Vec2(0.5f,0.5f));
 	sprite->setPosition(0, 0);
 	sprite->setName(name+"sprite");
 
 	spriteNode->addChild(sprite, 1);
 
-	//TODO: Send sprite node to scene
-
+	// Send sprite node to scene
+	SceneManager::GetInstance()->AddNodeToCurrentScene(spriteNode);
 
 	//setting the physics body
 	physicsBody = PhysicsBody::createBox(Size(sprite->getContentSize().width, sprite->getContentSize().height), PhysicsMaterial(0.0f, 0.0f, 1.f));

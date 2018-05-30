@@ -44,7 +44,7 @@ void Weapon::Discharge()
 	if (!attackspeed_timer >= attackspeed_triggerTime)
 		return;
 
-	Projectile* proj = Projectile::Create(this->GetDamage(), this->bulletSpeed, 1000, this->factionTag);
+	Projectile* proj = Projectile::Create(position, direction, this->GetDamage(), this->bulletSpeed, 1000, this->factionTag);
 
 	//PhysicsManager::GetInstance()->add_object(temp_proj, temp_proj->get_physics_component());
 	//CollisionManager::GetInstance()->add_collider(temp_proj->get_collider_component());
@@ -52,7 +52,7 @@ void Weapon::Discharge()
 
 	//AudioPlayer::GetInstance()->PlaySound2D("PewPew", 0.2);
 	//must reset timer
-	attackspeed_timer - 0.0;
+	attackspeed_timer = 0.0;
 }
 
 void Weapon::Set(int min_dmg, int max_dmg, double attacks_per_sec, int bulletType, float bulletSpeed, int factionSide)

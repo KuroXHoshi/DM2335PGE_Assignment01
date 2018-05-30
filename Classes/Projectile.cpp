@@ -11,17 +11,22 @@ void Projectile::Update(double dt)
 	distTravelled += speed * dt;
 	if (distTravelled > range)
 		this->Destroy();
+
+	this->sprite->setPosition(this->position);
 }
 
-Projectile * Projectile::Create(int damage, float speed, int range, int factionTag)
+Projectile * Projectile::Create(cocos2d::Vec2 pos, cocos2d::Vec2 dir, int damage, float speed, int range, int factionTag)
 {
 	Projectile* proj = new Projectile();
+	proj->position = pos;
+	proj->direction = dir;
 	proj->damage = damage;
 	proj->speed = speed;
 	proj->range = range;
 	proj->factionTag = factionTag;
 
 	proj->SetSprite("Blue_Front1.png", "proj");
+	
 
 	return proj;
 }

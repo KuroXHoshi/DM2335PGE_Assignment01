@@ -14,5 +14,5 @@ public:
 
 	virtual void Update(double dt);
 
-	static Projectile* Create(int damage, float speed, int range, int factionTag);
+	static Projectile* Create(cocos2d::Vec2 pos, cocos2d::Vec2 dir, int damage, float speed, int range, int factionTag);
 };
