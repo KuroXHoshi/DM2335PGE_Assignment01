@@ -60,9 +60,6 @@
     <ClInclude Include="..\Classes\GameObject.h">
       <Filter>src\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameScene.h">
-      <Filter>src\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Player.h">
       <Filter>src\GameObjects</Filter>
     </ClInclude>

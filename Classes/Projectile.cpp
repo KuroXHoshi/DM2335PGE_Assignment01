@@ -34,7 +34,8 @@ Projectile * Projectile::Create(cocos2d::Vec2 pos, cocos2d::Vec2 dir, int damage
 	return proj;
 }
 
-
+//Legit no point for this because when there is alot proj, this will be called alot of times
+//doing the same thing. if starting to lag then start migrating
 bool Projectile::OnContactBegin(cocos2d::PhysicsContact & contact)
 {
 
@@ -43,6 +44,9 @@ bool Projectile::OnContactBegin(cocos2d::PhysicsContact & contact)
 
 	void* userDataA = shapeA->getBody()->getNode()->getUserData();
 	void* userDataB = shapeB->getBody()->getNode()->getUserData();
+
+	//Normally proj should be equal this
+	//unless you want special effect on projectile collide projectile
 	Projectile* proj = GetData<Projectile*>(userDataA, userDataB);
 	
 	if (!proj)
