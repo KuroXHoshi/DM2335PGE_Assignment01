@@ -17,7 +17,7 @@ Weapon* weapon2;
 Scene* HelloWorld::createScene()
 {
 	auto scene = Scene::createWithPhysics();
-	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98.0f));
+	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98.0f)); //space game no gravity
 	auto layer = HelloWorld::create();
 	scene->addChild(layer);
 	return scene;
