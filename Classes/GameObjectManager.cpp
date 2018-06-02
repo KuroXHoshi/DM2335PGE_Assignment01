@@ -15,6 +15,8 @@ void GameObjectManager::Update(double dt)
 
 		entry.second->Update(dt);
 	}
+
+	PostUpdate();
 }
 
 void GameObjectManager::PostUpdate()
@@ -31,8 +33,8 @@ void GameObjectManager::PostUpdate()
 		}
 
 		//this->DeleteGameObject(it->first);
-		it = gameObjectMap.erase(it);
 		delList.push_back(it->second);
+		it = gameObjectMap.erase(it);
 	}
 
 	//Delete them objs

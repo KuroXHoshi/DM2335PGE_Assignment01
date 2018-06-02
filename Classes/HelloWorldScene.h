@@ -7,7 +7,7 @@
 
 using namespace cocos2d;
 
-class HelloWorld : public cocos2d::Scene
+class HelloWorld : public cocos2d::Layer
 {
 	std::vector<GameObject*> gameObjList;
 	Player* player;
@@ -28,6 +28,8 @@ public:
 	virtual void onMouseReleased(cocos2d::Event* event_);
 
 	void update(float delta);
+
+	bool OnContactBegin(PhysicsContact& contact);
 };
 
 #endif // __HELLOWORLD_SCENE_H__
