@@ -33,9 +33,6 @@
     <ClCompile Include="..\Classes\Weapon.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameObjectManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Projectile.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
@@ -47,6 +44,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Controls.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameController.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameObjectManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,9 +75,6 @@
     <ClInclude Include="..\Classes\Weapon.h">
       <Filter>src\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameObjectManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\SingletonTemplate.h">
       <Filter>src\Common</Filter>
     </ClInclude>
@@ -91,6 +91,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Controls.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameController.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameObjectManager.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

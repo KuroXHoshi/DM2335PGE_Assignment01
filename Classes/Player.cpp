@@ -28,15 +28,15 @@ void Player::Update(double dt)
 	{
 		physicsBody->applyForce(Vec2(0, 100));
 	}
-	else if (isKeyHeld(EventKeyboard::KeyCode::KEY_S))
+	if (isKeyHeld(EventKeyboard::KeyCode::KEY_S))
 	{
 		physicsBody->applyForce(Vec2(0, -100));
 	}
-	else if (isKeyHeld(EventKeyboard::KeyCode::KEY_A))
+	if (isKeyHeld(EventKeyboard::KeyCode::KEY_A))
 	{
 		physicsBody->applyForce(Vec2(-100, 0));
 	}
-	else if (isKeyHeld(EventKeyboard::KeyCode::KEY_D))
+	if (isKeyHeld(EventKeyboard::KeyCode::KEY_D))
 	{
 		physicsBody->applyForce(Vec2(100, 0));
 	}
