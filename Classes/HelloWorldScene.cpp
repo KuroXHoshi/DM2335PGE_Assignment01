@@ -14,6 +14,7 @@ Weapon* weapon2;
 #include "GameController.h"
 #include "Projectile.h"
 #include "Functions.h"
+#include "Enemy.h"
 
 Scene* HelloWorld::createScene()
 {
@@ -42,6 +43,7 @@ bool HelloWorld::init()
         return false;
     }
 
+	srand(0);
 	//HelloWorld::createWithPhysics();
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -395,10 +397,17 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 	Projectile* projB = dynamic_cast<Projectile*>(b);
 
 	Projectile* proj = nullptr;
+	GameObject* other = nullptr;
 	if (projA)
+	{
 		proj = projA;
+		other = b;
+	}
 	else if (projB)
+	{
 		proj = projB;
+		other = a;
+	}
 
 	if (!proj)
 		return false;
@@ -406,10 +415,21 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 	if (proj->isDead())
 		return false;
 
+	Enemy* enemy = dynamic_cast<Enemy*>(other);
+	if (enemy)
+	{
+		enemy->health -= proj->damage;
+		if (enemy->health <= 0)
+			enemy->Destroy();
+	}
+	Player* player = dynamic_cast<Player*>(other);
+	if (player)
+	{
+		player->hitpoint -= proj->damage;
+	}
 
 	proj->Destroy();
 	return true;
 
-	return false;
 }
 
