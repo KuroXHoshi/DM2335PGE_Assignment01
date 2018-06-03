@@ -26,7 +26,10 @@ GameObject::~GameObject()
 
 	Scene* currScene = Director::getInstance()->getRunningScene();
 	EventDispatcher* _eventDispatcher = currScene->getEventDispatcher();
-	_eventDispatcher->removeEventListener(contactListener);
+	if (physicsBody)
+		_eventDispatcher->removeEventListener(contactListener);
+
+	//animFrames.
 }
 
 void GameObject::Update(double dt)
