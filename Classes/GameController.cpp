@@ -145,8 +145,8 @@ void GameController::GenerateWave(double dt)
 
 			e->physicsBody->setMass(1);
 			e->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_ENEMY);
-			e->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_PLAYER + BITMASK_PLAYER_BULLET);
-			e->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_PLAYER + BITMASK_PLAYER_BULLET);
+			e->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_PLAYER + BITMASK_PLAYER_BULLET+ BITMASK_ENEMY);
+			e->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_PLAYER + BITMASK_PLAYER_BULLET + BITMASK_ENEMY);
 			e->sprite->setPosition(e->position);
 			e->sprite->setScale(0.5f);
 			e->healthLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 24);
