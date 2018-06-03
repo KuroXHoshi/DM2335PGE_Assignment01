@@ -60,6 +60,8 @@ public:
 	//call this function when player hit a boss
 	void AddScoreOnBossHit();
 
+	Scene* scene;
+
 private:
 	Player* player;
 

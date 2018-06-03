@@ -11,6 +11,7 @@ class HelloWorld : public cocos2d::Layer
 {
 	std::vector<GameObject*> gameObjList;
 	Player* player;
+	Label* playerHealth;
 public:
     static cocos2d::Scene* createScene();
 
