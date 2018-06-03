@@ -3,11 +3,11 @@ USING_NS_CC;
 
 Player::Player()
 {
-	this->SetSprite("textures/player_1.tga", "Player");
+	
 	factionTag = TAGENUM::PLAYER;
 	weapon = new Weapon();
 	health = 1000;
-	weapon->Set(15, 22, 1, 0, 1000, 0, "textures/Protagonist_Bullet.tga");
+	
 	//auto listener = EventListenerKeyboard::create();
 	//listener->onKeyPressed = CC_CALLBACK_2(Player::onKeyPressed, this);
 	//listener->onKeyReleased = CC_CALLBACK_2(Player::onKeyReleased, this);
@@ -80,6 +80,14 @@ void Player::Update(double dt)
 
 void Player::Start()
 {
+	this->SetSprite("textures/player_1.tga", "Player");
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
+	this->sprite->setPosition(playingSize.width / 2, playingSize.height / 2);
+
+	this->sprite->runAction(RepeatForever::create(this->animate))->setTag(0);
+
+	weapon->Set(15, 22, 1, 0, 1000, 0, "textures/Protagonist_Bullet.tga");
 	physicsBody = PhysicsBody::createCircle(sprite->getContentSize().width, PhysicsMaterial(0.0f, 0.0f, 1.f));
 	SetPhysics(true, Vec2(0, 0), false);
 	physicsBody->setVelocityLimit(100);

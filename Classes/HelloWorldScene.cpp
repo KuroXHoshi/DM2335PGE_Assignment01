@@ -76,7 +76,7 @@ bool HelloWorld::init()
 	
 	player = new Player();
 	//this->addChild(player->spriteNode);
-	player->sprite->setPosition(playingSize.width / 2, playingSize.height / 2);
+	//player->sprite->setPosition(playingSize.width / 2, playingSize.height / 2);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetKbListener(), this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetMouseListener(), this);
 
@@ -131,7 +131,7 @@ bool HelloWorld::init()
 	animateIdle = Animate::create(animation);
 	animateIdle->retain();	
 	player->SetAnimFrames(animFrames, 0.5f);
-	player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
+	//player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
 	//mainSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
 
 	cocos2d::Vector<SpriteFrame*> mouseAnimFrames;
