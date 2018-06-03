@@ -22,7 +22,7 @@ void GameObjectManager::Update(double dt)
 		entry.second->Update(dt);
 	}
 
-	PostUpdate();
+	//PostUpdate();
 }
 
 void GameObjectManager::PostUpdate()

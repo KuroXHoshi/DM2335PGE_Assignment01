@@ -17,7 +17,7 @@ hasStartedUpdate(false)
 GameObject::~GameObject()
 {
 	//GameObjectManager::GetInstance()->RemoveGameObject(this->id);
-	Director::getInstance()->getRunningScene()->removeChild(spriteNode, false);
+	Director::getInstance()->getRunningScene()->removeChild(spriteNode, true);
 	//physicsBody->release();
 	//sprite->release();
 	//animate->release();

@@ -364,6 +364,8 @@ void HelloWorld::update(float delta)
 	cam->setPosition(player->sprite->getPosition());
 
 	//player->LookAt();
+
+	GameObjectManager::GetInstance()->PostUpdate();
 }
 
 //bool HelloWorld::OnContactBegin(PhysicsContact & contact)

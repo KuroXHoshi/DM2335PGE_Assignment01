@@ -13,7 +13,7 @@ BossController::~BossController()
 
 void BossController::Start()
 {
-	boss = Enemy::Create(Vec2(0, 0), nullptr, 500, 10, 50, TAGENUM::ENEMY);
+	boss = Enemy::Create(Vec2(0, 0), nullptr, 500, 10, 100, TAGENUM::ENEMY);
 	boss->SetSprite("textures/Sheep_idle.tga", "Boss");
 
 
@@ -49,10 +49,11 @@ void BossController::Update(double dt)
 	//Mvoe towards player
 	if (me_to_player.lengthSquared() > stopAtDistance * stopAtDistance)
 	{
-		boss->speed = 0.0f;
+		boss->speed = 100.0f;
 	}
 	else
-		boss->speed = 50.0f;
+		//Dont chase
+		boss->speed = 0.0f;
 	//boss->sprite->setRotation()
 
 	boss->weap.position.set(boss->sprite->getPosition());

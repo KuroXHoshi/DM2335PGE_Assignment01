@@ -7,7 +7,7 @@ void GameController::Init(Player* _player)
 {
 	player = _player;
 
-	currState = GS_BOSS;
+	currState = GS_WAVE;
 	prevState = GS_TRANSITION;
 	sequences = 0;
 	waveCount = 0;
