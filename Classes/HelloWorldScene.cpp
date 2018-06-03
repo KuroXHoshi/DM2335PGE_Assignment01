@@ -419,13 +419,15 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 	if (enemy)
 	{
 		enemy->health -= proj->damage;
-		if (enemy->health <= 0)
+		if (enemy->health <= 0) {
+			enemy->healthLabel->removeFromParentAndCleanup(true);
 			enemy->Destroy();
+		}
 	}
 	Player* player = dynamic_cast<Player*>(other);
 	if (player)
 	{
-		player->hitpoint -= proj->damage;
+		player->SetHealth(player->GetHealth() - proj->damage);
 	}
 
 	proj->Destroy();

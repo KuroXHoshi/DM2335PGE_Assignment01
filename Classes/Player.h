@@ -20,6 +20,7 @@ public:
 	void Start();
 	void LookAt(Vec2 target_);
 	inline int GetHealth() { return health; }
+	inline void SetHealth(int _hp) { health = _hp; }
 	//void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event_);
 	//void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event_);
 	void onMousePressed(cocos2d::Event* event_);
