@@ -4,6 +4,7 @@
 
 class Enemy : public GameObject
 {
+	cocos2d::Size VisibleSize;
 	cocos2d::Vec2 LastPlayerPosition;
 	TAGENUM factionTag;
 	int health;

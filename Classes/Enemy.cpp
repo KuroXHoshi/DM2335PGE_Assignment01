@@ -12,12 +12,21 @@ Enemy::~Enemy()
 
 void Enemy::Start()
 {
-
+	VisibleSize = Director::getInstance()->getVisibleSize();
 }
 
 void Enemy::Update(double dt)
 {
+	// Return if not active
+	if (!active)
+		return;
 	
+	// Set not active when off screen
+	/*if (position.x < -50 || position.x > VisibleSize.width + 50 ||
+		position.y < -50 || position.y > VisibleSize.height + 50)
+	{
+		active = false;
+	}*/
 }
 
 Enemy * Enemy::Create(cocos2d::Vec2 pos, cocos2d::Vec2 playerPos, int damage, float speed, int factionTag)
