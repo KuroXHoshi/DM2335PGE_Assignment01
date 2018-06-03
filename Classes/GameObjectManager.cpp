@@ -10,7 +10,7 @@ void GameObjectManager::Update(double dt)
 	for each (auto entry in gameObjectMap)
 	{
 		//If game object is inactive, skip
-		if (!entry.second->active)
+		if (entry.second->isDead())
 			continue;
 
 		if (!entry.second->hasStartedUpdate)
@@ -48,7 +48,9 @@ void GameObjectManager::PostUpdate()
 	{
 		delete go;
 	}
-	delList.clear();
+
+	if (!delList.empty())
+		delList.clear();
 }
 
 
