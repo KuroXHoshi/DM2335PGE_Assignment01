@@ -14,6 +14,8 @@ public:
 	void AddGameObject(GameObject * go);
 	void Update(double dt);
 	void PostUpdate();
+
+	GameObject* GetGameObject(int id) { return gameObjectMap[id]; }
 protected:
 	GameObjectManager();
 };

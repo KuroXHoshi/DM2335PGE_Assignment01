@@ -81,7 +81,7 @@ void GameObject::SetPhysics(bool isDynamic, cocos2d::Vec2 velocity, bool isGravi
 	physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_EVERYTHING);
 	physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_EVERYTHING);
 	physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_EVERYTHING);
-	physicsBody->setTag(TAGENUM::NONE);
+	physicsBody->setTag(id);
 
 	//Scene* currScene = Director::getInstance()->getRunningScene();
 	//EventDispatcher* _eventDispatcher = currScene->getEventDispatcher();

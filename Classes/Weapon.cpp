@@ -61,7 +61,7 @@ void Weapon::Discharge()
 		proj->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_PLAYER);
 	}
 
-	proj->physicsBody->setTag(TAGENUM::BULLET);
+	proj->physicsBody->setTag(proj->id);
 
 	//AudioPlayer::GetInstance()->PlaySound2D("PewPew", 0.2);
 	//must reset timer
