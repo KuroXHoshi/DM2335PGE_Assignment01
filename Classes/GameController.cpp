@@ -139,10 +139,10 @@ void GameController::GenerateWave(double dt)
 		spawnTimer += dt;
 		if (spawnTimer > spawnRate)
 		{
-			Enemy* e = Enemy::Create(GenerateSpawnPosition(), player, 1, 5, 75, 2);
+			Enemy* e = Enemy::Create(GenerateSpawnPosition(), player, 50, 5, 75, 2);
 			e->SetSprite("textures/Enemy_Oce_Side.tga", "enemy");
 			e->SetPhysics(true, Vec2::ZERO, false);
-			e->physicsBody->setMass(100);
+			//e->physicsBody->setMass(1);
 			e->sprite->setPosition(e->position);
 			e->sprite->setScale(0.5f);
 			++enemyCount;
