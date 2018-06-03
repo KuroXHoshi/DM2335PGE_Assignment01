@@ -50,6 +50,7 @@ void GameObject::SetSprite(std::string filename, std::string name)
 	sprite->setAnchorPoint(Vec2(0.5f,0.5f));
 	sprite->setPosition(0, 0);
 	sprite->setName(name+"sprite");
+	sprite->retain();
 
 	//sprite->retain();
 

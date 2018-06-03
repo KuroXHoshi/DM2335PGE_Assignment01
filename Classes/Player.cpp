@@ -7,7 +7,7 @@ Player::Player()
 	factionTag = TAGENUM::PLAYER;
 	weapon = new Weapon();
 	health = 1000;
-	weapon->Set(1, 10, 1, 0, 1000, 0);
+	weapon->Set(1, 10, 1, 0, 1000, 0, "textures/Protagonist_Bullet.tga");
 	//auto listener = EventListenerKeyboard::create();
 	//listener->onKeyPressed = CC_CALLBACK_2(Player::onKeyPressed, this);
 	//listener->onKeyReleased = CC_CALLBACK_2(Player::onKeyReleased, this);
