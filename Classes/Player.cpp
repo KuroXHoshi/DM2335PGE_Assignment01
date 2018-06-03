@@ -75,6 +75,7 @@ void Player::Update(double dt)
 		sprite->setTexture("textures/player_1.tga");
 	}
 	physicsBody->onAdd(); // bandaid fix for animation
+	physicsBody->setVelocity(Vec2::ZERO);
 }
 
 void Player::Start()
