@@ -105,10 +105,10 @@ bool HelloWorld::init()
 	//auto sequence = Sequence::create(moveEvent, moveEvent->reverse(), delaySequence, nullptr);
 	//mainSprite->runAction(sequence);
 
-	//auto listener = EventListenerKeyboard::create();
+	auto listener = EventListenerKeyboard::create();
 	//listener->onKeyPressed = CC_CALLBACK_2(HelloWorld::onKeyPressed, this);
-	//listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
-	//_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+	listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	//auto mouseListener = EventListenerMouse::create();
 	//mouseListener->onMouseDown = CC_CALLBACK_1(HelloWorld::onMousePressed, this);
@@ -288,6 +288,11 @@ void HelloWorld::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 
 	}
 
+	if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_SPACE)
+	{
+		GameController::GetInstance()->switchStates();
+	}
+
 }
 
 //should store action if not using when created
@@ -296,27 +301,27 @@ void HelloWorld::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 void HelloWorld::onMousePressed(cocos2d::Event * event_)
 {
 	EventMouse* e = (EventMouse*)event_;
-	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
-	{
-		//aka screem size
-		auto visibleSize = Director::getInstance()->getVisibleSize();
-		
-		weapon->position.set(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
-		weapon->direction.set(e->getCursorX() - weapon->position.x, e->getCursorY() - weapon->position.y);
-		weapon->direction.normalize();
-		weapon->Discharge();
-	}
+	//if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
+	//{
+	//	//aka screem size
+	//	auto visibleSize = Director::getInstance()->getVisibleSize();
+	//	
+	//	weapon->position.set(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
+	//	weapon->direction.set(e->getCursorX() - weapon->position.x, e->getCursorY() - weapon->position.y);
+	//	weapon->direction.normalize();
+	//	weapon->Discharge();
+	//}
 
-	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_RIGHT)
-	{
-		//aka screem size
-		auto visibleSize = Director::getInstance()->getVisibleSize();
+	//if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_RIGHT)
+	//{
+	//	//aka screem size
+	//	auto visibleSize = Director::getInstance()->getVisibleSize();
 
-		weapon2->position.set(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
-		weapon2->direction.set(e->getCursorX() - weapon2->position.x, e->getCursorY() - weapon2->position.y);
-		weapon2->direction.normalize();
-		weapon2->Discharge();
-	}
+	//	weapon2->position.set(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
+	//	weapon2->direction.set(e->getCursorX() - weapon2->position.x, e->getCursorY() - weapon2->position.y);
+	//	weapon2->direction.normalize();
+	//	weapon2->Discharge();
+	//}
 }
 
 void HelloWorld::onMouseReleased(cocos2d::Event * event_)
@@ -359,6 +364,8 @@ void HelloWorld::update(float delta)
 	cam->setPosition(player->sprite->getPosition());
 
 	//player->LookAt();
+
+	GameObjectManager::GetInstance()->PostUpdate();
 }
 
 //bool HelloWorld::OnContactBegin(PhysicsContact & contact)

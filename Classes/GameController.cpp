@@ -1,5 +1,6 @@
 #include "GameController.h"
 #include "Enemy.h"
+#include "BossController.h"
 
 //requires a reference to the player
 void GameController::Init(Player* _player)
@@ -38,6 +39,8 @@ void GameController::Init(Player* _player)
 			backgrounds[index]->setPosition((i - 1) * backgroundWidth, (j - 1) * backgroundWidth);
 		}
 	}
+
+	BossController::GetInstance()->AttachPlayer(player);
 }
 
 void GameController::Update(double dt)
@@ -115,6 +118,7 @@ void GameController::WaveUpdate(double dt)
 
 void GameController::BossUpdate(double dt)
 {
+	BossController::GetInstance()->Update(dt);
 }
 
 Vec2 GameController::GenerateSpawnPosition()

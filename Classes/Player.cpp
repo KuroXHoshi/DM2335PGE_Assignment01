@@ -73,8 +73,11 @@ void Player::Start()
 	physicsBody = PhysicsBody::createCircle(sprite->getContentSize().width, PhysicsMaterial(0.0f, 0.0f, 1.f));
 	SetPhysics(true, Vec2(0, 0), false);
 	physicsBody->setVelocityLimit(100);
+	//physicsBody->setRotationOffset(4);
 	physicsBody->setRotationEnable(false);
-	
+	this->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_PLAYER);
+	this->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_ENEMY + BITMASK_ENUM::BITMASK_ENEMY_BULLET);
+	this->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_ENEMY + BITMASK_ENUM::BITMASK_ENEMY_BULLET);
 }
 
 void Player::LookAt(Vec2 target_)

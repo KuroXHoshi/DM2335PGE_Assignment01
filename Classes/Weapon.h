@@ -30,6 +30,9 @@ protected:
 
 	//Rands damage between min and max
 	int GetDamage();
+
+	//bullet sprite image to be rendered
+	std::string bulletTexture;
 public:
 	std::string name;
 
@@ -41,7 +44,7 @@ public:
 	virtual void Discharge();
 
 	//Call this function to initialize the weapon
-	virtual void Set(int min_dmg, int max_dmg, double attacks_per_sec, int bulletType, float bulletSpeed, int factionSide);
+	virtual void Set(int min_dmg, int max_dmg, double attacks_per_sec, int bulletType, float bulletSpeed, int factionSide, std::string bulletsrite = "Blue_Front1.png");
 };
 
 #endif // !WEAPON_H

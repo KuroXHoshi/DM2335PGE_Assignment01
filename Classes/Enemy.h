@@ -7,6 +7,7 @@
 
 class Enemy : public GameObject
 {
+public:
 	//cocos2d::Size VisibleSize;
 	Player* player;
 	TAGENUM factionTag;
