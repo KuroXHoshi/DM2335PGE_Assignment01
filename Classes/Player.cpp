@@ -28,13 +28,14 @@ Player::Player()
 
 void Player::Update(double dt)
 {
+	
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_W))
 	{
 		//physicsBody->applyForce(Vec2(0, 10000) * dt);
 		auto moveEvent = MoveBy::create(0.0f, Vec2(0.0f, 100.f) * dt);
 		sprite->runAction(moveEvent)->setTag(1);
 		
-		sprite->stopActionByTag(0);
+		//sprite->stopActionByTag(0);
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_S))
@@ -43,7 +44,7 @@ void Player::Update(double dt)
 		auto moveEvent = MoveBy::create(0.0f, Vec2(0.0f, -100.f) * dt);
 		sprite->runAction(moveEvent)->setTag(1);
 
-		sprite->stopActionByTag(0);
+		//sprite->stopActionByTag(0);
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_A))
@@ -52,7 +53,7 @@ void Player::Update(double dt)
 		auto moveEvent = MoveBy::create(0.0f, Vec2(-100.0f, 0.f) * dt);
 		sprite->runAction(moveEvent)->setTag(1);
 
-		sprite->stopActionByTag(0);
+		//sprite->stopActionByTag(0);
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_D))
@@ -61,11 +62,12 @@ void Player::Update(double dt)
 		auto moveEvent = MoveBy::create(0.0f, Vec2(100.0f, 0.f) * dt);
 		sprite->runAction(moveEvent)->setTag(1);
 
-		sprite->stopActionByTag(0);
+		//sprite->stopActionByTag(0);
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
+	if (!anyKeyHeld())
+		sprite->stopActionByTag(0);
 	physicsBody->onAdd(); // bandaid fix for animation
-	//if ()
 }
 
 void Player::Start()
@@ -139,10 +141,10 @@ void Player::onMousePressed(cocos2d::Event * event_)
 		//aka screem size
 		auto visibleSize = Director::getInstance()->getVisibleSize();
 
-		
-		weapon->direction.set(e->getCursorX() - weapon->position.x, e->getCursorY() - weapon->position.y);
+		weapon->position.set(sprite->getPosition());
+		weapon->direction.set(e->getCursorX() - visibleSize.width * 0.5f, e->getCursorY() - visibleSize.height * 0.5f);
 		weapon->direction.normalize();
-		weapon->position.set(sprite->getPosition() + weapon->direction * 80);
+		
 		weapon->Discharge();
 	}
 }

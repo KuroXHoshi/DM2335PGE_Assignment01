@@ -22,6 +22,13 @@ void Controls::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 	keyHeld.erase(keyCode);
 }
 
+bool Controls::anyKeyHeld()
+{
+	if (keyHeld.empty())
+		return false;
+	return true;
+}
+
 void Controls::keyboardInput(float dt_)
 {
 }

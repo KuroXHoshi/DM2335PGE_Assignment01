@@ -17,6 +17,7 @@ public:
 	virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 	virtual bool isKeyHeld(EventKeyboard::KeyCode keyCode);
 	virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+	virtual bool anyKeyHeld();
 	virtual void keyboardInput(float dt_);
 	virtual void onMouseUp(Event*);
 	virtual void mouseInput(float dt_);
