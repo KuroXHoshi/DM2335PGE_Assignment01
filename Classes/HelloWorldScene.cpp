@@ -110,10 +110,10 @@ bool HelloWorld::init()
 	listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-	auto mouseListener = EventListenerMouse::create();
-	mouseListener->onMouseDown = CC_CALLBACK_1(HelloWorld::onMousePressed, this);
+	//auto mouseListener = EventListenerMouse::create();
+	//mouseListener->onMouseDown = CC_CALLBACK_1(HelloWorld::onMousePressed, this);
 	//mouseListener->onMouseUp = CC_CALLBACK_1(HelloWorld::onMouseReleased, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+	//_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
 	this->scheduleUpdate();
 
@@ -145,11 +145,11 @@ bool HelloWorld::init()
 	
 	//Sequence::create(MoveBy)
 
-	weapon = new Weapon();
-	weapon->Set(1, 10, 5, 0, 300, 0);
-	
-	weapon2 = new Weapon();
-	weapon2->Set(1, 10, 5, 0, 100, 0);
+	//weapon = new Weapon();
+	//weapon->Set(1, 10, 5, 0, 300, 0);
+	//
+	//weapon2 = new Weapon();
+	//weapon2->Set(1, 10, 5, 0, 100, 0);
 
 	//auto contactListener = EventListenerPhysicsContact::create();
 	//contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::OnContactBegin, this);
