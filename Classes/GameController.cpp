@@ -145,6 +145,8 @@ void GameController::GenerateWave(double dt)
 			e->physicsBody->setMass(100);
 			e->sprite->setPosition(e->position);
 			e->sprite->setScale(0.5f);
+			e->healthLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 24);
+			scene->addChild(e->healthLabel, 1);
 			++enemyCount;
 			++enemySpawnedCount;
 			spawnTimer = 0;

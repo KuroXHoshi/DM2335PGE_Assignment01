@@ -79,6 +79,7 @@ bool HelloWorld::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetMouseListener(), this);
 
 	GameController::GetInstance()->Init(player);
+	GameController::GetInstance()->scene = (Scene*)this;
 	//add sprites of the bg to the node;
 	for (int i = 0; i < 9; ++i)
 	{
@@ -142,6 +143,11 @@ bool HelloWorld::init()
 	animateMouse = Animate::create(mouseanimation);
 	animateMouse->retain();
 
+	playerHealth = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 24);
+	if (playerHealth != nullptr)
+	{
+		this->addChild(playerHealth, 1);
+	}
 	
 	//Sequence::create(MoveBy)
 
@@ -364,6 +370,8 @@ void HelloWorld::update(float delta)
 	cam->setPosition(player->sprite->getPosition());
 
 	//player->LookAt();
+	playerHealth->setString(std::to_string(player->GetHealth()));
+	playerHealth->setPosition(player->sprite->getPosition().x, player->sprite->getPosition().y - 30);
 
 	GameObjectManager::GetInstance()->PostUpdate();
 }
