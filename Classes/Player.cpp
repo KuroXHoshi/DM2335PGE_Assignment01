@@ -36,6 +36,7 @@ void Player::Update(double dt)
 		sprite->runAction(moveEvent)->setTag(1);
 		
 		//sprite->stopActionByTag(0);
+		if (!sprite->getNumberOfRunningActionsByTag(0))
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_S))
@@ -45,6 +46,7 @@ void Player::Update(double dt)
 		sprite->runAction(moveEvent)->setTag(1);
 
 		//sprite->stopActionByTag(0);
+		if (!sprite->getNumberOfRunningActionsByTag(0))
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_A))
@@ -54,6 +56,7 @@ void Player::Update(double dt)
 		sprite->runAction(moveEvent)->setTag(1);
 
 		//sprite->stopActionByTag(0);
+		if (!sprite->getNumberOfRunningActionsByTag(0))
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_D))
@@ -63,10 +66,14 @@ void Player::Update(double dt)
 		sprite->runAction(moveEvent)->setTag(1);
 
 		//sprite->stopActionByTag(0);
+		if (!sprite->getNumberOfRunningActionsByTag(0))
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
-	if (!anyKeyHeld())
-		sprite->stopActionByTag(0);
+	if (sprite->getNumberOfRunningActionsByTag(0) && !anyKeyHeld())
+	{
+		sprite->stopAllActions();
+		sprite->setTexture("textures/player_1.tga");
+	}
 	physicsBody->onAdd(); // bandaid fix for animation
 }
 

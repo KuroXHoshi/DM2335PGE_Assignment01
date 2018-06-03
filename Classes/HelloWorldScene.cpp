@@ -409,27 +409,30 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 		other = a;
 	}
 
-	if (!proj)
-		return false;
-
-	if (proj->isDead())
-		return false;
-
-	Enemy* enemy = dynamic_cast<Enemy*>(other);
-	if (enemy)
+	if (proj)
 	{
-		enemy->health -= proj->damage;
-		if (enemy->health <= 0)
-			enemy->Destroy();
-	}
-	Player* player = dynamic_cast<Player*>(other);
-	if (player)
-	{
-		player->hitpoint -= proj->damage;
+		if (proj->isDead())
+			return false;
+
+		Enemy* enemy = dynamic_cast<Enemy*>(other);
+		if (enemy)
+		{
+			enemy->health -= proj->damage;
+			if (enemy->health <= 0) {
+				enemy->healthLabel->removeFromParentAndCleanup(true);
+				enemy->Destroy();
+			}
+		}
+		Player* player = dynamic_cast<Player*>(other);
+		if (player)
+		{
+			player->SetHealth(player->GetHealth() - proj->damage);
+		}
+
+		proj->Destroy();
+		return true;
 	}
 
-	proj->Destroy();
 	return true;
-
 }
 
