@@ -1,7 +1,7 @@
 #include "GameController.h"
 
 //requires a reference to the player
-void GameController::Init(Sprite* _player)
+void GameController::Init(Player* _player)
 {
 	player = _player;
 
@@ -38,14 +38,17 @@ void GameController::Init(Sprite* _player)
 void GameController::Update(double dt)
 {
 	//updating the background to follow the player
-	gridX = player->getPosition().x / backgroundWidth;
-	gridY = player->getPosition().y / backgroundWidth;
-	for (int j = 0; j < 3; ++j)
+	if (player->sprite != nullptr)
 	{
-		for (int i = 0; i < 3; ++i)
+		gridX = player->sprite->getPosition().x / backgroundWidth;
+		gridY = player->sprite->getPosition().y / backgroundWidth;
+		for (int j = 0; j < 3; ++j)
 		{
-			int index = j * 3 + i;
-			backgrounds[index]->setPosition((i - 1 + gridX) * backgroundWidth, (j - 1 + gridY) * backgroundWidth);
+			for (int i = 0; i < 3; ++i)
+			{
+				int index = j * 3 + i;
+				backgrounds[index]->setPosition((i - 1 + gridX) * backgroundWidth, (j - 1 + gridY) * backgroundWidth);
+			}
 		}
 	}
 

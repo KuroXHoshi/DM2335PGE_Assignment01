@@ -4,6 +4,8 @@
 #include "cocos2d.h"
 #include "SingletonTemplate.h"
 
+#include "Player.h"
+
 using namespace cocos2d;
 
 //game states
@@ -19,7 +21,7 @@ class GameController : public Singleton<GameController>
 {
 	friend Singleton<GameController>;
 public:
-	void Init(Sprite* _player);
+	void Init(Player* _player);
 	void Update(double dt);
 
 	//gets the array of background sprites
@@ -49,7 +51,7 @@ public:
 	void AddScoreOnBossHit();
 
 private:
-	Sprite* player;
+	Player* player;
 
 	GAME_STATE currState;
 	GAME_STATE prevState;
