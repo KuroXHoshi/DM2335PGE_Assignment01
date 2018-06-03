@@ -3,8 +3,8 @@ USING_NS_CC;
 
 Player::Player()
 {
-	this->SetSprite("Blue_Front1.png", "Player");
-	SetPhysics(true, Vec2(0,0), false);
+	this->SetSprite("textures/player_1.tga", "Player");
+	
 	//auto listener = EventListenerKeyboard::create();
 	//listener->onKeyPressed = CC_CALLBACK_2(Player::onKeyPressed, this);
 	//listener->onKeyReleased = CC_CALLBACK_2(Player::onKeyReleased, this);
@@ -16,9 +16,10 @@ Player::Player()
 	//_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 	//Director::getInstance()->getRunningScene()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, spriteNode);
 
-	auto mouseListener = EventListenerMouse::create();
+	mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseDown = CC_CALLBACK_1(Player::onMousePressed, this);
 	mouseListener->onMouseUp = CC_CALLBACK_1(Player::onMouseReleased, this);
+	mouseListener->onMouseMove = CC_CALLBACK_1(Player::onMouseMove, this);
 	//Director::getInstance()->getRunningScene()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, spriteNode);
 }
 
@@ -26,20 +27,36 @@ void Player::Update(double dt)
 {
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_W))
 	{
-		physicsBody->applyForce(Vec2(0, 100));
+		physicsBody->applyForce(Vec2(0, 10000) * dt);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_S))
 	{
-		physicsBody->applyForce(Vec2(0, -100));
+		physicsBody->applyForce(Vec2(0, -10000) * dt);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_A))
 	{
-		physicsBody->applyForce(Vec2(-100, 0));
+		physicsBody->applyForce(Vec2(-10000, 0) * dt);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_D))
 	{
-		physicsBody->applyForce(Vec2(100, 0));
+		physicsBody->applyForce(Vec2(10000, 0) * dt);
 	}
+	physicsBody->onAdd(); // bandaid fix for animation
+	//if ()
+}
+
+void Player::Start()
+{
+	physicsBody = PhysicsBody::createCircle(sprite->getContentSize().width, PhysicsMaterial(0.0f, 0.0f, 1.f));
+	SetPhysics(true, Vec2(0, 0), false);
+	physicsBody->setVelocityLimit(100);
+	//physicsBody->setRotationOffset(4);
+}
+
+void Player::LookAt(Vec2 target_)
+{
+	//physicsBody->(-90 + atan2(target_.y, target_.x) * 180 / 3.14159265f);
+	sprite->setRotation(-90 + atan2(target_.y,target_.x) * 180 / 3.14159265f);
 }
 
 //void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event * event)
@@ -95,7 +112,18 @@ void Player::onMouseReleased(cocos2d::Event * event_)
 {
 }
 
+void Player::onMouseMove(cocos2d::Event * event_)
+{
+	EventMouse* eventMouse = (EventMouse*)event_;
+	LookAt(eventMouse->getLocation() - Director::getInstance()->getVisibleSize() * 0.5f);
+}
+
 EventListenerKeyboard* Player::GetKbListener()
 {
 	return kbListener;
+}
+
+EventListenerMouse * Player::GetMouseListener()
+{
+	return mouseListener;
 }

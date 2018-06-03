@@ -74,8 +74,9 @@ bool HelloWorld::init()
 	
 	player = new Player();
 	//this->addChild(player->spriteNode);
-	player->sprite->setPosition(0, 0);
+	player->sprite->setPosition(playingSize.width / 2, playingSize.height / 2);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetKbListener(), this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetMouseListener(), this);
 
 	GameController::GetInstance()->Init(player);
 	//add sprites of the bg to the node;
@@ -117,15 +118,15 @@ bool HelloWorld::init()
 	this->scheduleUpdate();
 
 	cocos2d::Vector<SpriteFrame*> animFrames;
-	animFrames.reserve(4);
-	animFrames.pushBack(SpriteFrame::create("Blue_Front2.png", Rect(0, 0, 65, 81)));
-	animFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
-	animFrames.pushBack(SpriteFrame::create("Blue_Front3.png", Rect(0, 0, 65, 81)));
-	animFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
+	animFrames.reserve(2);
+	animFrames.pushBack(SpriteFrame::create("textures/player_2.tga", Rect(0, 0, 39, 43)));
+	animFrames.pushBack(SpriteFrame::create("textures/player_3.tga", Rect(0, 0, 39, 40)));
+	//animFrames.pushBack(SpriteFrame::create("Blue_Front3.png", Rect(0, 0, 65, 81)));
+	//animFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
 
 	Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.5f);
 	animateIdle = Animate::create(animation);
-	animateIdle->retain();
+	animateIdle->retain();	
 	player->SetAnimFrames(animFrames, 0.5f);
 	player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
 	//mainSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
@@ -356,6 +357,8 @@ void HelloWorld::update(float delta)
 	//centering the camera on the player
 	Camera* cam = Camera::getDefaultCamera();
 	cam->setPosition(player->sprite->getPosition());
+
+	//player->LookAt();
 }
 
 //bool HelloWorld::OnContactBegin(PhysicsContact & contact)
