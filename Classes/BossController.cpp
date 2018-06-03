@@ -16,11 +16,13 @@ void BossController::Start()
 	boss = Enemy::Create(Vec2(0, 0), nullptr, 500, 10, 100, TAGENUM::ENEMY);
 	boss->SetSprite("textures/Sheep_idle.tga", "Boss");
 
+	boss->healthLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 24);
+	GameController::GetInstance()->scene->addChild(boss->healthLabel, 1);
 
 	Vec2 spawnPos = GameController::GetInstance()->GenerateSpawnPosition();
 	boss->sprite->setPosition(spawnPos);
 	boss->position = spawnPos;
-	boss->health = 500;
+	boss->health = 200;
 	boss->weap.Set(10, 20, 2, 0, 175, 1, "textures/EnemyBullet_01.tga");
 	boss->sprite->setScale(0.5f);
 	boss->sprite->retain();
@@ -31,6 +33,7 @@ void BossController::Start()
 	boss->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_ENEMY);
 	boss->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_PLAYER + BITMASK_ENUM::BITMASK_PLAYER_BULLET);
 	boss->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_PLAYER + BITMASK_ENUM::BITMASK_PLAYER_BULLET);
+	
 }
 
 void BossController::Update(double dt)

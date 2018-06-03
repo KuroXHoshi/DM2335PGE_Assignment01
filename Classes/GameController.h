@@ -62,10 +62,12 @@ public:
 
 	Scene* scene;
 
+	GAME_STATE currState;
+	int GetEnemyCount() { return enemyCount; }
+	void RemoveOneEnemy() { enemyCount--; }
 private:
 	Player* player;
 
-	GAME_STATE currState;
 	GAME_STATE prevState;
 
 	//value to adjust difficulty of game

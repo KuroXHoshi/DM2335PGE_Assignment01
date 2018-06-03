@@ -112,8 +112,16 @@ void GameController::WaveUpdate(double dt)
 		//spawning of the enemy
 		GenerateWave(dt);
 	}
-	if (enemyCount == 0)
-		spawn = true;
+	else
+	{
+		if (enemyCount == 0)
+		{
+			this->switchStates();
+			spawn = true;
+		}
+	}
+	//if (enemyCount == 0)
+	//	spawn = true;
 }
 
 void GameController::BossUpdate(double dt)

@@ -421,6 +421,10 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 			if (enemy->health <= 0) {
 				enemy->healthLabel->removeFromParentAndCleanup(true);
 				enemy->Destroy();
+				if (GameController::GetInstance()->currState == GAME_STATE::GS_WAVE)
+				{
+					GameController::GetInstance()->RemoveOneEnemy();
+				}
 			}
 		}
 		Player* player = dynamic_cast<Player*>(other);
