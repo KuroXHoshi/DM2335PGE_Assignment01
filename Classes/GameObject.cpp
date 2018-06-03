@@ -8,7 +8,8 @@ USING_NS_CC;
 int GameObject::idCounter = 0;
 
 GameObject::GameObject() : id(idCounter++), position(0, 0), direction(1, 0),
-scale(1, 1), active(true), sprite(nullptr), spriteNode(nullptr), isDone(false)
+scale(1, 1), active(true), sprite(nullptr), spriteNode(nullptr), isDone(false),
+hasStartedUpdate(false)
 {
 	GameObjectManager::GetInstance()->AddGameObject(this);
 }
@@ -26,6 +27,15 @@ GameObject::~GameObject()
 	Scene* currScene = Director::getInstance()->getRunningScene();
 	EventDispatcher* _eventDispatcher = currScene->getEventDispatcher();
 	_eventDispatcher->removeEventListener(contactListener);
+}
+
+void GameObject::Update(double dt)
+{
+
+}
+
+void GameObject::Start()
+{
 }
 
 void GameObject::SetSprite(std::string filename, std::string name)

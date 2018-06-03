@@ -66,10 +66,13 @@ public:
 
 	cocos2d::Vector<SpriteFrame*> animFrames;
 
+	bool hasStartedUpdate;
 public:
 	GameObject();
 	~GameObject();
-	virtual void Update(double dt) {};
+	virtual void Update(double dt);
+	//This is called before first update
+	virtual void Start();
 
 	void SetSprite(std::string filename, std::string nodeName);
 	void SetAnimFrames(Vector<SpriteFrame*> spriteFrameList, float delay);

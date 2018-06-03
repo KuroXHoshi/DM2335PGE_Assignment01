@@ -13,6 +13,12 @@ void GameObjectManager::Update(double dt)
 		if (!entry.second->active)
 			continue;
 
+		if (!entry.second->hasStartedUpdate)
+		{
+			entry.second->Start();
+			entry.second->hasStartedUpdate = true;
+		}
+
 		entry.second->Update(dt);
 	}
 
