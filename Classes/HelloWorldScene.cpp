@@ -11,6 +11,7 @@ Weapon* weapon;
 Weapon* weapon2;
 #include "SceneManager.h"
 #include "GameObjectManager.h"
+#include "GameController.h"
 #include "Projectile.h"
 #include "Functions.h"
 
@@ -55,7 +56,7 @@ bool HelloWorld::init()
 	auto nodeItems = Node::create();
 	nodeItems->setName("nodeItems" + std::to_string(0));
 
-	for (int i = 0; i < numOftiles; ++i)
+	/*for (int i = 0; i < numOftiles; ++i)
 	{
 		sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
 		sprite->setAnchorPoint(Vec2::ZERO);
@@ -63,12 +64,26 @@ bool HelloWorld::init()
 
 		nodeItems->addChild(sprite, 0);
 	}
-	this->addChild(nodeItems, 1);
+	this->addChild(nodeItems, 1);*/
+
+	/*auto bkgrnd = Sprite::create("textures/bg_sky2.tga");
+	sprite->setAnchorPoint(Vec2::ZERO);
+	sprite->setPosition(Vec2::ZERO);
+	nodeItems->addChild(bkgrnd, 0);
+	this->addChild(nodeItems, 1);*/
 	
 	player = new Player();
 	//this->addChild(player->spriteNode);
-	player->sprite->setPosition(0, playingSize.height / 2 + sprite->getContentSize().height);
+	player->sprite->setPosition(0, 0);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetKbListener(), this);
+
+	GameController::GetInstance()->Init(player->sprite);
+	//add sprites of the bg to the node;
+	for (int i = 0; i < 9; ++i)
+	{
+		nodeItems->addChild(GameController::GetInstance()->GetBackgroundSprites()[i], 0);
+	}
+	this->addChild(nodeItems);
 
 	//auto spriteNode = Node::create();
 	//spriteNode->setName("spriteNode");
@@ -336,6 +351,11 @@ void HelloWorld::update(float delta)
 
 	SceneManager::GetInstance()->Update(delta);
 	GameObjectManager::GetInstance()->Update(delta);
+	GameController::GetInstance()->Update(delta);
+
+	//centering the camera on the player
+	Camera* cam = Camera::getDefaultCamera();
+	cam->setPosition(player->sprite->getPosition());
 }
 
 //bool HelloWorld::OnContactBegin(PhysicsContact & contact)
