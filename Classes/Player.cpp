@@ -4,7 +4,10 @@ USING_NS_CC;
 Player::Player()
 {
 	this->SetSprite("textures/player_1.tga", "Player");
-	
+	factionTag = TAGENUM::PLAYER;
+	weapon = new Weapon();
+	health = 1000;
+	weapon->Set(0, 1, 1, 0, 1000, 0);
 	//auto listener = EventListenerKeyboard::create();
 	//listener->onKeyPressed = CC_CALLBACK_2(Player::onKeyPressed, this);
 	//listener->onKeyReleased = CC_CALLBACK_2(Player::onKeyReleased, this);
@@ -27,19 +30,39 @@ void Player::Update(double dt)
 {
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_W))
 	{
-		physicsBody->applyForce(Vec2(0, 10000) * dt);
+		//physicsBody->applyForce(Vec2(0, 10000) * dt);
+		auto moveEvent = MoveBy::create(0.0f, Vec2(0.0f, 100.f) * dt);
+		sprite->runAction(moveEvent)->setTag(1);
+		
+		sprite->stopActionByTag(0);
+		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_S))
 	{
-		physicsBody->applyForce(Vec2(0, -10000) * dt);
+		//physicsBody->applyForce(Vec2(0, -10000) * dt);
+		auto moveEvent = MoveBy::create(0.0f, Vec2(0.0f, -100.f) * dt);
+		sprite->runAction(moveEvent)->setTag(1);
+
+		sprite->stopActionByTag(0);
+		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_A))
 	{
-		physicsBody->applyForce(Vec2(-10000, 0) * dt);
+		//physicsBody->applyForce(Vec2(-10000, 0) * dt);
+		auto moveEvent = MoveBy::create(0.0f, Vec2(-100.0f, 0.f) * dt);
+		sprite->runAction(moveEvent)->setTag(1);
+
+		sprite->stopActionByTag(0);
+		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	if (isKeyHeld(EventKeyboard::KeyCode::KEY_D))
 	{
-		physicsBody->applyForce(Vec2(10000, 0) * dt);
+		//physicsBody->applyForce(Vec2(10000, 0) * dt);
+		auto moveEvent = MoveBy::create(0.0f, Vec2(100.0f, 0.f) * dt);
+		sprite->runAction(moveEvent)->setTag(1);
+
+		sprite->stopActionByTag(0);
+		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
 	physicsBody->onAdd(); // bandaid fix for animation
 	//if ()
@@ -50,7 +73,8 @@ void Player::Start()
 	physicsBody = PhysicsBody::createCircle(sprite->getContentSize().width, PhysicsMaterial(0.0f, 0.0f, 1.f));
 	SetPhysics(true, Vec2(0, 0), false);
 	physicsBody->setVelocityLimit(100);
-	//physicsBody->setRotationOffset(4);
+	physicsBody->setRotationEnable(false);
+	
 }
 
 void Player::LookAt(Vec2 target_)
@@ -106,10 +130,43 @@ void Player::LookAt(Vec2 target_)
 
 void Player::onMousePressed(cocos2d::Event * event_)
 {
+	EventMouse* e = (EventMouse*)event_;
+	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
+	{
+		//aka screem size
+		auto visibleSize = Director::getInstance()->getVisibleSize();
+
+		
+		weapon->direction.set(e->getCursorX() - weapon->position.x, e->getCursorY() - weapon->position.y);
+		weapon->direction.normalize();
+		weapon->position.set(sprite->getPosition() + weapon->direction * 80);
+		weapon->Discharge();
+	}
 }
 
 void Player::onMouseReleased(cocos2d::Event * event_)
 {
+	EventMouse* e = (EventMouse*)event_;
+	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
+	{
+		/*auto curSprite = this->getChildByName("spriteNode")->getChildByName("mainSprite");
+		curSprite->stopActionByTag(1);
+		int displacement = e->getCursorX() - curSprite->getPositionX();
+
+		auto moveEvent = MoveBy::create(abs(displacement) / 300.0f, Vec2(displacement, 0));
+
+		auto callbackStop = CallFunc::create([curSprite]() {
+			curSprite->stopAllActions();
+			curSprite->runAction(RepeatForever::create(animateIdle))->setTag(0);
+		});
+
+		auto seq = Sequence::create(moveEvent, callbackStop, nullptr);
+
+		curSprite->runAction(seq)->setTag(1);
+
+		curSprite->stopActionByTag(0);
+		curSprite->runAction(RepeatForever::create(animateMouse))->setTag(0);*/
+	}
 }
 
 void Player::onMouseMove(cocos2d::Event * event_)

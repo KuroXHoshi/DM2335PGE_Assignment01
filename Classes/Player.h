@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "GameObject.h"
 #include "Controls.h"
+#include "Weapon.h"
 
 class Player : public CharacterBase, public GameObject, public Controls
 {
@@ -10,6 +11,9 @@ private:
 	EventListenerKeyboard* kbListener;
 	EventListenerMouse* mouseListener;
 	//Controls controls;
+	Weapon* weapon;
+	TAGENUM factionTag;
+	int health;
 public:
 	Player();
 	void Update(double dt);
