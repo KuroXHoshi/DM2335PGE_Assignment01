@@ -143,6 +143,9 @@ void GameController::GenerateWave(double dt)
 			e->SetSprite("textures/Enemy_Oce_Side.tga", "enemy");
 			e->SetPhysics(true, Vec2::ZERO, false);
 			e->physicsBody->setMass(100);
+			e->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_ENEMY_BULLET);
+			e->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_PLAYER);
+			e->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_PLAYER);
 			e->sprite->setPosition(e->position);
 			e->sprite->setScale(0.5f);
 			e->healthLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 24);

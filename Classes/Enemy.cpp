@@ -24,6 +24,9 @@ void Enemy::Update(double dt)
 	sprite->setRotation(-90 + atan2(dir.x, dir.y) * 180 / 3.14159265f);
 	healthLabel->setString(std::to_string(health));
 	healthLabel->setPosition(sprite->getPosition().x, sprite->getPosition().y - 50);
+	weap.position = sprite->getPosition();
+	weap.direction = dir;
+	weap.Discharge();
 }
 
 Enemy * Enemy::Create(cocos2d::Vec2 pos, Player* player, int health, int damage, float speed, int factionTag)
@@ -35,6 +38,7 @@ Enemy * Enemy::Create(cocos2d::Vec2 pos, Player* player, int health, int damage,
 	enemy->position = pos;
 	enemy->damage = damage;
 	enemy->speed = speed;
+	enemy->weap.Set(1, 2, 1, 0, 1000, 2, "textures/EnemyBullet_01.tga");
 
 	return enemy;
 }
