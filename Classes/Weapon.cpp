@@ -46,6 +46,7 @@ void Weapon::Discharge()
 
 	Projectile* proj = Projectile::Create(position, direction, this->GetDamage(), this->bulletSpeed, 1000, this->factionTag);
 
+	proj->SetSprite(bulletTexture, "bullet");
 	//PhysicsManager::GetInstance()->add_object(temp_proj, temp_proj->get_physics_component());
 	//CollisionManager::GetInstance()->add_collider(temp_proj->get_collider_component());
 	//RenderManager::GetInstance()->attach_renderable(temp_proj, 1);
@@ -55,7 +56,7 @@ void Weapon::Discharge()
 	attackspeed_timer = 0.0;
 }
 
-void Weapon::Set(int min_dmg, int max_dmg, double attacks_per_sec, int bulletType, float bulletSpeed, int factionSide)
+void Weapon::Set(int min_dmg, int max_dmg, double attacks_per_sec, int bulletType, float bulletSpeed, int factionSide, std::string bulletsprite)
 {
 	defaultMinDmg = min_dmg;
 	defaultMaxDmg = max_dmg;
@@ -69,4 +70,6 @@ void Weapon::Set(int min_dmg, int max_dmg, double attacks_per_sec, int bulletTyp
 	this->factionTag = factionSide;
 
 	this->isSet = true;
+
+	this->bulletTexture = bulletsprite;
 }

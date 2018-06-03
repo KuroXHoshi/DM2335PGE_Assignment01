@@ -20,7 +20,7 @@ void Projectile::Update(double dt)
 
 void Projectile::Start()
 {
-	this->SetSprite("Blue_Front1.png", "proj");
+	//this->SetSprite("Blue_Front1.png", "proj");
 	this->SetPhysics(true, direction * speed, false);
 }
 
