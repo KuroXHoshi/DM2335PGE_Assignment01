@@ -74,7 +74,6 @@ void GameController::Update(double dt)
 		if (transitionTimer > transitionTime)
 		{
 			transitionTimer = 0;
-			prevState = currState;
 			switch (prevState)
 			{
 			case GS_WAVE:
@@ -84,6 +83,7 @@ void GameController::Update(double dt)
 				currState = GS_WAVE;
 				break;
 			}
+			prevState = currState;
 		}
 		break;
 	default:
@@ -142,6 +142,7 @@ void GameController::GenerateWave(double dt)
 			Enemy* e = Enemy::Create(GenerateSpawnPosition(), player, 1, 5, 75, 2);
 			e->SetSprite("textures/Enemy_Oce_Side.tga", "enemy");
 			e->SetPhysics(true, Vec2::ZERO, false);
+			e->physicsBody->setMass(100);
 			e->sprite->setPosition(e->position);
 			e->sprite->setScale(0.5f);
 			++enemyCount;

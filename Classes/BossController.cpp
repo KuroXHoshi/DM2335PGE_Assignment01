@@ -23,6 +23,7 @@ void BossController::Start()
 	boss->health = 500;
 	boss->weap.Set(10, 20, 2, 0, 175, 1, "textures/EnemyBullet_01.tga");
 	boss->sprite->setScale(0.5f);
+	boss->sprite->retain();
 	hasStarted = true;
 	boss->active = true;
 	boss->player = player;

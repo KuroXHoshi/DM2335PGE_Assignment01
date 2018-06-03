@@ -151,9 +151,9 @@ bool HelloWorld::init()
 	//weapon2 = new Weapon();
 	//weapon2->Set(1, 10, 5, 0, 100, 0);
 
-	//auto contactListener = EventListenerPhysicsContact::create();
-	//contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::OnContactBegin, this);
-	//_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+	auto contactListener = EventListenerPhysicsContact::create();
+	contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::OnContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -368,26 +368,40 @@ void HelloWorld::update(float delta)
 	GameObjectManager::GetInstance()->PostUpdate();
 }
 
-//bool HelloWorld::OnContactBegin(PhysicsContact & contact)
-//{
-//	
-//	PhysicsShape* shapeA = contact.getShapeA();
-//	PhysicsShape* shapeB = contact.getShapeB();
-//
-//	void* userDataA = shapeA->getBody()->getNode()->getUserData();
-//	void* userDataB = shapeB->getBody()->getNode()->getUserData();
-//	Projectile* proj = GetData<Projectile*>(userDataA, userDataB);
-//
-//	if (!proj)
-//		return false;
-//
-//	if (proj->isDead())
-//		return false;
-//
-//
-//	proj->Destroy();
-//	return true;
-//
-//	return false;
-//}
+bool HelloWorld::OnContactBegin(PhysicsContact & contact)
+{
+	
+	PhysicsShape* shapeA = contact.getShapeA();
+	PhysicsShape* shapeB = contact.getShapeB();
+
+	//void* userDataA = shapeA->getBody()->getNode()->getUserData();
+	//void* userDataB = shapeB->getBody()->getNode()->getUserData();
+	////Projectile* proj = GetData<Projectile*>(userDataA, userDataB);
+	//Projectile* a = reinterpret_cast<Projectile*>(userDataA);
+	//Projectile* b = reinterpret_cast<Projectile*>(userDataB);
+
+
+	GameObject* a = GameObjectManager::GetInstance()->GetGameObject(shapeA->getBody()->getTag());
+	GameObject* b = GameObjectManager::GetInstance()->GetGameObject(shapeB->getBody()->getTag());
+	Projectile* projA = dynamic_cast<Projectile*>(a);
+	Projectile* projB = dynamic_cast<Projectile*>(b);
+
+	Projectile* proj = nullptr;
+	if (projA)
+		proj = projA;
+	else if (projB)
+		proj = projB;
+
+	if (!proj)
+		return false;
+
+	if (proj->isDead())
+		return false;
+
+
+	proj->Destroy();
+	return true;
+
+	return false;
+}
 
