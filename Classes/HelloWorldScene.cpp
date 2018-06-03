@@ -78,7 +78,7 @@ bool HelloWorld::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetKbListener(), this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetMouseListener(), this);
 
-	GameController::GetInstance()->Init(player->sprite);
+	GameController::GetInstance()->Init(player);
 	//add sprites of the bg to the node;
 	for (int i = 0; i < 9; ++i)
 	{
