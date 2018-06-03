@@ -102,7 +102,19 @@ std::vector<std::string> LoadScene::GetFilePaths()
 
 	//check if the directory existsS
 	if ((hFile = _findfirst("..\\Resources\\textures/*", &c_file)) == -1L)
+	{
 		printf("no file found");
+		if ((hFile = _findfirst("..\\..\\Resources\\textures/*", &c_file)) == -1L)
+		{
+
+		}
+		else
+		{
+			do {
+				filepaths.push_back(c_file.name);
+			} while (_findnext(hFile, &c_file) == 0);
+		}
+	}
 	else
 	{
 		do {
