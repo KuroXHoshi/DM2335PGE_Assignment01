@@ -46,7 +46,7 @@ void GameObjectManager::PostUpdate()
 	//Delete them objs
 	for each (GameObject* go in delList)
 	{
-		delete go;
+		go->sprite->removeFromParentAndCleanup(true);
 	}
 
 	if (!delList.empty())
