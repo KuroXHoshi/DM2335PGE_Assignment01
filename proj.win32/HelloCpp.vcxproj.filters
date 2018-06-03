@@ -36,7 +36,6 @@
     <ClCompile Include="..\Classes\Projectile.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\SceneManager.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -53,6 +52,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Enemy.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SceneManager.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>

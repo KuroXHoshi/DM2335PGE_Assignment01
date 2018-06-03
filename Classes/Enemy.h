@@ -7,7 +7,7 @@
 
 class Enemy : public GameObject
 {
-	cocos2d::Size VisibleSize;
+	//cocos2d::Size VisibleSize;
 	Player* player;
 	TAGENUM factionTag;
 	int health;
@@ -16,11 +16,13 @@ class Enemy : public GameObject
 	Weapon weap;
 
 	Enemy();
-	~Enemy();
+	//~Enemy();
 
 public:
 	virtual void Start();
 	virtual void Update(double dt);
 
-	static Enemy* Create(cocos2d::Vec2 pos, Player* player, int damage, float speed, int factionTag);
+	static Enemy* Create(cocos2d::Vec2 pos, Player* player, int health, int damage, float speed, int factionTag);
+
+	//bool OnContactBegin(cocos2d::PhysicsContact& contact);
 };
