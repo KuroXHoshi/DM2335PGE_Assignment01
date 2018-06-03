@@ -78,12 +78,12 @@ void GameObject::SetPhysics(bool isDynamic, cocos2d::Vec2 velocity, bool isGravi
 	physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_PLAYER_BULLET);
 	physicsBody->setTag(TAGENUM::BULLET);
 
-	Scene* currScene = Director::getInstance()->getRunningScene();
-	EventDispatcher* _eventDispatcher = currScene->getEventDispatcher();
+	//Scene* currScene = Director::getInstance()->getRunningScene();
+	//EventDispatcher* _eventDispatcher = currScene->getEventDispatcher();
 
-	contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(GameObject::OnContactBegin, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, currScene);
+	//contactListener = EventListenerPhysicsContact::create();
+	//contactListener->onContactBegin = CC_CALLBACK_1(GameObject::OnContactBegin, this);
+	//_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, currScene);
 	
 	//physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_PLAYER_BULLET);
 	
