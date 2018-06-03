@@ -21,7 +21,7 @@ void Projectile::Update(double dt)
 void Projectile::Start()
 {
 	//this->SetSprite("Blue_Front1.png", "proj");
-	this->SetPhysics(true, direction * speed, false);
+	//this->SetPhysics(true, direction * speed, false);
 }
 
 Projectile * Projectile::Create(cocos2d::Vec2 pos, cocos2d::Vec2 dir, int damage, float speed, int range, int factionTag)
@@ -34,7 +34,7 @@ Projectile * Projectile::Create(cocos2d::Vec2 pos, cocos2d::Vec2 dir, int damage
 	proj->range = range;
 	proj->factionTag = factionTag;
 
-
+	
 
 	return proj;
 }

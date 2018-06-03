@@ -47,6 +47,7 @@ void GameObjectManager::PostUpdate()
 	for each (GameObject* go in delList)
 	{
 		delete go;
+		go = nullptr;
 	}
 
 	if (!delList.empty())

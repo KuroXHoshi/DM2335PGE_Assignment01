@@ -13,7 +13,7 @@ BossController::~BossController()
 
 void BossController::Start()
 {
-	boss = Enemy::Create(Vec2(0, 0), nullptr, 10, 50, TAGENUM::ENEMY);
+	boss = Enemy::Create(Vec2(0, 0), nullptr, 500, 10, 50, TAGENUM::ENEMY);
 	boss->SetSprite("textures/Sheep_idle.tga", "Boss");
 
 
@@ -21,12 +21,15 @@ void BossController::Start()
 	boss->sprite->setPosition(spawnPos);
 	boss->position = spawnPos;
 	boss->health = 500;
-	boss->weap.Set(10, 20, 2, 0, 175, 1);
+	boss->weap.Set(10, 20, 2, 0, 175, 1, "textures/EnemyBullet_01.tga");
 	boss->sprite->setScale(0.5f);
 	hasStarted = true;
 	boss->active = true;
 	boss->player = player;
 	boss->SetPhysics(true, Vec2(0, 0), false);
+	boss->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_ENEMY);
+	boss->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_PLAYER + BITMASK_ENUM::BITMASK_PLAYER_BULLET);
+	boss->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_PLAYER + BITMASK_ENUM::BITMASK_PLAYER_BULLET);
 }
 
 void BossController::Update(double dt)

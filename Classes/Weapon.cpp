@@ -47,9 +47,21 @@ void Weapon::Discharge()
 	Projectile* proj = Projectile::Create(position, direction, this->GetDamage(), this->bulletSpeed, 1000, this->factionTag);
 
 	proj->SetSprite(bulletTexture, "bullet");
-	//PhysicsManager::GetInstance()->add_object(temp_proj, temp_proj->get_physics_component());
-	//CollisionManager::GetInstance()->add_collider(temp_proj->get_collider_component());
-	//RenderManager::GetInstance()->attach_renderable(temp_proj, 1);
+	proj->SetPhysics(true, proj->direction * proj->speed, false);
+	proj->sprite->setPosition(proj->position);
+	if (factionTag == 0)
+	{
+		proj->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_PLAYER_BULLET);
+		proj->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_ENEMY);
+		proj->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_ENEMY);
+	}
+	else {
+		proj->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_ENEMY_BULLET);
+		proj->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_PLAYER);
+		proj->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_PLAYER);
+	}
+
+	proj->physicsBody->setTag(TAGENUM::BULLET);
 
 	//AudioPlayer::GetInstance()->PlaySound2D("PewPew", 0.2);
 	//must reset timer

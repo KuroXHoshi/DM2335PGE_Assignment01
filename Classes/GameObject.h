@@ -25,7 +25,9 @@ enum TAGENUM
 {
 	PLAYER = 0,
 	BULLET,
-	ENEMY
+	ENEMY,
+
+	NONE
 };
 
 class GameObject
