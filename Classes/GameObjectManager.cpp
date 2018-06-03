@@ -22,7 +22,7 @@ void GameObjectManager::Update(double dt)
 		entry.second->Update(dt);
 	}
 
-	//PostUpdate();
+	PostUpdate();
 }
 
 void GameObjectManager::PostUpdate()
@@ -46,8 +46,7 @@ void GameObjectManager::PostUpdate()
 	//Delete them objs
 	for each (GameObject* go in delList)
 	{
-		delete go;
-		go = nullptr;
+		go->sprite->removeFromParentAndCleanup(true);
 	}
 
 	if (!delList.empty())
