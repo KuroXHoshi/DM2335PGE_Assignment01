@@ -1,4 +1,5 @@
 #include "GameController.h"
+#include "Enemy.h"
 
 //requires a reference to the player
 void GameController::Init(Player* _player)
@@ -9,9 +10,13 @@ void GameController::Init(Player* _player)
 	prevState = GS_TRANSITION;
 	sequences = 0;
 	waveCount = 0;
-	waveMax = 5;
+	spawnRate = 2.f;
+	spawnTimer = 0.f;
+	spawn = true;
+	distance = 500.f;
 	transitionTime = 1.f;
 	transitionTimer = 0.f;
+	waveMax = 5;
 
 	score = 0;
 	scoreMultiplier = 1.f;
@@ -56,11 +61,10 @@ void GameController::Update(double dt)
 	switch (currState)
 	{
 	case GS_WAVE:
-		if (waveCount > waveMax)
-			switchStates();
+		WaveUpdate(dt);
 		break;
 	case GS_BOSS:
-
+		BossUpdate(dt);
 		break;
 	case GS_TRANSITION:
 		transitionTimer += dt;
@@ -98,11 +102,63 @@ void GameController::switchStates()
 	currState = GS_TRANSITION;
 }
 
+void GameController::WaveUpdate(double dt)
+{
+	if (spawn)
+	{
+		//spawning of the enemy
+		GenerateWave(dt);
+	}
+	if (enemyCount == 0)
+		spawn = true;
+}
+
+void GameController::BossUpdate(double dt)
+{
+}
+
+Vec2 GameController::GenerateSpawnPosition()
+{
+	Vec2 dir;
+	dir.x = RandomHelper::random_real(-1.f, 1.f);
+	dir.y = RandomHelper::random_real(-1.f, 1.f);
+	dir.normalize();
+	return player->sprite->getPosition() + dir * distance;
+}
+
+void GameController::GenerateWave(double dt)
+{
+	static int enemySpawnedCount = 0;
+	static int enemyMaxSpawn = 5;
+	if (enemySpawnedCount <= enemyMaxSpawn)
+	{
+		spawnTimer += dt;
+		if (spawnTimer > spawnRate)
+		{
+			Enemy* e = Enemy::Create(GenerateSpawnPosition(), player, 5, 100, 2);
+			e->SetSprite("textures/Enemy_Oce_Side.tga", "enemy");
+			e->SetPhysics(true, Vec2::ZERO, false);
+			e->sprite->setPosition(e->position);
+			++enemyCount;
+			++enemySpawnedCount;
+			spawnTimer = 0;
+		}
+	}
+	else 
+	{
+		spawn = false;
+		enemySpawnedCount = 0;
+		++enemyMaxSpawn;
+	}
+}
+
 void GameController::AddScoreOnEnemyKilled()
 {
 	//need to know what enemy player killed to add score, for now value is fixed
 	int enemyScore = 100;
 	score += enemyScore * scoreMultiplier;
+	//decrease the enemy count
+	enemyScore -= 1;
 }
 
 void GameController::AddMultiplierOnEnemyHit()

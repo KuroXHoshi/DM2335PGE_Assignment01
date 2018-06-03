@@ -26,13 +26,23 @@ public:
 
 	//gets the array of background sprites
 	inline Sprite** GetBackgroundSprites() { return backgrounds; }
+	//gets the score
+	inline int GetScore() { return score; }
+	//gets the score multiplier
+	inline int GetMultiplier() { return scoreMultiplier; }
 
 	//change game state to another state
 	void switchStates();
+	//update loop for wave state
+	void WaveUpdate(double dt);
+	//update loop for boss state
+	void BossUpdate(double dt);
 
 	//wave related functions
+	//generate a random position out of screen
+	Vec2 GenerateSpawnPosition();
 	//generate a wave based on difficulty and wave count
-	//void GenerateWave();
+	void GenerateWave(double dt);
 	//call this function when cleared a wave
 	//void ClearWave();
 
@@ -60,10 +70,19 @@ private:
 	int difficulty;
 	//how many sequences the player cleared
 	int sequences;
+	//number of enemy in the field
+	int enemyCount;
 	//number of waves atm
 	int waveCount;
 	//how many waves there can be
 	int waveMax;
+	//spawn rate of the enemies
+	float spawnRate;
+	float spawnTimer;
+	//bool to manage when to spawn enemies
+	bool spawn;
+	//distance from player to spawn an enemy
+	float distance;
 	//timer for how long the transition will last
 	float transitionTime;
 	float transitionTimer;
