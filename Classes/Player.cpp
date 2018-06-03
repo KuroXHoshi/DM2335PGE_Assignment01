@@ -87,6 +87,8 @@ void Player::Start()
 	this->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_PLAYER);
 	this->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_ENEMY + BITMASK_ENUM::BITMASK_ENEMY_BULLET);
 	this->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_ENEMY + BITMASK_ENUM::BITMASK_ENEMY_BULLET);
+	
+	this->physicsBody->setMass(10.0f);
 }
 
 void Player::LookAt(Vec2 target_)

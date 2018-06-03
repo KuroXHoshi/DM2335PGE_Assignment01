@@ -24,9 +24,9 @@ GameObject::~GameObject()
 	//spriteNode->release();
 	//animFrames.clear();
 
-	Scene* currScene = Director::getInstance()->getRunningScene();
-	EventDispatcher* _eventDispatcher = currScene->getEventDispatcher();
-	_eventDispatcher->removeEventListener(contactListener);
+	//Scene* currScene = Director::getInstance()->getRunningScene();
+	//EventDispatcher* _eventDispatcher = currScene->getEventDispatcher();
+	//_eventDispatcher->removeEventListener(contactListener);
 }
 
 void GameObject::Update(double dt)
@@ -77,14 +77,14 @@ void GameObject::SetPhysics(bool isDynamic, cocos2d::Vec2 velocity, bool isGravi
 	physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_EVERYTHING);
 	physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_EVERYTHING);
 	physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_EVERYTHING);
-	physicsBody->setTag(TAGENUM::NONE);
+	physicsBody->setTag(id);
 
-	Scene* currScene = Director::getInstance()->getRunningScene();
-	EventDispatcher* _eventDispatcher = currScene->getEventDispatcher();
+	//Scene* currScene = Director::getInstance()->getRunningScene();
+	//EventDispatcher* _eventDispatcher = currScene->getEventDispatcher();
 
-	contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(GameObject::OnContactBegin, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, currScene);
+	//contactListener = EventListenerPhysicsContact::create();
+	//contactListener->onContactBegin = CC_CALLBACK_1(GameObject::OnContactBegin, this);
+	//_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, currScene);
 	
 	
 	
