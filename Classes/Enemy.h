@@ -16,6 +16,8 @@ public:
 	float speed;
 	Weapon weap;
 
+	Label* healthLabel;
+
 	Enemy();
 	//~Enemy();
 

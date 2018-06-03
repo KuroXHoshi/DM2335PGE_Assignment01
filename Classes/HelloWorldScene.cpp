@@ -14,6 +14,7 @@ Weapon* weapon2;
 #include "GameController.h"
 #include "Projectile.h"
 #include "Functions.h"
+#include "Enemy.h"
 
 Scene* HelloWorld::createScene()
 {
@@ -42,6 +43,7 @@ bool HelloWorld::init()
         return false;
     }
 
+	srand(0);
 	//HelloWorld::createWithPhysics();
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -79,6 +81,7 @@ bool HelloWorld::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetMouseListener(), this);
 
 	GameController::GetInstance()->Init(player);
+	GameController::GetInstance()->scene = (Scene*)this;
 	//add sprites of the bg to the node;
 	for (int i = 0; i < 9; ++i)
 	{
@@ -142,6 +145,11 @@ bool HelloWorld::init()
 	animateMouse = Animate::create(mouseanimation);
 	animateMouse->retain();
 
+	playerHealth = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 24);
+	if (playerHealth != nullptr)
+	{
+		this->addChild(playerHealth, 1);
+	}
 	
 	//Sequence::create(MoveBy)
 
@@ -364,6 +372,8 @@ void HelloWorld::update(float delta)
 	cam->setPosition(player->sprite->getPosition());
 
 	//player->LookAt();
+	playerHealth->setString(std::to_string(player->GetHealth()));
+	playerHealth->setPosition(player->sprite->getPosition().x, player->sprite->getPosition().y - 30);
 
 	GameObjectManager::GetInstance()->PostUpdate();
 }
@@ -387,10 +397,17 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 	Projectile* projB = dynamic_cast<Projectile*>(b);
 
 	Projectile* proj = nullptr;
+	GameObject* other = nullptr;
 	if (projA)
+	{
 		proj = projA;
+		other = b;
+	}
 	else if (projB)
+	{
 		proj = projB;
+		other = a;
+	}
 
 	if (!proj)
 		return false;
@@ -398,10 +415,21 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 	if (proj->isDead())
 		return false;
 
+	Enemy* enemy = dynamic_cast<Enemy*>(other);
+	if (enemy)
+	{
+		enemy->health -= proj->damage;
+		if (enemy->health <= 0)
+			enemy->Destroy();
+	}
+	Player* player = dynamic_cast<Player*>(other);
+	if (player)
+	{
+		player->hitpoint -= proj->damage;
+	}
 
 	proj->Destroy();
 	return true;
 
-	return false;
 }
 

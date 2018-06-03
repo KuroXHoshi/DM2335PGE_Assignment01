@@ -11,7 +11,6 @@ public:
 	float speed;
 	int range;
 	int factionTag;
-
 	virtual void Update(double dt);
 	virtual void Start();
 
