@@ -2,7 +2,6 @@
 #include "SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
 
-#include <io.h>
 #include <string>
 
 USING_NS_CC;
@@ -49,7 +48,6 @@ bool LoadScene::init()
 	index = 0;
 	Director::getInstance()->getTextureCache()->addImageAsync(filepaths[index], CC_CALLBACK_1(LoadScene::LoadTexture, this));
 
-	scheduleUpdate();
 	return true;
 }
 
