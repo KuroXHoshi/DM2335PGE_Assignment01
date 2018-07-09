@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
 
@@ -12,6 +13,7 @@ class HelloWorld : public cocos2d::Layer
 	std::vector<GameObject*> gameObjList;
 	Player* player;
 	Label* playerHealth;
+	CocosDenshion::SimpleAudioEngine *audio;
 public:
     static cocos2d::Scene* createScene();
 

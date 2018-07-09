@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Controls.h"
 #include "Weapon.h"
+#include "SimpleAudioEngine.h"
 
 class Player : public CharacterBase, public GameObject, public Controls
 {
@@ -14,6 +15,7 @@ private:
 	Weapon* weapon;
 	TAGENUM factionTag;
 	int health;
+	CocosDenshion::SimpleAudioEngine *audio;
 public:
 	Player();
 	void Update(double dt);

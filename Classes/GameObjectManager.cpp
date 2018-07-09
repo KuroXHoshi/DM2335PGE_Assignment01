@@ -7,19 +7,19 @@ GameObjectManager::GameObjectManager()
 
 void GameObjectManager::Update(double dt)
 {
-	for each (auto entry in gameObjectMap)
+    for (std::map<int, GameObject*>::iterator entry = gameObjectMap.begin(); entry!= gameObjectMap.end(); ++entry)
 	{
 		//If game object is inactive, skip
-		if (entry.second->isDead())
+		if (entry->second->isDead())
 			continue;
 
-		if (!entry.second->hasStartedUpdate)
+		if (!entry->second->hasStartedUpdate)
 		{
-			entry.second->Start();
-			entry.second->hasStartedUpdate = true;
+			entry->second->Start();
+			entry->second->hasStartedUpdate = true;
 		}
 
-		entry.second->Update(dt);
+		entry->second->Update(dt);
 	}
 
 	PostUpdate();
@@ -44,9 +44,12 @@ void GameObjectManager::PostUpdate()
 	}
 
 	//Delete them objs
-	for each (GameObject* go in delList)
+    for (int i = 0; i < delList.size(); ++i)
+        //GameObject* go in delList)
 	{
+        GameObject* go = delList[i];
 		go->sprite->removeFromParentAndCleanup(true);
+		//delete go;
 	}
 
 	if (!delList.empty())

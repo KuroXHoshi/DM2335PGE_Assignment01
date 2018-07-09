@@ -3,7 +3,7 @@ USING_NS_CC;
 
 Player::Player()
 {
-	
+	audio = CocosDenshion::SimpleAudioEngine::getInstance();
 	factionTag = TAGENUM::PLAYER;
 	weapon = new Weapon();
 	health = 1000;
@@ -69,13 +69,13 @@ void Player::Update(double dt)
 		if (!sprite->getNumberOfRunningActionsByTag(0))
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
-	if (sprite->getNumberOfRunningActionsByTag(0) && !anyKeyHeld())
+	if (sprite->getNumberOfRunningActionsByTag(0) && !anyKeyHeld() && sprite->getName() == "Playersprite")
 	{
 		sprite->stopAllActions();
 		sprite->setTexture("textures/player_1.tga");
 	}
-	physicsBody->onAdd(); // bandaid fix for animation
-	physicsBody->setVelocity(Vec2::ZERO);
+	//physicsBody->onAdd(); // bandaid fix for animation
+	//physicsBody->setVelocity(Vec2::ZERO);
 }
 
 void Player::Start()
@@ -89,7 +89,7 @@ void Player::Start()
 
 	weapon->Set(15, 22, 1, 0, 1000, 0, "textures/Protagonist_Bullet.tga");
 	physicsBody = PhysicsBody::createCircle(sprite->getContentSize().width, PhysicsMaterial(0.0f, 0.0f, 1.f));
-	SetPhysics(true, Vec2(0, 0), false);
+	SetPhysics(false, Vec2(0, 0), false);
 	physicsBody->setVelocityLimit(100);
 	//physicsBody->setRotationOffset(4);
 	physicsBody->setRotationEnable(false);
@@ -97,13 +97,16 @@ void Player::Start()
 	this->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_ENEMY + BITMASK_ENUM::BITMASK_ENEMY_BULLET);
 	this->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_ENEMY + BITMASK_ENUM::BITMASK_ENEMY_BULLET);
 	
-	this->physicsBody->setMass(1000.0f);
+	//this->physicsBody->setMass(1000.0f);
 }
 
 void Player::LookAt(Vec2 target_)
 {
-	//physicsBody->(-90 + atan2(target_.y, target_.x) * 180 / 3.14159265f);
+	//physicsBody->()
+	if (!sprite)
+		return;
 	sprite->setRotation(-90 + atan2(target_.y,target_.x) * 180 / 3.14159265f);
+	//physicsBody->setRotationOffset(sprite->getRotation());
 }
 
 //void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event * event)
@@ -156,6 +159,7 @@ void Player::onMousePressed(cocos2d::Event * event_)
 	EventMouse* e = (EventMouse*)event_;
 	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
 	{
+		audio->playEffect("sounds/shoot.mp3");
 		//aka screem size
 		auto visibleSize = Director::getInstance()->getVisibleSize();
 

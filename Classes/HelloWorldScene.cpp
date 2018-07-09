@@ -77,6 +77,7 @@ bool HelloWorld::init()
 	player = new Player();
 	//this->addChild(player->spriteNode);
 	//player->sprite->setPosition(playingSize.width / 2, playingSize.height / 2);
+	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetKbListener(), this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetMouseListener(), this);
 
@@ -226,6 +227,11 @@ bool HelloWorld::init()
     //    // add the sprite as a child to this layer
     //    this->addChild(sprite, 0);
     //}
+
+	audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->preloadBackgroundMusic("sounds/bgm.mp3");
+	audio->playBackgroundMusic("sounds/bgm.mp3", true);
+	audio->preloadEffect("sounds/shoot.mp3");
     return true;
 }
 

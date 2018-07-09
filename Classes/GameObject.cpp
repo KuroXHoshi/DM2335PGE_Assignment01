@@ -51,7 +51,6 @@ void GameObject::SetSprite(std::string filename, std::string name)
 	sprite->retain();
 
 	spriteNode->addChild(sprite, 1);
-
 	// Send sprite node to scene
 	SceneManager::GetInstance()->AddNodeToCurrentScene(spriteNode);
 }
