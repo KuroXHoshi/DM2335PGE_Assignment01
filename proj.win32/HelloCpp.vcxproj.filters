@@ -113,6 +113,9 @@
     <ClInclude Include="..\Classes\BossController.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\AndroidCompile.h">
+      <Filter>src\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

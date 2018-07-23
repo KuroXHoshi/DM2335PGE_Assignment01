@@ -15,6 +15,7 @@ Weapon* weapon2;
 #include "Projectile.h"
 #include "Functions.h"
 #include "Enemy.h"
+#include "AndroidCompile.h"
 
 Scene* HelloWorld::createScene()
 {
@@ -56,7 +57,7 @@ bool HelloWorld::init()
 	int numOftiles = playingSize.width / x;
 
 	auto nodeItems = Node::create();
-	nodeItems->setName("nodeItems" + std::to_string(0));
+	nodeItems->setName("nodeItems" + to_string(0));
 
 	/*for (int i = 0; i < numOftiles; ++i)
 	{
@@ -378,7 +379,7 @@ void HelloWorld::update(float delta)
 	cam->setPosition(player->sprite->getPosition());
 
 	//player->LookAt();
-	playerHealth->setString(std::to_string(player->GetHealth()));
+	playerHealth->setString(to_string(player->GetHealth()));
 	playerHealth->setPosition(player->sprite->getPosition().x, player->sprite->getPosition().y - 30);
 
 	GameObjectManager::GetInstance()->PostUpdate();
