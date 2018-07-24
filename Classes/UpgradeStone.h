@@ -1,7 +1,11 @@
 #ifndef UPGRADE_STONE_H
 #define UPGRADE_STONE_H
 
-class UpgradeStone
+#include "ui\UIButton.h"
+
+using namespace cocos2d::ui;
+
+class UpgradeStone : public Button
 {
 public:
 	enum UPGRADE_TYPE

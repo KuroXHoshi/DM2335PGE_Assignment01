@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "SimpleAudioEngine.h"
+#include "ui\UIButton.h"
 
 using namespace cocos2d;
 

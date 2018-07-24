@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "HudLayer.h"
 
 USING_NS_CC;
 
@@ -23,6 +24,8 @@ Scene* HelloWorld::createScene()
 	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98.0f)); //space game no gravity
 	auto layer = HelloWorld::create();
 	scene->addChild(layer);
+	auto hudLayer = HudLayer::create();
+	scene->addChild(hudLayer, 1);
 	return scene;
 	//return HelloWorld::createWithPhysics();
 }
