@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Functions.h"
+#include "AndroidCompile.h"
 
 Enemy::Enemy() : player(nullptr), factionTag(TAGENUM::ENEMY), health(1), damage(1), speed(10.f)
 {
@@ -22,7 +23,7 @@ void Enemy::Update(double dt)
 	dir.normalize();
 	physicsBody->setVelocity(dir * speed);
 	sprite->setRotation(-90 + atan2(dir.x, dir.y) * 180 / 3.14159265f);
-	healthLabel->setString(std::to_string(health));
+	healthLabel->setString(to_string(health));
 	healthLabel->setPosition(sprite->getPosition().x, sprite->getPosition().y - 50);
 	weap.position = sprite->getPosition();
 	weap.direction = dir;

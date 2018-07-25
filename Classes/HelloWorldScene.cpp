@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "ui\CocosGUI.h"
+#include "HudLayer.h"
 
 USING_NS_CC;
 
@@ -16,6 +17,7 @@ Weapon* weapon2;
 #include "Projectile.h"
 #include "Functions.h"
 #include "Enemy.h"
+#include "AndroidCompile.h"
 
 Scene* HelloWorld::createScene()
 {
@@ -23,7 +25,8 @@ Scene* HelloWorld::createScene()
 	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98.0f)); //space game no gravity
 	auto layer = HelloWorld::create();
 	scene->addChild(layer);
-
+	auto hudLayer = HudLayer::create();
+	scene->addChild(hudLayer, 1);
 	return scene;
 	//return HelloWorld::createWithPhysics();
 }
@@ -58,7 +61,7 @@ bool HelloWorld::init()
 	int numOftiles = playingSize.width / x;
 
 	auto nodeItems = Node::create();
-	nodeItems->setName("nodeItems" + std::to_string(0));
+	nodeItems->setName("nodeItems" + to_string(0));
 
 
 	//auto joystick_bg_left_node = Node::create();
@@ -450,7 +453,7 @@ void HelloWorld::update(float delta)
 	this->getChildByName("joystick_bg_left")->setPosition(cam->getPosition() - Vec2(playingSize.width * 0.4, playingSize.height * 0.4));
 	
 	//player->LookAt();
-	playerHealth->setString(std::to_string(player->GetHealth()));
+	playerHealth->setString(to_string(player->GetHealth()));
 	playerHealth->setPosition(player->sprite->getPosition().x, player->sprite->getPosition().y - 30);
 
 	GameObjectManager::GetInstance()->PostUpdate();
