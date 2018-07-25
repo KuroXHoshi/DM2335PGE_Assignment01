@@ -21,4 +21,5 @@ public:
 	virtual void keyboardInput(float dt_);
 	virtual void onMouseUp(Event*);
 	virtual void mouseInput(float dt_);
+
 };

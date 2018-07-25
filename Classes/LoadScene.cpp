@@ -179,6 +179,7 @@ std::vector<std::string> LoadScene::GetFilePaths()
 	filepaths.push_back("White_Front1.tga");
 	filepaths.push_back("ZigzagForest_Square.png");
 	filepaths.push_back("ZigzagGrass_Mud_Round.png");
+	filepaths.push_back("ui_joystick_bg");
 
 	return filepaths;
 }

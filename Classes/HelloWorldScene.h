@@ -30,6 +30,13 @@ public:
 	virtual void onMousePressed(cocos2d::Event* event_);
 	virtual void onMouseReleased(cocos2d::Event* event_);
 
+
+	virtual bool onTouchBegan(cocos2d::Touch*, cocos2d::Event*);
+	virtual void onTouchEnded(cocos2d::Touch*, cocos2d::Event*);
+	virtual void onTouchMoved(cocos2d::Touch*, cocos2d::Event*);
+	virtual void onTouchCancelled(cocos2d::Touch*, cocos2d::Event*);
+
+
 	void update(float delta);
 
 	bool OnContactBegin(PhysicsContact& contact);
