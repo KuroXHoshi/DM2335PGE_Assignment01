@@ -72,7 +72,7 @@ void InventoryManager::Update(float dt)
 {
 	//layer follow player
 	if (player != nullptr)
-		hudLayer->setPosition(player->sprite->getPosition() - visibleSize / 2);
+		hudLayer->setPosition(player->sprite->getPosition() - visibleSize * 0.5f);
 	if (displayInventory && change)
 	{
 		inventoryScrollView->setEnabled(true);

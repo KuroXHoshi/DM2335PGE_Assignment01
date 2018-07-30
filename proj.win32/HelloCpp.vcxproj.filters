@@ -72,6 +72,9 @@
     <ClCompile Include="..\Classes\HudLayer.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\JoyStick.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -135,6 +138,9 @@
       <Filter>src\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\HudLayer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JoyStick.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

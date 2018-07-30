@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "InventoryManager.h"
+#include "JoyStick.h"
 USING_NS_CC;
 
 Player::Player()
@@ -99,6 +100,7 @@ void Player::Start()
 	this->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_ENEMY + BITMASK_ENUM::BITMASK_ENEMY_BULLET);
 	
 	InventoryManager::GetInstance()->AttachPlayer(this);
+	JoyStick::GetInstance()->AttachPlayer(this);
 	//this->physicsBody->setMass(1000.0f);
 }
 
