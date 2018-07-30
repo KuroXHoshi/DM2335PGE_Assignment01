@@ -29,6 +29,12 @@ void JoyStick::init(cocos2d::Layer* layer)
 
 	layer->addChild(joystick_bg_left);
 
+	DrawNode* drawnode = DrawNode::create();
+	drawnode->drawDot(Vec2(0, 0), 20, Color4F(2, 99, 2, 2));
+	//drawnode->setPosition(Point(winSize.width / 2.1 + origin.x, winSize.height / 5 + origin.y));
+	drawnode->setName("drawnode");
+	layer->addChild(drawnode, 3);
+
 	eventListenerTouch = EventListenerTouchOneByOne::create();
 
 	eventListenerTouch->onTouchBegan = CC_CALLBACK_2(JoyStick::onTouchBegan, this);
@@ -65,7 +71,7 @@ bool JoyStick::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * event)
 	//CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
 	//Vec2 thePlayerPos = player->sprite->getPosition();
 
-	//this->getChildByName("drawnode")->setPosition(touch->getLocation() + player->sprite->getPosition() - Director::getInstance()->getVisibleSize() * 0.5f);
+	hudLayer->getChildByName("drawnode")->setPosition(touch->getLocation());
 	//Vec2 theDotPos = this->getChildByName("drawnode")->getPosition();
 	if (distance < 70)
 	{
@@ -79,8 +85,20 @@ void JoyStick::onTouchEnded(cocos2d::Touch *, cocos2d::Event *)
 {
 }
 
-void JoyStick::onTouchMoved(cocos2d::Touch *, cocos2d::Event *)
+void JoyStick::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
 {
+	float distance = ((joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).distance(touch->getLocation()));
+	if (distance < 70)
+	{
+		hudLayer->getChildByName("drawnode")->setPosition(touch->getLocation());
+	}
+	else
+	{
+		Vec2 direction = (touch->getLocation() - joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).getNormalized();
+		//angle = angle * 180 / 3.1415;
+
+		hudLayer->getChildByName("drawnode")->setPosition(joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition() + direction * 70);
+	}
 }
 
 void JoyStick::onTouchCancelled(cocos2d::Touch *, cocos2d::Event *)
