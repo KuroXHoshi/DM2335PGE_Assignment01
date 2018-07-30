@@ -1,8 +1,8 @@
 #pragma once
 #include "cocos2d.h"
 #include "GameObject.h"
+#include "Player.h"
 
-class Player;
 class JoyStick
 {
 public:
@@ -30,5 +30,9 @@ public:
 private:
 	JoyStick();
 	EventListenerTouchOneByOne* eventListenerTouch;
+	bool leftJoyHeld;
+	int leftTouch;
+	int rightTouch;
+	Vec2 leftJoyDirection;
 };
 

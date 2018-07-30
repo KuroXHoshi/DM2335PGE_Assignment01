@@ -19,4 +19,5 @@ bool HudLayer::init()
 void HudLayer::update(float delta)
 {
 	InventoryManager::GetInstance()->Update(delta);
+	JoyStick::GetInstance()->update(delta);
 }
