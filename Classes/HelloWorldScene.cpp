@@ -63,18 +63,6 @@ bool HelloWorld::init()
 	auto nodeItems = Node::create();
 	nodeItems->setName("nodeItems" + to_string(0));
 
-
-	//auto joystick_bg_left_node = Node::create();
-	//joystick_bg_left_node->setName("joystick_bg_left_node");
-	//auto joystick_bg_left_sprite = Sprite::create("textures/ui_joystick_bg.tga");
-	//joystick_bg_left_sprite->setAnchorPoint(Vec2(0.5f, 0.5f));
-	//joystick_bg_left_sprite->setPosition(playingSize.width * 0.1, playingSize.height * 0.1);
-	//joystick_bg_left_sprite->setName("joystick_bg_left_sprite");
-
-	//joystick_bg_left_sprite->retain();
-
-	//joystick_bg_left_node->addChild(sprite, 1);
-
 	/*auto bkgrnd = Sprite::create("textures/bg_sky2.tga");
 	sprite->setAnchorPoint(Vec2::ZERO);
 	sprite->setPosition(Vec2::ZERO);
@@ -107,16 +95,16 @@ bool HelloWorld::init()
 	this->addChild(nodeItems);
 
 
-	auto joystick_bg_left = Sprite::create("textures/ui_joystick_bg.tga");
+	//auto joystick_bg_left = Sprite::create("textures/ui_joystick_bg.tga");
 	//joystick_bg_left->setPosition(Vec2(playingSize.width * 0.1, playingSize.height * 0.1));
 	
-	joystick_bg_left->setAnchorPoint(Vec2(0.5f, 0.5f));
+	//joystick_bg_left->setAnchorPoint(Vec2(0.5f, 0.5f));
 	//joystick_bg_left->setTitleText("Button Text");
 	
 	//joystick_bg_left->runAction(Follow::createWithOffset(Camera::getDefaultCamera(), playingSize.width * 0.1, playingSize.height * 0.1));
 	//Camera::getDefaultCamera()->addChild(joystick_bg_left, 2);
-	joystick_bg_left->setName("joystick_bg_left");
-	this->addChild(joystick_bg_left, 2);
+	//joystick_bg_left->setName("joystick_bg_left");
+	//this->addChild(joystick_bg_left, 2);
 	
 	DrawNode* drawnode = DrawNode::create();
 	drawnode->drawDot(Vec2(0, 0), 20, Color4F(2, 99, 2, 2));
@@ -399,22 +387,23 @@ void HelloWorld::onMouseReleased(cocos2d::Event * event_)
 
 bool HelloWorld::onTouchBegan(Touch* touch, Event* event)
 {
-	cocos2d::log("touch began");
-	EventTouch* e = (EventTouch*)event;
-	float distance = ((this->getChildByName("joystick_bg_left")->getPosition()).distance(touch->getLocation() + player->sprite->getPosition() - Director::getInstance()->getVisibleSize() * 0.5f));
-	
-	Vec2 theJoyPos = this->getChildByName("joystick_bg_left")->getPosition();
-	CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
-	Vec2 thePlayerPos = player->sprite->getPosition();
-	
-	this->getChildByName("drawnode")->setPosition(touch->getLocation() + player->sprite->getPosition() - Director::getInstance()->getVisibleSize() * 0.5f);
-	Vec2 theDotPos = this->getChildByName("drawnode")->getPosition();
-	if (distance < 80)
-	{
-		cocos2d::log("button");
-		return true;
-	}
-	return true;
+//	cocos2d::log("touch began");
+//	EventTouch* e = (EventTouch*)event;
+//	float distance = ((this->getChildByName("joystick_bg_left")->getPosition()).distance(touch->getLocation() + player->sprite->getPosition() - Director::getInstance()->getVisibleSize() * 0.5f));
+//	
+//	Vec2 theJoyPos = this->getChildByName("joystick_bg_left")->getPosition();
+//	CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
+//	Vec2 thePlayerPos = player->sprite->getPosition();
+//	
+//	this->getChildByName("drawnode")->setPosition(touch->getLocation() + player->sprite->getPosition() - Director::getInstance()->getVisibleSize() * 0.5f);
+//	Vec2 theDotPos = this->getChildByName("drawnode")->getPosition();
+//	if (distance < 80)
+//	{
+//		cocos2d::log("button");
+//		return true;
+//	}
+//	return true;
+	return false;
 }
 
 void HelloWorld::onTouchEnded(Touch* touch, Event* event)
@@ -450,7 +439,7 @@ void HelloWorld::update(float delta)
 	//centering the camera on the player
 	Camera* cam = Camera::getDefaultCamera();
 	cam->setPosition(player->sprite->getPosition());
-	this->getChildByName("joystick_bg_left")->setPosition(cam->getPosition() - Vec2(playingSize.width * 0.4, playingSize.height * 0.4));
+//	this->getChildByName("joystick_bg_left")->setPosition(cam->getPosition() - Vec2(playingSize.width * 0.4, playingSize.height * 0.4));
 	
 	//player->LookAt();
 	playerHealth->setString(to_string(player->GetHealth()));
