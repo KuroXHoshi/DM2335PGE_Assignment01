@@ -6,6 +6,7 @@
 #include "ui\UIScrollView.h"
 #include "ui\UILayout.h"
 
+class Player;
 class InventoryManager
 {
 public:
@@ -17,6 +18,12 @@ public:
 	bool displayInventory = false;
 	bool change = false;
 	std::vector<UpgradeStone*> stones;
+	Player* player;
+	cocos2d::Layer* hudLayer;
+	cocos2d::Size visibleSize;
+	cocos2d::Vec2 origin;
+
+	void AttachPlayer(Player*);
 
 	void onInventoryEnable(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void onInventoryDisable(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);

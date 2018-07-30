@@ -1,10 +1,17 @@
 #include "InventoryManager.h"
 
 #include "cocos2d.h"
+#include "Player.h"
 
 using namespace cocos2d;
 
 InventoryManager* InventoryManager::s_instance = nullptr;
+
+void InventoryManager::AttachPlayer(Player * _player)
+{
+	player = _player;
+	hudLayer->runAction(Follow::create(player->sprite));
+}
 
 void InventoryManager::onInventoryEnable(Ref * sender, ui::Widget::TouchEventType type)
 {
@@ -34,8 +41,9 @@ InventoryManager * InventoryManager::GetInstance()
 
 void InventoryManager::Init(cocos2d::Layer* layer)
 {
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	visibleSize = Director::getInstance()->getVisibleSize();
+	origin = Director::getInstance()->getVisibleOrigin();
+	this->hudLayer = layer;
 
 	inventoryEnable = Button::create("ZigzagGrass_Mud_Round.png", "ZigzagForest_Square.png");
 	inventoryEnable->setPosition(Vec2(visibleSize.width - inventoryEnable->getSize().width, visibleSize.height / 4 * 3 + origin.y));
@@ -62,6 +70,9 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 
 void InventoryManager::Update(float dt)
 {
+	//layer follow player
+	if (player != nullptr)
+		hudLayer->setPosition(player->sprite->getPosition() - visibleSize / 2);
 	if (displayInventory && change)
 	{
 		inventoryScrollView->setEnabled(true);
