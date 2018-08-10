@@ -5,6 +5,8 @@
 #include "UpgradeStone.h"
 #include "ui\UIScrollView.h"
 #include "ui\UILayout.h"
+#include "ui\UIButton.h"
+#include "ui\UIText.h"
 
 class Player;
 class InventoryManager
@@ -23,6 +25,10 @@ public:
 	std::vector<UpgradeStone*> stones;
 	std::vector<Layout*> horizontalLayouts;
 
+	cocos2d::ui::Button* statDisplay;
+	cocos2d::ui::Text* stoneTypeText;
+	cocos2d::ui::Text* stoneValueText;
+
 	Player* player;
 	cocos2d::Layer* hudLayer;
 	cocos2d::Size visibleSize;
@@ -35,6 +41,8 @@ public:
 	//callback function
 	void onInventoryEnable(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void onInventoryDisable(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void DisplayStoneStat(UpgradeStone* stone);
+	void onStoneStatClose(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 private:
 	InventoryManager();
