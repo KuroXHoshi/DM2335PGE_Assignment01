@@ -89,7 +89,7 @@ void Player::Update(double dt)
 		float rangemul = 1.0f;
 		float critchancemul = 1.0f;
 		float critdmgmul = 1.0f;
-		int num = stoneModifiers.size();
+		int num = stoneModifierSize;
 		for (int i = 0; i < num; ++i)
 		{
 			UpgradeStone* us = stoneModifiers[i];

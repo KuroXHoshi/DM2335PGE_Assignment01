@@ -34,5 +34,6 @@ public:
 
 
 	//Upgrade Stones to affect the multipliers on equiped weaps
-	std::vector<UpgradeStone*> stoneModifiers;
+	const int stoneModifierSize = 6;
+	UpgradeStone* stoneModifiers[6] = { nullptr, };
 };

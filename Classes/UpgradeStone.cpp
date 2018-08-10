@@ -6,7 +6,8 @@ UpgradeStone * UpgradeStone::GenerateStone(int modifier, cocos2d::Size size)
 {
 	UpgradeStone* newStone = new UpgradeStone();
 	newStone->btn = Button::create("Blue_Front1.png");
-	newStone->btn->setContentSize(size);
+	newStone->btn->setScaleX((size.width / newStone->btn->getContentSize().width));
+	newStone->btn->setScaleY((size.width / newStone->btn->getContentSize().width));
 	newStone->btn->addTouchEventListener(CC_CALLBACK_2(UpgradeStone::onClick, newStone));
 	newStone->type = (UPGRADE_TYPE)cocos2d::RandomHelper::random_int(0, UPGRADE_TYPE::UT_COUNT - 1);
 	switch (newStone->type)
