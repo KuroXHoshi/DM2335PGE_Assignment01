@@ -5,7 +5,7 @@
 
 using namespace cocos2d::ui;
 
-class UpgradeStone : public Button
+class UpgradeStone
 {
 public:
 	enum UPGRADE_TYPE
@@ -15,13 +15,18 @@ public:
 		UT_COUNT
 	};
 
+	Button* btn;
+
 	static UpgradeStone* GenerateStone(int modifier, cocos2d::Size size);
+
+	void onClick(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	
 	float modififyingValue = 0;
 	float baseValue = 0;
+	UPGRADE_TYPE type;
 	
 private:
-	UpgradeStone();
+	UpgradeStone() {};
 };
 
 #endif
