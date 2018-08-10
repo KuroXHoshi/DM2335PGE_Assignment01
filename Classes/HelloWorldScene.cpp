@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "ui\CocosGUI.h"
 #include "HudLayer.h"
 
 USING_NS_CC;
@@ -62,26 +63,25 @@ bool HelloWorld::init()
 	auto nodeItems = Node::create();
 	nodeItems->setName("nodeItems" + to_string(0));
 
-	/*for (int i = 0; i < numOftiles; ++i)
-	{
-		sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
-		sprite->setAnchorPoint(Vec2::ZERO);
-		sprite->setPosition(x * i, playingSize.height / 2);
-
-		nodeItems->addChild(sprite, 0);
-	}
-	this->addChild(nodeItems, 1);*/
-
 	/*auto bkgrnd = Sprite::create("textures/bg_sky2.tga");
 	sprite->setAnchorPoint(Vec2::ZERO);
 	sprite->setPosition(Vec2::ZERO);
 	nodeItems->addChild(bkgrnd, 0);
 	this->addChild(nodeItems, 1);*/
 	
+	auto touchListener = EventListenerTouchOneByOne::create();
+
+	touchListener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+	touchListener->onTouchMoved = CC_CALLBACK_2(HelloWorld::onTouchMoved, this);
+	touchListener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
+	touchListener->onTouchCancelled = CC_CALLBACK_2(HelloWorld::onTouchCancelled, this);
+
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
 	player = new Player();
 	//this->addChild(player->spriteNode);
 	//player->sprite->setPosition(playingSize.width / 2, playingSize.height / 2);
-	
+
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetKbListener(), this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(player->GetMouseListener(), this);
 
@@ -93,6 +93,24 @@ bool HelloWorld::init()
 		nodeItems->addChild(GameController::GetInstance()->GetBackgroundSprites()[i], 0);
 	}
 	this->addChild(nodeItems);
+
+
+	//auto joystick_bg_left = Sprite::create("textures/ui_joystick_bg.tga");
+	//joystick_bg_left->setPosition(Vec2(playingSize.width * 0.1, playingSize.height * 0.1));
+	
+	//joystick_bg_left->setAnchorPoint(Vec2(0.5f, 0.5f));
+	//joystick_bg_left->setTitleText("Button Text");
+	
+	//joystick_bg_left->runAction(Follow::createWithOffset(Camera::getDefaultCamera(), playingSize.width * 0.1, playingSize.height * 0.1));
+	//Camera::getDefaultCamera()->addChild(joystick_bg_left, 2);
+	//joystick_bg_left->setName("joystick_bg_left");
+	//this->addChild(joystick_bg_left, 2);
+	
+	DrawNode* drawnode = DrawNode::create();
+	drawnode->drawDot(Vec2(0, 0), 20, Color4F(2, 99, 2, 2));
+	//drawnode->setPosition(Point(winSize.width / 2.1 + origin.x, winSize.height / 5 + origin.y));
+	drawnode->setName("drawnode");
+	this->addChild(drawnode,3);
 
 	//auto spriteNode = Node::create();
 	//spriteNode->setName("spriteNode");
@@ -367,6 +385,42 @@ void HelloWorld::onMouseReleased(cocos2d::Event * event_)
 	}
 }
 
+bool HelloWorld::onTouchBegan(Touch* touch, Event* event)
+{
+//	cocos2d::log("touch began");
+//	EventTouch* e = (EventTouch*)event;
+//	float distance = ((this->getChildByName("joystick_bg_left")->getPosition()).distance(touch->getLocation() + player->sprite->getPosition() - Director::getInstance()->getVisibleSize() * 0.5f));
+//	
+//	Vec2 theJoyPos = this->getChildByName("joystick_bg_left")->getPosition();
+//	CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
+//	Vec2 thePlayerPos = player->sprite->getPosition();
+//	
+//	this->getChildByName("drawnode")->setPosition(touch->getLocation() + player->sprite->getPosition() - Director::getInstance()->getVisibleSize() * 0.5f);
+//	Vec2 theDotPos = this->getChildByName("drawnode")->getPosition();
+//	if (distance < 80)
+//	{
+//		cocos2d::log("button");
+//		return true;
+//	}
+//	return true;
+	return false;
+}
+
+void HelloWorld::onTouchEnded(Touch* touch, Event* event)
+{
+	cocos2d::log("touch ended");
+}
+
+void HelloWorld::onTouchMoved(Touch* touch, Event* event)
+{
+	cocos2d::log("touch moved");
+}
+
+void HelloWorld::onTouchCancelled(Touch* touch, Event* event)
+{
+	cocos2d::log("touch cancelled");
+}
+
 void HelloWorld::update(float delta)
 {
 	//auto curSprite = this->getChildByName("spriteNode")->getChildByName("mainSprite");
@@ -377,10 +431,16 @@ void HelloWorld::update(float delta)
 	GameObjectManager::GetInstance()->Update(delta);
 	GameController::GetInstance()->Update(delta);
 
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+	Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
+
 	//centering the camera on the player
 	Camera* cam = Camera::getDefaultCamera();
 	cam->setPosition(player->sprite->getPosition());
-
+//	this->getChildByName("joystick_bg_left")->setPosition(cam->getPosition() - Vec2(playingSize.width * 0.4, playingSize.height * 0.4));
+	
 	//player->LookAt();
 	playerHealth->setString(to_string(player->GetHealth()));
 	playerHealth->setPosition(player->sprite->getPosition().x, player->sprite->getPosition().y - 30);

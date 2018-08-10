@@ -6,6 +6,7 @@
 #include "ui\UIScrollView.h"
 #include "ui\UILayout.h"
 
+class Player;
 class InventoryManager
 {
 public:
@@ -21,6 +22,13 @@ public:
 	cocos2d::Size stoneSize;
 	std::vector<UpgradeStone*> stones;
 	std::vector<Layout*> horizontalLayouts;
+
+	Player* player;
+	cocos2d::Layer* hudLayer;
+	cocos2d::Size visibleSize;
+	cocos2d::Vec2 origin;
+
+	void AttachPlayer(Player*);
 
 	void AddStone(UpgradeStone* stone);
 

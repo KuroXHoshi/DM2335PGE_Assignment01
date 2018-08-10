@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "InventoryManager.h"
+#include "JoyStick.h"
 USING_NS_CC;
 
 Player::Player()
@@ -83,7 +85,7 @@ void Player::Start()
 	this->SetSprite("textures/player_1.tga", "Player");
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
-	this->sprite->setPosition(playingSize.width / 2, playingSize.height / 2);
+	this->sprite->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 
 	this->sprite->runAction(RepeatForever::create(this->animate))->setTag(0);
 
@@ -97,6 +99,8 @@ void Player::Start()
 	this->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_ENEMY + BITMASK_ENUM::BITMASK_ENEMY_BULLET);
 	this->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_ENEMY + BITMASK_ENUM::BITMASK_ENEMY_BULLET);
 	
+	InventoryManager::GetInstance()->AttachPlayer(this);
+	JoyStick::GetInstance()->AttachPlayer(this);
 	//this->physicsBody->setMass(1000.0f);
 }
 
