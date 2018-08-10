@@ -78,6 +78,10 @@ void Player::Update(double dt)
 	}
 	//physicsBody->onAdd(); // bandaid fix for animation
 	//physicsBody->setVelocity(Vec2::ZERO);
+
+
+	//Set weapons multiplier;
+	//if (weapon->Discharge)
 }
 
 void Player::Start()

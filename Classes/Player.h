@@ -5,6 +5,7 @@
 #include "Controls.h"
 #include "Weapon.h"
 #include "SimpleAudioEngine.h"
+#include "UpgradeStone.h"
 
 class Player : public CharacterBase, public GameObject, public Controls
 {
@@ -30,4 +31,13 @@ public:
 	void onMouseMove(cocos2d::Event* event_);
 	EventListenerKeyboard* GetKbListener();
 	EventListenerMouse* GetMouseListener();
+
+
+	//Upgrade Stones to affect the multipliers on equiped weaps
+	std::vector<UpgradeStone*> stoneModifiers;
+	float damageMultiplier = 1.0f;
+	float critChanceMultiplier = 1.0f;
+	float critDamageMultiplier = 1.0f;
+	float rangeMultiplier = 1.0f;
+	float attackSpeedMulitiplier = 1.0f;
 };
