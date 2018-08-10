@@ -29,6 +29,9 @@ public:
 	cocos2d::ui::Text* stoneTypeText;
 	cocos2d::ui::Text* stoneValueText;
 
+	cocos2d::Sprite* borders[6];
+	cocos2d::ui::Button* equipButtons[6];
+
 	Player* player;
 	cocos2d::Layer* hudLayer;
 	cocos2d::Size visibleSize;
@@ -43,6 +46,7 @@ public:
 	void onInventoryDisable(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void DisplayStoneStat(UpgradeStone* stone);
 	void onStoneStatClose(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void equipStone(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 private:
 	InventoryManager();

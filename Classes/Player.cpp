@@ -3,6 +3,8 @@
 #include "JoyStick.h"
 USING_NS_CC;
 
+Player* Player::s_instance = nullptr;
+
 Player::Player()
 {
 	audio = CocosDenshion::SimpleAudioEngine::getInstance();

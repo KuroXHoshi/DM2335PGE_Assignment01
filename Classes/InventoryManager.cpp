@@ -83,6 +83,17 @@ void InventoryManager::onStoneStatClose(cocos2d::Ref * sender, cocos2d::ui::Widg
 	}
 }
 
+void InventoryManager::equipStone(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchEventType type)
+{
+	for (int i = 0; i < 6; ++i)
+	{
+		if ((cocos2d::ui::Button*)sender == equipButtons[i])
+		{
+			
+		}
+	}
+}
+
 InventoryManager::InventoryManager()
 {
 
@@ -154,6 +165,36 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 	stoneValueText->setFontSize(20);
 	stoneValueText->setVisible(false);
 	layer->addChild(stoneValueText, 101);
+
+	borders[0] = Sprite::create("textures/dark_red.png");
+	borders[1] = Sprite::create("textures/green.png");
+	borders[2] = Sprite::create("textures/yellow.png");
+	borders[3] = Sprite::create("textures/pink.png");
+	borders[4] = Sprite::create("textures/light_blue.png");
+	borders[5] = Sprite::create("textures/orange.png");
+
+	equipButtons[0] = Button::create("textures/dark_red.png");
+	equipButtons[1] = Button::create("textures/green.png");
+	equipButtons[2] = Button::create("textures/yellow.png");
+	equipButtons[3] = Button::create("textures/pink.png");
+	equipButtons[4] = Button::create("textures/light_blue.png");
+	equipButtons[5] = Button::create("textures/orange.png");
+	for (int i = 0; i < 6; ++i)
+	{
+		borders[i]->setScaleX((stoneSize.width / borders[i]->getContentSize().width));
+		borders[i]->setScaleY((stoneSize.height / borders[i]->getContentSize().height));
+		borders[i]->setVisible(false);
+		layer->addChild(borders[i], 102);
+
+		equipButtons[i]->setPosition(Vec2(inventoryScrollView->getPosition().x + i * inventoryScrollView->getContentSize().width / 6, inventoryScrollView->getPosition().y));
+		equipButtons[i]->setAnchorPoint(Vec2::ZERO);
+		equipButtons[i]->setScaleX((inventoryScrollView->getContentSize().width / 6 / equipButtons[i]->getContentSize().width));
+		equipButtons[i]->setScaleY((inventoryScrollView->getContentSize().width / 6 / equipButtons[i]->getContentSize().height));
+		equipButtons[i]->addTouchEventListener(CC_CALLBACK_2(InventoryManager::equipStone, this));
+		equipButtons[i]->setVisible(false);
+		equipButtons[i]->setEnabled(false);
+		layer->addChild(equipButtons[i], 102);
+	}
 
 	for (int j = 0; j < 10; ++j)
 	{
