@@ -17,8 +17,6 @@ private:
 	TAGENUM factionTag;
 	int health;
 	CocosDenshion::SimpleAudioEngine *audio;
-	static Player* s_instance;
-
 public:
 	Player();
 	void Update(double dt);
@@ -34,15 +32,6 @@ public:
 	EventListenerKeyboard* GetKbListener();
 	EventListenerMouse* GetMouseListener();
 
-	static Player* GetInstance()
-	{
-		if (s_instance == nullptr)
-		{
-			s_instance = new Player();
-			return s_instance;
-		}
-		return s_instance;
-	}
 
 	//Upgrade Stones to affect the multipliers on equiped weaps
 	std::vector<UpgradeStone*> stoneModifiers;
