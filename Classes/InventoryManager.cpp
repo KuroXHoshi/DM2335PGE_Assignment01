@@ -6,6 +6,15 @@ using namespace cocos2d;
 
 InventoryManager* InventoryManager::s_instance = nullptr;
 
+void InventoryManager::AddStone(UpgradeStone * stone)
+{
+	//if the number of stones is divisible by 3
+	if (stones.size() % 3 == 0)
+	{
+
+	}
+}
+
 void InventoryManager::onInventoryEnable(Ref * sender, ui::Widget::TouchEventType type)
 {
 	displayInventory = true;
@@ -52,12 +61,26 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 	inventoryScrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
 	inventoryScrollView->setBounceEnabled(true);
 	inventoryScrollView->setContentSize(Size(visibleSize.width / 2, visibleSize.height / 2));
-	inventoryScrollView->setInnerContainerSize(Size(visibleSize.width / 2, visibleSize.height / 2));
+	containerSize = Size(visibleSize.width / 2, visibleSize.height / 2);
+	inventoryScrollView->setInnerContainerSize(containerSize);
 	inventoryScrollView->setPosition(Vec2(visibleSize.width / 5 + origin.x, visibleSize.height / 5 + origin.y));
 	inventoryScrollView->setBackGroundImage("textures/background.tga");
 	inventoryScrollView->setEnabled(false);
 	inventoryScrollView->setVisible(false);
 	layer->addChild(inventoryScrollView);
+
+	for (int j = 0; j < 10; ++j)
+	{
+		Layout* test = Layout::create();
+		test->setLayoutType(Layout::Type::HORIZONTAL);
+		for (int i = 0; i < 5; ++i)
+		{
+			UpgradeStone* stone = UpgradeStone::GenerateStone(1, Size(50, 50));
+			test->addChild(stone);
+		}
+		test->setPosition(Vec2(0, 50 * j));
+		inventoryScrollView->addChild(test);
+	}
 }
 
 void InventoryManager::Update(float dt)

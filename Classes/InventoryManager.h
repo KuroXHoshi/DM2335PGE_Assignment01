@@ -16,8 +16,15 @@ public:
 	//bool to control rendering of inventory
 	bool displayInventory = false;
 	bool change = false;
+	int stoneRowCount;
+	cocos2d::Size containerSize;
+	cocos2d::Size stoneSize;
 	std::vector<UpgradeStone*> stones;
+	std::vector<Layout*> horizontalLayouts;
 
+	void AddStone(UpgradeStone* stone);
+
+	//callback function
 	void onInventoryEnable(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void onInventoryDisable(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 

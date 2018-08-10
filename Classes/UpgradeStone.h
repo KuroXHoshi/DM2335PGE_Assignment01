@@ -15,13 +15,13 @@ public:
 		UT_COUNT
 	};
 
-	static UpgradeStone* GenerateStone(int modifier);
-
+	static UpgradeStone* GenerateStone(int modifier, cocos2d::Size size);
+	
 	float modififyingValue = 0;
 	float baseValue = 0;
 	
 private:
-
+	UpgradeStone();
 };
 
 #endif
