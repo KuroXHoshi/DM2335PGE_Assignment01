@@ -34,7 +34,7 @@ public:
 
 
 	//Upgrade Stones to affect the multipliers on equiped weaps
-	std::vector<UpgradeStone*> stoneModifiers;
+	UpgradeStone* stoneModifiers[6] = { nullptr, };
 	float damageMultiplier = 1.0f;
 	float critChanceMultiplier = 1.0f;
 	float critDamageMultiplier = 1.0f;
