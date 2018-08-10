@@ -9,11 +9,23 @@ InventoryManager* InventoryManager::s_instance = nullptr;
 
 void InventoryManager::AddStone(UpgradeStone * stone)
 {
-	//if the number of stones is divisible by 3
-	if (stones.size() % 3 == 0)
+	//if the number of stones is divisible by stone row count
+	//need to create a new horizontal layer
+	if (stones.size() % stoneRowCount == 0)
 	{
-
+		Layout* horizontalLayout = Layout::create();
+		horizontalLayout->setLayoutType(Layout::Type::HORIZONTAL);
+		horizontalLayouts.push_back(horizontalLayout);
+		//set the horizontal layout to correct location
+		horizontalLayout->setPosition(Vec2(0, stoneSize.height * (horizontalLayouts.size())));
+		inventoryScrollView->addChild(horizontalLayout);
+		//update container size
+		inventoryScrollView->setInnerContainerSize(Size(visibleSize.width, horizontalLayouts.size() * stoneSize.height));
 	}
+	//get the last layer to add the stone in
+	int finalIndex = horizontalLayouts.size() - 1;
+	horizontalLayouts[finalIndex]->addChild(stone);
+	stones.push_back(stone);
 }
 
 void InventoryManager::AttachPlayer(Player * _player)
@@ -77,17 +89,17 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 	inventoryScrollView->setVisible(false);
 	layer->addChild(inventoryScrollView);
 
+	stoneRowCount = 7;
+	stoneSize.width = containerSize.width / stoneRowCount;
+	stoneSize.height = stoneSize.width;
+
 	for (int j = 0; j < 10; ++j)
 	{
-		Layout* test = Layout::create();
-		test->setLayoutType(Layout::Type::HORIZONTAL);
-		for (int i = 0; i < 5; ++i)
+		for (int i = 0; i < 7; ++i)
 		{
-			UpgradeStone* stone = UpgradeStone::GenerateStone(1, Size(50, 50));
-			test->addChild(stone);
+			UpgradeStone* stone = UpgradeStone::GenerateStone(0, stoneSize);
+			AddStone(stone);
 		}
-		test->setPosition(Vec2(0, 50 * j));
-		inventoryScrollView->addChild(test);
 	}
 }
 
