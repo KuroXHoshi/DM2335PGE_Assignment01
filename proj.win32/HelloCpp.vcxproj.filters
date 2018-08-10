@@ -75,6 +75,12 @@
     <ClCompile Include="..\Classes\JoyStick.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="WeaponGenerator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Pickup.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -142,6 +148,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\JoyStick.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponGenerator.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Pickup.h">
+      <Filter>src\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

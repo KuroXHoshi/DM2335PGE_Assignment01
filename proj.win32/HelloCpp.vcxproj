@@ -166,6 +166,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\UpgradeStone.cpp" />
     <ClCompile Include="..\Classes\Weapon.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pickup.cpp" />
+    <ClCompile Include="WeaponGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AndroidCompile.h" />
@@ -190,6 +192,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\UpgradeStone.h" />
     <ClInclude Include="..\Classes\Weapon.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Pickup.h" />
+    <ClInclude Include="WeaponGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">
