@@ -1,13 +1,14 @@
 #include "Player.h"
 #include "InventoryManager.h"
 #include "JoyStick.h"
+#include "WeaponGenerator.h"
 USING_NS_CC;
 
 Player::Player()
 {
 	audio = CocosDenshion::SimpleAudioEngine::getInstance();
 	factionTag = TAGENUM::PLAYER;
-	weapon = new Weapon();
+	weapon = nullptr;
 	health = 1000;
 	
 	//auto listener = EventListenerKeyboard::create();
@@ -81,7 +82,44 @@ void Player::Update(double dt)
 
 
 	//Set weapons multiplier;
-	//if (weapon->Discharge)
+	if (weapon != nullptr)
+	{
+		float dmgmul = 1.0f;
+		float attspdmul = 1.0f;
+		float rangemul = 1.0f;
+		float critchancemul = 1.0f;
+		float critdmgmul = 1.0f;
+		int num = stoneModifiers.size();
+		for (int i = 0; i < num; ++i)
+		{
+			UpgradeStone* us = stoneModifiers[i];
+			if (us == nullptr)
+				continue;
+			switch (us->type)
+			{
+			case UpgradeStone::UPGRADE_TYPE::UT_FIRERATE:
+				attspdmul += us->modififyingValue;
+				break;
+			case UpgradeStone::UT_DAMAGE:
+				dmgmul += us->modififyingValue;
+				break;
+			case UpgradeStone::UT_RANGE:
+				rangemul += us->modififyingValue;
+				break;
+			case UpgradeStone::UT_CRITCHANCE:
+				critchancemul += us->modififyingValue;
+				break;
+			case UpgradeStone::UT_CRITDAMAGE:
+				critdmgmul += us->modififyingValue;
+				break;
+			}
+		}
+		weapon->damageMultiplier = dmgmul;
+		weapon->attackSpeedMultiplier = attspdmul;
+		weapon->rangeMultiplier = rangemul;
+		weapon->critChanceMultiplier = critchancemul;
+		weapon->critDamageMultiplier = critdmgmul;
+	}
 }
 
 void Player::Start()
@@ -93,7 +131,8 @@ void Player::Start()
 
 	this->sprite->runAction(RepeatForever::create(this->animate))->setTag(0);
 
-	weapon->Set(15, 22, 1, 0, 1000, 0, "textures/Protagonist_Bullet.tga");
+	weapon = WeaponGenerator::GetInstance()->GetWeapon(WEAPON_TYPES::SHOTGUN, 0);
+
 	physicsBody = PhysicsBody::createCircle(sprite->getContentSize().width, PhysicsMaterial(0.0f, 0.0f, 1.f));
 	SetPhysics(false, Vec2(0, 0), false);
 	physicsBody->setVelocityLimit(100);
@@ -167,15 +206,19 @@ void Player::onMousePressed(cocos2d::Event * event_)
 	EventMouse* e = (EventMouse*)event_;
 	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
 	{
-		audio->playEffect("sounds/shoot.mp3");
-		//aka screem size
-		auto visibleSize = Director::getInstance()->getVisibleSize();
+		if (weapon != nullptr)
+		{
+			audio->playEffect("sounds/shoot.mp3");
+			//aka screem size
+			auto visibleSize = Director::getInstance()->getVisibleSize();
 
-		weapon->position.set(sprite->getPosition());
-		weapon->direction.set(e->getCursorX() - visibleSize.width * 0.5f, e->getCursorY() - visibleSize.height * 0.5f);
-		weapon->direction.normalize();
-		
-		weapon->Discharge();
+			weapon->position.set(sprite->getPosition());
+			weapon->direction.set(e->getCursorX() - visibleSize.width * 0.5f, e->getCursorY() - visibleSize.height * 0.5f);
+			weapon->direction.normalize();
+
+			weapon->Discharge();
+
+		}
 	}
 }
 

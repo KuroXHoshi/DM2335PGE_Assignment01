@@ -19,6 +19,9 @@
     <Filter Include="src\Inventory">
       <UniqueIdentifier>{6bb1c47d-1c48-4235-a621-42e23f9734f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\GameObjects\Projectiles">
+      <UniqueIdentifier>{52c0f487-c70e-46fd-af75-f4104395ba4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -34,9 +37,6 @@
       <Filter>src\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Weapon.cpp">
-      <Filter>src\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Projectile.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
@@ -75,11 +75,17 @@
     <ClCompile Include="..\Classes\JoyStick.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponGenerator.cpp">
+    <ClCompile Include="..\Classes\WeaponGenerator.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Pickup.cpp">
+    <ClCompile Include="..\Classes\Pickup.cpp">
       <Filter>src\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Projectile.cpp">
+      <Filter>src\GameObjects\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Shell.cpp">
+      <Filter>src\GameObjects\Projectiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +112,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SingletonTemplate.h">
       <Filter>src\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Projectile.h">
-      <Filter>src\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SceneManager.h">
       <Filter>src\GameObjects</Filter>
@@ -149,11 +152,17 @@
     <ClInclude Include="..\Classes\JoyStick.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponGenerator.h">
+    <ClInclude Include="..\Classes\WeaponGenerator.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="Pickup.h">
+    <ClInclude Include="..\Classes\Pickup.h">
       <Filter>src\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Projectile.h">
+      <Filter>src\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Shell.h">
+      <Filter>src\GameObjects\Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

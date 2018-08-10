@@ -70,7 +70,7 @@ void GameObject::SetPhysics(bool isDynamic, cocos2d::Vec2 velocity, bool isGravi
 	physicsBody->setVelocity(velocity);
 	physicsBody->setGravityEnable(isGravityEnabled);
 	sprite->addComponent(physicsBody);
-	physicsBody->getNode()->setUserData(this);
+	//physicsBody->getNode()->setUserData(this);
 
 	//Set collision bitmask
 	physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_EVERYTHING);

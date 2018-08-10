@@ -20,7 +20,9 @@ class WeaponGenerator : public Singleton <WeaponGenerator>
 {
 	static WeaponGenerator* s_instance;
 public:
-	WeaponGenerator* GetInstance();
+	static WeaponGenerator* GetInstance();
 
-	Weapon* GetRandomWeaponPickup();
+	//side : 0 = player, 1 = enemy
+	Weapon* GetWeapon(WEAPON_TYPES type, int factionSide);
+	Projectile* GetProjectile(Weapon* weap);
 };

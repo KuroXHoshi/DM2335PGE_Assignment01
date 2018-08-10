@@ -74,7 +74,11 @@ public:
 	int GetDamage(bool& isCrit) { 
 		int mindmg = min_damage * damageMultiplier;
 		int maxdmg = max_damage * damageMultiplier;
-		return this->min_damage + (rand() % (this->max_damage - this->min_damage));
+		isCrit = (rand() % 100) <= (GetCritChance() * 100);
+		int baseDmg = mindmg + (rand() % (maxdmg - mindmg));
+		if (isCrit)
+			baseDmg = baseDmg * GetCritDamage();
+		return baseDmg;
 	}
 
 	float range = 1000.0f;

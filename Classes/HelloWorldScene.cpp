@@ -468,6 +468,11 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 
 	Projectile* proj = nullptr;
 	GameObject* other = nullptr;
+
+	//std::wostringstream os_;
+	//os_ << "COLLISION " << a->id << " n " << b->id << "\n";
+	//OutputDebugStringW(os_.str().c_str());
+
 	if (projA)
 	{
 		proj = projA;
@@ -487,15 +492,25 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 		Enemy* enemy = dynamic_cast<Enemy*>(other);
 		if (enemy)
 		{
-			enemy->health -= proj->damage;
-			if (enemy->health <= 0) {
-				enemy->healthLabel->removeFromParentAndCleanup(true);
-				enemy->Destroy();
-				if (GameController::GetInstance()->currState == GAME_STATE::GS_WAVE)
+			if (!enemy->isDead())
+			{
+				enemy->health -= proj->damage;
+				if (enemy->health <= 0)
 				{
-					GameController::GetInstance()->RemoveOneEnemy();
+					enemy->healthLabel->removeFromParentAndCleanup(true);
+					enemy->Destroy();
+					if (GameController::GetInstance()->currState == GAME_STATE::GS_WAVE)
+					{
+						GameController::GetInstance()->RemoveOneEnemy();
+					}
 				}
 			}
+			else
+			{
+				//enemy is dead
+				return false;
+			}
+			
 		}
 		Player* player = dynamic_cast<Player*>(other);
 		if (player)

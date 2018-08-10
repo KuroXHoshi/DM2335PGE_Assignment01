@@ -4,6 +4,13 @@
 
 using namespace cocos2d;
 
+#define DBOUT( s )            \
+{                             \
+   std::wostringstream os_;    \
+   os_ << s << "\n";                   \
+   OutputDebugStringW( os_.str().c_str() );  \
+}
+
 //all these values have to be in bit form / power of 2
 //physics use this bit method to differentiate the layers, something like in unity
 //When two collide, their categorymask is tested against contacttestmask by perfoming &&

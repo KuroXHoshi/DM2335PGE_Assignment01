@@ -12,6 +12,9 @@ public:
 	{
 		UT_FIRERATE = 0,
 		UT_DAMAGE,
+		UT_RANGE,
+		UT_CRITCHANCE,
+		UT_CRITDAMAGE,
 		UT_COUNT
 	};
 

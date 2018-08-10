@@ -1,6 +1,7 @@
 #include "Weapon.h"
 
 #include "Projectile.h"
+#include "WeaponGenerator.h"
 
 Weapon::Weapon()
 {
@@ -44,26 +45,7 @@ void Weapon::Discharge()
 	if (!(attackspeed_timer >= attackspeed_triggerTime))
 		return;
 
-	Projectile* proj = Projectile::Create(position, direction, this->GetDamage(), this->bulletSpeed, 1000, this->factionTag);
-
-	proj->SetSprite(bulletTexture, "bullet");
-	proj->SetPhysics(true, proj->direction * proj->speed, false);
-	proj->physicsBody->setMass(0.1f);
-	proj->sprite->setPosition(proj->position);
-	proj->sprite->setRotation(-90 + atan2(proj->direction.x, proj->direction.y) * 180 / 3.14159265f);
-	if (factionTag == 0)
-	{
-		proj->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_PLAYER_BULLET);
-		proj->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_ENEMY);
-		proj->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_ENEMY);
-	}
-	else {
-		proj->physicsBody->setCategoryBitmask(BITMASK_ENUM::BITMASK_ENEMY_BULLET);
-		proj->physicsBody->setContactTestBitmask(BITMASK_ENUM::BITMASK_PLAYER);
-		proj->physicsBody->setCollisionBitmask(BITMASK_ENUM::BITMASK_PLAYER);
-	}
-
-	proj->physicsBody->setTag(proj->id);
+	Projectile* proj = WeaponGenerator::GetInstance()->GetProjectile(this);
 
 	//AudioPlayer::GetInstance()->PlaySound2D("PewPew", 0.2);
 	//must reset timer
