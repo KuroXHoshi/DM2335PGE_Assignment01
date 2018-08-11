@@ -18,6 +18,7 @@ Weapon* weapon2;
 #include "Functions.h"
 #include "Enemy.h"
 #include "AndroidCompile.h"
+#include "Vortex.h"
 
 Scene* HelloWorld::createScene()
 {
@@ -503,6 +504,7 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 					{
 						GameController::GetInstance()->RemoveOneEnemy();
 					}
+
 				}
 			}
 			else
@@ -524,4 +526,3 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 
 	return true;
 }
-

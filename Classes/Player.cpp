@@ -6,6 +6,8 @@
 #include "Enemy.h"
 USING_NS_CC;
 
+#include <Windows.h>
+
 Player::Player()
 {
 	audio = CocosDenshion::SimpleAudioEngine::getInstance();
@@ -128,9 +130,10 @@ void Player::Update(double dt)
 	std::sort(GameController::GetInstance()->activeEnemies.begin(), GameController::GetInstance()->activeEnemies.end(), [this](const GameObject* a, const GameObject* b) -> bool {
 		float aDist = (-this->position + a->position).lengthSquared();
 		float bDist = (-this->position + b->position).lengthSquared();
-		DBOUT("aDist " << aDist << "   bDist " << bDist);
+		//DBOUT("aDist " << aDist << "   bDist " << bDist);
 		return aDist < bDist;
 	});
+
 }
 
 void Player::Start()
@@ -142,7 +145,7 @@ void Player::Start()
 
 	this->sprite->runAction(RepeatForever::create(this->animate))->setTag(0);
 
-	weapon = WeaponGenerator::GetInstance()->GetWeapon(WEAPON_TYPES::SWARM_SUMMON, 0);
+	weapon = WeaponGenerator::GetInstance()->GetWeapon(WEAPON_TYPES::SUCTION_GUN, 0);
 
 	physicsBody = PhysicsBody::createCircle(sprite->getContentSize().width, PhysicsMaterial(0.0f, 0.0f, 1.f));
 	SetPhysics(false, Vec2(0, 0), false);

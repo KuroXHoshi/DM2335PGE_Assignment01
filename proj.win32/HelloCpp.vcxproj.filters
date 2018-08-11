@@ -90,6 +90,12 @@
     <ClCompile Include="..\Classes\Swarmer.cpp">
       <Filter>src\GameObjects\Projectiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GravityBullet.cpp">
+      <Filter>src\GameObjects\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Vortex.cpp">
+      <Filter>src\GameObjects\Projectiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -172,6 +178,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\MyMath.h">
       <Filter>src\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GravityBullet.h">
+      <Filter>src\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Vortex.h">
+      <Filter>src\GameObjects\Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -155,6 +155,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\GameController.cpp" />
     <ClCompile Include="..\Classes\GameObject.cpp" />
     <ClCompile Include="..\Classes\GameObjectManager.cpp" />
+    <ClCompile Include="..\Classes\GravityBullet.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\HudLayer.cpp" />
     <ClCompile Include="..\Classes\InventoryManager.cpp" />
@@ -167,6 +168,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Shell.cpp" />
     <ClCompile Include="..\Classes\Swarmer.cpp" />
     <ClCompile Include="..\Classes\UpgradeStone.cpp" />
+    <ClCompile Include="..\Classes\Vortex.cpp" />
     <ClCompile Include="..\Classes\Weapon.cpp" />
     <ClCompile Include="..\Classes\WeaponGenerator.cpp" />
     <ClCompile Include="main.cpp" />
@@ -182,6 +184,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\GameController.h" />
     <ClInclude Include="..\Classes\GameObject.h" />
     <ClInclude Include="..\Classes\GameObjectManager.h" />
+    <ClInclude Include="..\Classes\GravityBullet.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\HudLayer.h" />
     <ClInclude Include="..\Classes\InventoryManager.h" />
@@ -196,6 +199,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\SingletonTemplate.h" />
     <ClInclude Include="..\Classes\Swarmer.h" />
     <ClInclude Include="..\Classes\UpgradeStone.h" />
+    <ClInclude Include="..\Classes\Vortex.h" />
     <ClInclude Include="..\Classes\Weapon.h" />
     <ClInclude Include="..\Classes\WeaponGenerator.h" />
     <ClInclude Include="main.h" />

@@ -76,11 +76,13 @@ void Swarmer::MoveToCircumference(double dt)
 void Swarmer::RotateAround(double dt)
 {
 	float radiusAroundParent = parent->sprite->getBoundingBox().size.width;
-	
-	//float distanceFromParent = (this->position - parent->position).length();
-	//if (distanceFromParent <)
+
+	float circumferenceOfParent = PI * 2.0f * radiusAroundParent;
+	//*2.0f because let swarm rotate at slower speed
+	circumferenceOfParent *= 5.0f;
+
 	float isPositive = antiClockwise ? 1.0f : -1.0f;
-	float currRad = isPositive * ((float)distTravelled / (float)range) * (PI * 2.0f) + initialRad;
+	float currRad = isPositive * ((float)distTravelled / (float)circumferenceOfParent) * (PI * 2.0f) + initialRad;
 	Vec2 intendedPos(radiusAroundParent * cos(currRad) + parent->position.x,
 		radiusAroundParent * sin(currRad) + parent->position.y);
 
@@ -139,7 +141,7 @@ void Swarmer::RotateAround(double dt)
 	else
 	{
 		float distSq = (GameController::GetInstance()->player->position - this->position).lengthSquared();
-		if (distSq < this->detectRange)
+		if (distSq < this->detectRange * this->detectRange)
 		{
 			target = GameController::GetInstance()->player->position;
 			this->state = 2;

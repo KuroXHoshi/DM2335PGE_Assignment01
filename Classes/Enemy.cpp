@@ -15,6 +15,7 @@ Enemy::Enemy() : player(nullptr), factionTag(TAGENUM::ENEMY), health(1), damage(
 void Enemy::Start()
 {
 	//VisibleSize = Director::getInstance()->getVisibleSize();
+	this->position = sprite->getPosition();
 }
 
 void Enemy::Update(double dt)
@@ -28,6 +29,8 @@ void Enemy::Update(double dt)
 	weap.position = sprite->getPosition();
 	weap.direction = dir;
 	weap.Discharge();
+
+	this->position = sprite->getPosition();
 }
 
 Enemy * Enemy::Create(cocos2d::Vec2 pos, Player* player, int health, int damage, float speed, int factionTag)

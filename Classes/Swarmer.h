@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SWARMER_H
+#define SWARMER_H
 
 #include "Projectile.h"
 
@@ -9,7 +10,7 @@ public:
 	bool antiClockwise = true;
 	float initialRad = 0.0f;
 
-	const float defaultDetectRange = 500.0f;
+	const float defaultDetectRange = 300.0f;
 	float detectRange = defaultDetectRange;
 	Vec2 target;
 
@@ -24,3 +25,5 @@ public:
 	void RotateAround(double dt);
 	void ChaseTarget(double dt);
 };
+
+#endif

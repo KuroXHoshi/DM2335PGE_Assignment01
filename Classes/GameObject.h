@@ -39,6 +39,7 @@ enum TAGENUM
 
 class GameObject
 {
+protected:
 	//deletion Flag. if true, deletes gameobject at the end of the frame update
 	bool isDone;
 public:
@@ -90,7 +91,7 @@ public:
 	virtual bool OnContactBegin(cocos2d::PhysicsContact& contact);
 
 	//Destroys the gameobject at the end of the update frame
-	void Destroy();
+	virtual void Destroy();
 
 	//Returns true if this gameobject is going to be destroyed at the end of update frame
 	//useful for things like projectile, check if projectile is dead to avoid/checks for collision response

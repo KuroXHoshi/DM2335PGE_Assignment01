@@ -5,6 +5,7 @@
 #include "Shell.h"
 #include "Swarmer.h"
 #include "GameController.h"
+#include "GravityBullet.h"
 
 using namespace cocos2d;
 
@@ -45,7 +46,8 @@ Weapon * WeaponGenerator::GetWeapon(WEAPON_TYPES type, int factionSide)
 		weapon->range = 5000;
 		break;
 	case WEAPON_TYPES::SUCTION_GUN:
-		weapon->Set(100, 200, 10, 5, 750, factionSide, "textures/Protagonist_Bullet.tga");
+		weapon->Set(30, 50, 2, 5, 750, factionSide, "textures/Protagonist_Bullet.tga");
+		weapon->range = 800;
 		break;
 	}
 	return weapon;
@@ -95,6 +97,7 @@ Projectile * WeaponGenerator::GetProjectile(Weapon* weap)
 		ss->factionTag = weap->factionTag;
 
 		ss->detectRange = ss->defaultDetectRange * weap->rangeMultiplier;
+		//DBOUT("DETECTRANGE " << ss->detectRange);
 		if (weap->factionTag == 0)
 			ss->parent = GameController::GetInstance()->player;
 
@@ -102,14 +105,30 @@ Projectile * WeaponGenerator::GetProjectile(Weapon* weap)
 	}
 		break;
 	case 5:
-		//suction
+	{	//suction
+		GravityBullet* ss = new GravityBullet();
+		ss->position = weap->position;
+		ss->direction = weap->direction;
+		ss->damage = damage;
+		ss->speed = weap->bulletSpeed;
+		ss->range = weap->GetRange();
+		ss->factionTag = weap->factionTag;
+
+		ss->detectRange = ss->defaultDetectRange * weap->rangeMultiplier;
+		ss->explosionRange = ss->defaultExplosionRange * weap->rangeMultiplier;
+
+		ss->vortexTexture = weap->bulletTexture;
+
+		proj = ss;
+	}
 		break;
 	default:
 		proj = Projectile::Create(weap->position, weap->direction, damage, weap->bulletSpeed, weap->GetRange(), weap->factionTag);
-		proj->isCrit = gotCrit;
+		//proj->isCrit = gotCrit;
 		break;
 	}
 
+	proj->isCrit = gotCrit;
 	std::string bulletTexture = weap->bulletTexture;
 	proj->SetSpriteStuffs(bulletTexture);
 

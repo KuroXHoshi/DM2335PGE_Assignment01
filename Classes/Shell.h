@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SHELL_H
+#define SHELL_H
 
 #include "Projectile.h"
 
@@ -15,3 +16,5 @@ public:
 	virtual void Update(double dt);
 	virtual void Start();
 };
+
+#endif
