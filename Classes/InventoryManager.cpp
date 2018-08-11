@@ -30,6 +30,8 @@ void InventoryManager::AddStone(UpgradeStone * stone)
 	//add it to respective catergory
 	stoneTypes[stone->type].push_back(stone);
 	stone->btn->addTouchEventListener(CC_CALLBACK_2(UpgradeStone::onClick, stone));
+	stone->btn->setScaleX((stoneSize.width / stone->btn->getContentSize().width));
+	stone->btn->setScaleY((stoneSize.width / stone->btn->getContentSize().width));
 }
 
 bool sortGreater(UpgradeStone* a, UpgradeStone* b) { return a->modififyingValue > b->modififyingValue; }
