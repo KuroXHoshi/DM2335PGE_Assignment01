@@ -26,7 +26,6 @@ UpgradeStone * UpgradeStone::GenerateStone(int modifier, cocos2d::Size size)
 	}
 	newStone->btn->setScaleX((size.width / newStone->btn->getContentSize().width));
 	newStone->btn->setScaleY((size.width / newStone->btn->getContentSize().width));
-	newStone->btn->addTouchEventListener(CC_CALLBACK_2(UpgradeStone::onClick, newStone));
 	newStone->btn->retain();
 	switch (newStone->type)
 	{
