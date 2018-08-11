@@ -19,6 +19,7 @@ Weapon* weapon2;
 #include "Enemy.h"
 #include "AndroidCompile.h"
 #include "Vortex.h"
+#include "DamageText.h"
 
 Scene* HelloWorld::createScene()
 {
@@ -496,6 +497,7 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 			if (!enemy->isDead())
 			{
 				enemy->health -= proj->damage;
+				DamageText::Create(enemy->position, proj->damage, proj->isCrit);
 				if (enemy->health <= 0)
 				{
 					enemy->healthLabel->removeFromParentAndCleanup(true);
@@ -518,10 +520,16 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 		if (player)
 		{
 			player->SetHealth(player->GetHealth() - proj->damage);
+			DamageText::Create(player->position, proj->damage, proj->isCrit);
 		}
 
+
 		proj->Destroy();
-		return true;
+		Vortex* vortex = dynamic_cast<Vortex*>(proj);
+		if (vortex)
+			return true;
+		else
+			return false;
 	}
 
 	return true;

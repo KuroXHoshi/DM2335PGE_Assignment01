@@ -145,7 +145,7 @@ void Player::Start()
 
 	this->sprite->runAction(RepeatForever::create(this->animate))->setTag(0);
 
-	weapon = WeaponGenerator::GetInstance()->GetWeapon(WEAPON_TYPES::SUCTION_GUN, 0);
+	weapon = WeaponGenerator::GetInstance()->GetWeapon(WEAPON_TYPES::FLAMETHROWER, 0);
 
 	physicsBody = PhysicsBody::createCircle(sprite->getContentSize().width, PhysicsMaterial(0.0f, 0.0f, 1.f));
 	SetPhysics(false, Vec2(0, 0), false);

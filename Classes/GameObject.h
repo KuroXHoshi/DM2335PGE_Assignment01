@@ -60,7 +60,7 @@ public:
 
 	//sprite renderable
 	cocos2d::Node* spriteNode;
-	cocos2d::Sprite* sprite;
+	cocos2d::Sprite* sprite = nullptr;
 
 	cocos2d::Animate* animate;
 

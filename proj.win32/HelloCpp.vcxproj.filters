@@ -96,6 +96,12 @@
     <ClCompile Include="..\Classes\Vortex.cpp">
       <Filter>src\GameObjects\Projectiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Flame.cpp">
+      <Filter>src\GameObjects\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DamageText.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -184,6 +190,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Vortex.h">
       <Filter>src\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Flame.h">
+      <Filter>src\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DamageText.h">
+      <Filter>src\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

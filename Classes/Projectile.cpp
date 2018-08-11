@@ -10,6 +10,7 @@ Projectile::Projectile() : distTravelled(0), damage(0), speed(10.0f), range(100)
 
 void Projectile::Update(double dt)
 {
+	//NOTE: some sub class copys pasta this code
 	physicsBody->setVelocity(this->direction * speed);
 	this->position += this->direction * speed * dt;
 	distTravelled += speed * dt;

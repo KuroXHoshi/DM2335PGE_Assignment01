@@ -64,7 +64,8 @@ void GameObjectManager::PostUpdate()
         //GameObject* go in delList)
 	{
         GameObject* go = delList[i];
-		go->sprite->removeFromParentAndCleanup(true);
+		if (go->sprite != nullptr)
+			go->sprite->removeFromParentAndCleanup(true);
 		//delete go;
 	}
 

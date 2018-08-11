@@ -6,6 +6,7 @@
 #include "Swarmer.h"
 #include "GameController.h"
 #include "GravityBullet.h"
+#include "Flame.h"
 
 using namespace cocos2d;
 
@@ -34,20 +35,28 @@ Weapon * WeaponGenerator::GetWeapon(WEAPON_TYPES type, int factionSide)
 	case WEAPON_TYPES::SHOTGUN:
 		weapon->Set(85, 130, 1.5f, 1, 1500, factionSide, "textures/Protagonist_Bullet.tga");
 		weapon->range = 250;
+		weapon->baseCritChance = 0.2f;
+		weapon->baseCritDamage = 1.75f;
 		break;
 	case WEAPON_TYPES::FLAMETHROWER:
-		weapon->Set(5, 10, 10, 2, 1000, factionSide, "textures/Protagonist_Bullet.tga");
+		weapon->Set(5, 10, 10, 2, 400, factionSide, "textures/Protagonist_Bullet.tga");
+		weapon->range = 400;
+		weapon->baseCritChance = 0.15f;
 		break;
 	case WEAPON_TYPES::LENZ:
 		weapon->Set(50, 100, 1.5f, 3, 1000, factionSide, "textures/Protagonist_Bullet.tga");
 		break;
 	case WEAPON_TYPES::SWARM_SUMMON:
-		weapon->Set(50, 75, 2, 4, 750, factionSide, "textures/Protagonist_Bullet.tga");
+		weapon->Set(20, 35, 5, 4, 750, factionSide, "textures/Protagonist_Bullet.tga");
 		weapon->range = 5000;
+		weapon->baseCritChance = 0.5f;
+		weapon->baseCritDamage = 2.5f;
 		break;
 	case WEAPON_TYPES::SUCTION_GUN:
 		weapon->Set(30, 50, 2, 5, 750, factionSide, "textures/Protagonist_Bullet.tga");
 		weapon->range = 800;
+		weapon->baseCritChance = 0.1f;
+		weapon->baseCritDamage = 2.0f;
 		break;
 	}
 	return weapon;
@@ -80,9 +89,20 @@ Projectile * WeaponGenerator::GetProjectile(Weapon* weap)
 		proj = ss;
 	}
 		break;
-	//case 2:
+	case 2:
 		//flame thrower
-	//	break;
+	{
+		Flame* ss = new Flame();
+		ss->position = weap->position;
+		ss->direction = weap->direction;
+		ss->damage = damage;
+		ss->speed = weap->bulletSpeed;
+		ss->range = weap->GetRange();
+		ss->factionTag = weap->factionTag;
+
+		proj = ss;
+	}
+		break;
 	case 3:
 		//lenz
 		break;
