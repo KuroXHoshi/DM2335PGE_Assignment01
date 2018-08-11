@@ -3,6 +3,8 @@
 #include "cocos2d.h"
 #include "Player.h"
 #include "Shell.h"
+#include "Swarmer.h"
+#include "GameController.h"
 
 using namespace cocos2d;
 
@@ -40,6 +42,7 @@ Weapon * WeaponGenerator::GetWeapon(WEAPON_TYPES type, int factionSide)
 		break;
 	case WEAPON_TYPES::SWARM_SUMMON:
 		weapon->Set(50, 75, 2, 4, 750, factionSide, "textures/Protagonist_Bullet.tga");
+		weapon->range = 5000;
 		break;
 	case WEAPON_TYPES::SUCTION_GUN:
 		weapon->Set(100, 200, 10, 5, 750, factionSide, "textures/Protagonist_Bullet.tga");
@@ -64,7 +67,7 @@ Projectile * WeaponGenerator::GetProjectile(Weapon* weap)
 		ss->direction = weap->direction;
 		ss->damage = damage;
 		ss->speed = weap->bulletSpeed;
-		ss->range = weap->range;
+		ss->range = weap->GetRange();
 		ss->factionTag = weap->factionTag;
 
 		ss->critChance = weap->GetCritChance();
@@ -82,13 +85,27 @@ Projectile * WeaponGenerator::GetProjectile(Weapon* weap)
 		//lenz
 		break;
 	case 4:
-		//swarm army
+	{	//swarm army
+		Swarmer * ss = new Swarmer();
+		ss->position = weap->position;
+		ss->direction = weap->direction;
+		ss->damage = damage;
+		ss->speed = weap->bulletSpeed;
+		ss->range = weap->GetRange();
+		ss->factionTag = weap->factionTag;
+
+		ss->detectRange = ss->defaultDetectRange * weap->rangeMultiplier;
+		if (weap->factionTag == 0)
+			ss->parent = GameController::GetInstance()->player;
+
+		proj = ss;
+	}
 		break;
 	case 5:
 		//suction
 		break;
 	default:
-		proj = Projectile::Create(weap->position, weap->direction, damage, weap->bulletSpeed, weap->range, weap->factionTag);
+		proj = Projectile::Create(weap->position, weap->direction, damage, weap->bulletSpeed, weap->GetRange(), weap->factionTag);
 		proj->isCrit = gotCrit;
 		break;
 	}

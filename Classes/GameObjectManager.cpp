@@ -1,5 +1,7 @@
 #include "GameObjectManager.h"
 
+#include "Enemy.h"
+#include "GameController.h"
 
 GameObjectManager::GameObjectManager()
 {
@@ -40,6 +42,20 @@ void GameObjectManager::PostUpdate()
 
 		//this->DeleteGameObject(it->first);
 		delList.push_back(it->second);
+		if (Enemy* e = dynamic_cast<Enemy*>(it->second))
+		{
+
+			for (std::vector<GameObject*>::iterator eit = GameController::GetInstance()->activeEnemies.begin();
+				eit != GameController::GetInstance()->activeEnemies.end(); ++eit)
+			{
+				if (e == (*eit))
+				{
+					eit = GameController::GetInstance()->activeEnemies.erase(eit);
+					break;
+				}
+				
+			}
+		}
 		it = gameObjectMap.erase(it);
 	}
 

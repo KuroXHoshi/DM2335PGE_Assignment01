@@ -8,6 +8,7 @@ class BossController : public Singleton<BossController>
 {
 	friend Singleton<BossController>;
 
+public:
 	Enemy* boss;
 	Player* player;
 

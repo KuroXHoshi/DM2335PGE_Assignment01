@@ -87,6 +87,9 @@
     <ClCompile Include="..\Classes\Shell.cpp">
       <Filter>src\GameObjects\Projectiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Swarmer.cpp">
+      <Filter>src\GameObjects\Projectiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -163,6 +166,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Shell.h">
       <Filter>src\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Swarmer.h">
+      <Filter>src\GameObjects\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MyMath.h">
+      <Filter>src\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

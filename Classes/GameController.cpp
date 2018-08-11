@@ -162,6 +162,8 @@ void GameController::GenerateWave(double dt)
 			++enemyCount;
 			++enemySpawnedCount;
 			spawnTimer = 0;
+
+			activeEnemies.push_back(e);
 		}
 	}
 	else 
