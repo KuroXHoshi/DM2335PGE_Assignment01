@@ -165,6 +165,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Projectile.cpp" />
     <ClCompile Include="..\Classes\SceneManager.cpp" />
     <ClCompile Include="..\Classes\Shell.cpp" />
+    <ClCompile Include="..\Classes\Swarmer.cpp" />
     <ClCompile Include="..\Classes\UpgradeStone.cpp" />
     <ClCompile Include="..\Classes\Weapon.cpp" />
     <ClCompile Include="..\Classes\WeaponGenerator.cpp" />
@@ -186,12 +187,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\InventoryManager.h" />
     <ClInclude Include="..\Classes\JoyStick.h" />
     <ClInclude Include="..\Classes\LoadScene.h" />
+    <ClInclude Include="..\Classes\MyMath.h" />
     <ClInclude Include="..\Classes\Pickup.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\Projectile.h" />
     <ClInclude Include="..\Classes\SceneManager.h" />
     <ClInclude Include="..\Classes\Shell.h" />
     <ClInclude Include="..\Classes\SingletonTemplate.h" />
+    <ClInclude Include="..\Classes\Swarmer.h" />
     <ClInclude Include="..\Classes\UpgradeStone.h" />
     <ClInclude Include="..\Classes\Weapon.h" />
     <ClInclude Include="..\Classes\WeaponGenerator.h" />

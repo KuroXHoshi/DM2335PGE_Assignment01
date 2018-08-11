@@ -4,7 +4,7 @@
 
 class Projectile : public GameObject
 {
-	
+protected:
 	int distTravelled;
 public:
 	Projectile();

@@ -2,6 +2,8 @@
 #include "InventoryManager.h"
 #include "JoyStick.h"
 #include "WeaponGenerator.h"
+#include "GameController.h"
+#include "Enemy.h"
 USING_NS_CC;
 
 Player::Player()
@@ -80,6 +82,7 @@ void Player::Update(double dt)
 	//physicsBody->onAdd(); // bandaid fix for animation
 	//physicsBody->setVelocity(Vec2::ZERO);
 
+	this->position = sprite->getPosition();
 
 	//Set weapons multiplier;
 	if (weapon != nullptr)
@@ -120,6 +123,14 @@ void Player::Update(double dt)
 		weapon->critChanceMultiplier = critchancemul;
 		weapon->critDamageMultiplier = critdmgmul;
 	}
+
+	//sort gamecontroller enemy vector base on distance
+	std::sort(GameController::GetInstance()->activeEnemies.begin(), GameController::GetInstance()->activeEnemies.end(), [this](const GameObject* a, const GameObject* b) -> bool {
+		float aDist = (-this->position + a->position).lengthSquared();
+		float bDist = (-this->position + b->position).lengthSquared();
+		DBOUT("aDist " << aDist << "   bDist " << bDist);
+		return aDist < bDist;
+	});
 }
 
 void Player::Start()
@@ -131,7 +142,7 @@ void Player::Start()
 
 	this->sprite->runAction(RepeatForever::create(this->animate))->setTag(0);
 
-	weapon = WeaponGenerator::GetInstance()->GetWeapon(WEAPON_TYPES::SHOTGUN, 0);
+	weapon = WeaponGenerator::GetInstance()->GetWeapon(WEAPON_TYPES::SWARM_SUMMON, 0);
 
 	physicsBody = PhysicsBody::createCircle(sprite->getContentSize().width, PhysicsMaterial(0.0f, 0.0f, 1.f));
 	SetPhysics(false, Vec2(0, 0), false);
@@ -219,6 +230,7 @@ void Player::onMousePressed(cocos2d::Event * event_)
 			weapon->Discharge();
 
 		}
+
 	}
 }
 

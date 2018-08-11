@@ -65,9 +65,11 @@ public:
 	GAME_STATE currState;
 	int GetEnemyCount() { return enemyCount; }
 	void RemoveOneEnemy() { enemyCount--; }
-private:
-	Player* player;
 
+	std::vector<GameObject*> activeEnemies;
+
+	Player* player;
+private:
 	GAME_STATE prevState;
 
 	//value to adjust difficulty of game
