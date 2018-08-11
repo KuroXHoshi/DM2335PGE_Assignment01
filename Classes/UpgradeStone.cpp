@@ -10,12 +10,22 @@ UpgradeStone * UpgradeStone::GenerateStone(int modifier, cocos2d::Size size)
 	newStone->btn->setScaleY((size.width / newStone->btn->getContentSize().width));
 	newStone->btn->addTouchEventListener(CC_CALLBACK_2(UpgradeStone::onClick, newStone));
 	newStone->type = (UPGRADE_TYPE)cocos2d::RandomHelper::random_int(0, UPGRADE_TYPE::UT_COUNT - 1);
+	newStone->btn->retain();
 	switch (newStone->type)
 	{
 	case UPGRADE_TYPE::UT_DAMAGE:
 		newStone->modififyingValue = cocos2d::random(0.f, 1.f) * ((float)modifier / 5);
 		break;
 	case UPGRADE_TYPE::UT_FIRERATE:
+		newStone->modififyingValue = cocos2d::random(0.f, 1.f) * ((float)modifier / 5);
+		break;
+	case UPGRADE_TYPE::UT_RANGE:
+		newStone->modififyingValue = cocos2d::random(0.f, 1.f) * ((float)modifier / 5);
+		break;
+	case UPGRADE_TYPE::UT_CRITCHANCE:
+		newStone->modififyingValue = cocos2d::random(0.f, 1.f) * ((float)modifier / 5);
+		break;
+	case UPGRADE_TYPE::UT_CRITDAMAGE:
 		newStone->modififyingValue = cocos2d::random(0.f, 1.f) * ((float)modifier / 5);
 		break;
 	}

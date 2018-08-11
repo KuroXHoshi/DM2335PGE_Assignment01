@@ -22,7 +22,6 @@ public:
 	int stoneRowCount;
 	cocos2d::Size containerSize;
 	cocos2d::Size stoneSize;
-	std::vector<UpgradeStone*> stones;
 	std::vector<Layout*> horizontalLayouts;
 
 	cocos2d::ui::Button* statDisplay;
@@ -38,9 +37,13 @@ public:
 	cocos2d::Size visibleSize;
 	cocos2d::Vec2 origin;
 
+	inline int GetStoneCount() { int i = 0; for (auto it : stoneTypes) i += it.size(); return i; }
+
 	void AttachPlayer(Player*);
 
 	void AddStone(UpgradeStone* stone);
+	void SortStone(bool highest);
+	void UpdateStonesPositions();
 
 	//callback function
 	void onInventoryEnable(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
@@ -55,6 +58,10 @@ private:
 
 	Button* inventoryEnable;
 	Button* inventoryDisable;
+
+	std::vector<std::vector<UpgradeStone*>> stoneTypes;
+	int stoneTypeSort;
+	bool highestOrLowest;
 
 	ScrollView* inventoryScrollView;
 };
