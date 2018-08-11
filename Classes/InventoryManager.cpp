@@ -26,6 +26,7 @@ void InventoryManager::AddStone(UpgradeStone * stone)
 	//get the last layer to add the stone in
 	int finalIndex = horizontalLayouts.size() - 1;
 	stone->btn->setAnchorPoint(Vec2::ZERO);
+	stone->btn->removeFromParentAndCleanup(false);
 	horizontalLayouts[finalIndex]->addChild(stone->btn);
 	//add it to respective catergory
 	stoneTypes[stone->type].push_back(stone);
