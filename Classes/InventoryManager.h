@@ -37,6 +37,11 @@ public:
 	cocos2d::Size visibleSize;
 	cocos2d::Vec2 origin;
 
+	cocos2d::ui::Button* sortButton;
+	cocos2d::ui::Button* sortType;
+	cocos2d::ui::Text* sortText;
+	cocos2d::ui::Text* sortTypeText;
+
 	inline int GetStoneCount() { int i = 0; for (auto it : stoneTypes) i += it.size(); return i; }
 
 	void AttachPlayer(Player*);
@@ -51,6 +56,14 @@ public:
 	void DisplayStoneStat(UpgradeStone* stone);
 	void onStoneStatClose(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void equipStone(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void onSort(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void onSortType(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
+	//sorting functions
+	void quickSort(std::vector<UpgradeStone*> &stones, int _first_index, int _last_index);
+	int partition(std::vector<UpgradeStone*> &stones, int _first_index, int _last_index);
+	void swap(std::vector<UpgradeStone*> &stones, int _first_index, int _second_index);
+	
 
 private:
 	InventoryManager();

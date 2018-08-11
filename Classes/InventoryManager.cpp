@@ -31,30 +31,31 @@ void InventoryManager::AddStone(UpgradeStone * stone)
 	stoneTypes[stone->type].push_back(stone);
 }
 
+bool sortGreater(UpgradeStone* a, UpgradeStone* b) { return a->modififyingValue > b->modififyingValue; }
+bool sortLower(UpgradeStone* a, UpgradeStone* b) { return a->modififyingValue < b->modififyingValue; }
+
 void InventoryManager::SortStone(bool highest)
 {
 	//using std::sort
 	//if sort by highest to lowest
+	/*for (auto it : stoneTypes)
+	{
+		quickSort(it, 0, it.size() - 1);
+	}*/
 	if (highest)
 	{
 		//for every type of stones
-		for (auto it : stoneTypes)
+		for (int i = 0; i < stoneTypes.size(); ++i)
 		{
-			std::sort(it.begin(), it.end(), [](const UpgradeStone* a, const UpgradeStone* b) -> bool
-			{
-				return a->modififyingValue > b->modififyingValue;
-			});
+			std::sort(stoneTypes[i].begin(), stoneTypes[i].end(), sortGreater);
 		}
 	}
 	else
 	{
 		//for every type of stones
-		for (auto it : stoneTypes)
+		for (int i = 0; i < stoneTypes.size(); ++i)
 		{
-			std::sort(it.begin(), it.end(), [](const UpgradeStone* a, const UpgradeStone* b)
-			{
-				return a->modififyingValue < b->modififyingValue;
-			});
+			std::sort(stoneTypes[i].begin(), stoneTypes[i].end(), sortLower);
 		}
 	}
 	UpdateStonesPositions();
@@ -76,7 +77,7 @@ void InventoryManager::UpdateStonesPositions()
 			if (stoneIndexCount % stoneRowCount == 0)
 				++layoutCount;
 			//horizontalLayouts[horizontalLayouts.size() - layoutCount]->addChild(stoneTypes[i][j]->btn);
-			horizontalLayouts[layoutCount - 1]->addChild(stoneTypes[i][j]->btn);
+			horizontalLayouts[horizontalLayouts.size() - layoutCount]->addChild(stoneTypes[i][j]->btn);
 			++stoneIndexCount;
 		}
 	}
@@ -87,7 +88,7 @@ void InventoryManager::UpdateStonesPositions()
 			if (stoneIndexCount % stoneRowCount == 0)
 				++layoutCount;
 			//horizontalLayouts[horizontalLayouts.size() - layoutCount]->addChild(stoneTypes[i][j]->btn);
-			horizontalLayouts[layoutCount - 1]->addChild(stoneTypes[i][j]->btn);
+			horizontalLayouts[horizontalLayouts.size() - layoutCount]->addChild(stoneTypes[i][j]->btn);
 			++stoneIndexCount;
 		}
 	}
@@ -187,6 +188,87 @@ void InventoryManager::equipStone(cocos2d::Ref * sender, cocos2d::ui::Widget::To
 			}
 		}
 	}
+}
+
+void InventoryManager::onSort(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchEventType type)
+{
+	if (type == cocos2d::ui::Widget::TouchEventType::ENDED)
+	{
+		highestOrLowest = !highestOrLowest;
+		SortStone(highestOrLowest);
+		if (highestOrLowest)
+			sortText->setText("Descending");
+		else
+			sortText->setText("Ascending");
+	}
+}
+
+void InventoryManager::onSortType(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchEventType type)
+{
+	if (type == cocos2d::ui::Widget::TouchEventType::ENDED)
+	{
+		++stoneTypeSort;
+		if (stoneTypeSort == UpgradeStone::UT_COUNT)
+			stoneTypeSort = 0;
+		SortStone(highestOrLowest);
+		switch (stoneTypeSort)
+		{
+		case 0:
+			sortTypeText->setText("Firerate");
+			break;
+		case 1:
+			sortTypeText->setText("Damage");
+			break;
+		case 2:
+			sortTypeText->setText("Range");
+			break;
+		case 3:
+			sortTypeText->setText("Critical Chance");
+			break;
+		case 4:
+			sortTypeText->setText("Critical Damage");
+			break;
+		}
+	}
+}
+
+void InventoryManager::quickSort(std::vector<UpgradeStone*>& stones, int _first_index, int _last_index)
+{
+	if (_first_index < _last_index) {
+		int pivot_location = (int)partition(stones, _first_index, _last_index);
+		quickSort(stones, _first_index, pivot_location - 1);
+		quickSort(stones, pivot_location + 1, _last_index);
+	}
+}
+
+int InventoryManager::partition(std::vector<UpgradeStone*>& stones, int _first_index, int _last_index)
+{
+	int middle_index = (_first_index + _last_index) / 2;
+	int pivot_value;
+	pivot_value = stones[middle_index]->modififyingValue;
+	int small_index = _first_index;
+
+	swap(stones, _first_index, middle_index);
+
+	for (int check_index = (_first_index + 1); check_index <= _last_index; check_index++) {
+		int compared_data;
+		compared_data = stones[middle_index]->modififyingValue;
+
+		if (compared_data < pivot_value) {
+			small_index++;
+			swap(stones, small_index, check_index);
+		}
+	}
+	swap(stones, _first_index, small_index);
+
+	return small_index;
+}
+
+void InventoryManager::swap(std::vector<UpgradeStone*>& stones, int _first_index, int _second_index)
+{
+	UpgradeStone* temp = stones[_first_index];
+	stones[_first_index] = stones[_second_index];
+	stones[_second_index] = temp;
 }
 
 InventoryManager::InventoryManager()
@@ -300,16 +382,37 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 		equipButtons[i]->setEnabled(false);
 		layer->addChild(equipButtons[i], 102);
 	}
+	sortButton = Button::create("textures/grey.png"); 
+	sortButton->setPosition(Vec2(inventoryScrollView->getPosition().x + inventoryScrollView->getContentSize().width / 4, inventoryScrollView->getPosition().y + inventoryScrollView->getContentSize().height / 6 * 7));
+	sortButton->setScaleX((inventoryScrollView->getContentSize().width / 2 / sortButton->getContentSize().width));
+	sortButton->setScaleY((inventoryScrollView->getContentSize().height / 6 / sortButton->getContentSize().height));
+	sortButton->addTouchEventListener(CC_CALLBACK_2(InventoryManager::onSort, this));
+	sortButton->setVisible(false);
+	sortButton->setEnabled(false);
+	layer->addChild(sortButton, 102);
+	sortText = Text::create();
+	sortText->setText("Descending");
+	sortText->setPosition(sortButton->getPosition());
+	sortText->setFontSize(30);
+	sortText->setColor(Color3B::WHITE);
+	sortText->setVisible(false);
+	layer->addChild(sortText, 102);
 
-	for (int j = 0; j < 10; ++j)
-	{
-		for (int i = 0; i < 7; ++i)
-		{
-			UpgradeStone* stone = UpgradeStone::GenerateStone(1, stoneSize);
-			AddStone(stone);
-		}
-	}
-	SortStone(true);
+	sortType = Button::create("textures/grey.png");
+	sortType->setPosition(Vec2(inventoryScrollView->getPosition().x + inventoryScrollView->getContentSize().width / 4 * 3, inventoryScrollView->getPosition().y + inventoryScrollView->getContentSize().height /6 * 7));
+	sortType->setScaleX((inventoryScrollView->getContentSize().width / 2 / sortType->getContentSize().width));
+	sortType->setScaleY((inventoryScrollView->getContentSize().height / 6 / sortType->getContentSize().height));
+	sortType->addTouchEventListener(CC_CALLBACK_2(InventoryManager::onSortType, this));
+	sortType->setVisible(false);
+	sortType->setEnabled(false);
+	layer->addChild(sortType, 102);
+	sortTypeText = Text::create();
+	sortTypeText->setText("Firerate");
+	sortTypeText->setPosition(sortType->getPosition());
+	sortTypeText->setFontSize(30);
+	sortTypeText->setColor(Color3B::WHITE);
+	sortTypeText->setVisible(false);
+	layer->addChild(sortTypeText, 102);
 }
 
 void InventoryManager::Update(float dt)
@@ -325,6 +428,12 @@ void InventoryManager::Update(float dt)
 		inventoryDisable->setVisible(true);
 		inventoryEnable->setEnabled(false);
 		inventoryEnable->setVisible(false);
+		sortButton->setEnabled(true);
+		sortButton->setVisible(true);
+		sortType->setEnabled(true);
+		sortType->setVisible(true);
+		sortText->setVisible(true);
+		sortTypeText->setVisible(true);
 		change = false;
 	}
 	if (!displayInventory && change)
@@ -335,6 +444,12 @@ void InventoryManager::Update(float dt)
 		inventoryDisable->setVisible(false);
 		inventoryEnable->setEnabled(true);
 		inventoryEnable->setVisible(true);
+		sortButton->setEnabled(false);
+		sortButton->setVisible(false);
+		sortType->setEnabled(false);
+		sortType->setVisible(false);
+		sortText->setVisible(false);
+		sortTypeText->setVisible(false);
 		change = false;
 	}
 }
