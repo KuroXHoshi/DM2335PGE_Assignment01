@@ -11,9 +11,10 @@ void InventoryManager::AddStone(UpgradeStone * stone)
 {
 	//if the number of stones is divisible by stone row count
 	//need to create a new horizontal layer
-	if (stones.size() % stoneRowCount == 0)
+	if (GetStoneCount() % stoneRowCount == 0)
 	{
 		Layout* horizontalLayout = Layout::create();
+		horizontalLayout->retain();
 		horizontalLayout->setLayoutType(Layout::Type::HORIZONTAL);
 		horizontalLayouts.push_back(horizontalLayout);
 		//set the horizontal layout to correct location
@@ -26,7 +27,70 @@ void InventoryManager::AddStone(UpgradeStone * stone)
 	int finalIndex = horizontalLayouts.size() - 1;
 	stone->btn->setAnchorPoint(Vec2::ZERO);
 	horizontalLayouts[finalIndex]->addChild(stone->btn);
-	stones.push_back(stone);
+	//add it to respective catergory
+	stoneTypes[stone->type].push_back(stone);
+}
+
+void InventoryManager::SortStone(bool highest)
+{
+	//using std::sort
+	//if sort by highest to lowest
+	if (highest)
+	{
+		//for every type of stones
+		for (auto it : stoneTypes)
+		{
+			std::sort(it.begin(), it.end(), [](const UpgradeStone* a, const UpgradeStone* b) -> bool
+			{
+				return a->modififyingValue > b->modififyingValue;
+			});
+		}
+	}
+	else
+	{
+		//for every type of stones
+		for (auto it : stoneTypes)
+		{
+			std::sort(it.begin(), it.end(), [](const UpgradeStone* a, const UpgradeStone* b)
+			{
+				return a->modififyingValue < b->modififyingValue;
+			});
+		}
+	}
+	UpdateStonesPositions();
+}
+
+void InventoryManager::UpdateStonesPositions()
+{
+	//remove all the stones from all the layouts
+	for (auto it : horizontalLayouts)
+	{
+		it->removeAllChildrenWithCleanup(false);
+	}
+	int stoneIndexCount = 0;
+	int layoutCount = 0;
+	for (int i = stoneTypeSort; i < UpgradeStone::UT_COUNT; ++i)
+	{
+		for (int j = 0; j < stoneTypes[i].size(); ++j)
+		{
+			if (stoneIndexCount % stoneRowCount == 0)
+				++layoutCount;
+			//horizontalLayouts[horizontalLayouts.size() - layoutCount]->addChild(stoneTypes[i][j]->btn);
+			horizontalLayouts[layoutCount - 1]->addChild(stoneTypes[i][j]->btn);
+			++stoneIndexCount;
+		}
+	}
+	for (int i = 0; i < stoneTypeSort; ++i)
+	{
+		for (int j = 0; j < stoneTypes[i].size(); ++j)
+		{
+			if (stoneIndexCount % stoneRowCount == 0)
+				++layoutCount;
+			//horizontalLayouts[horizontalLayouts.size() - layoutCount]->addChild(stoneTypes[i][j]->btn);
+			horizontalLayouts[layoutCount - 1]->addChild(stoneTypes[i][j]->btn);
+			++stoneIndexCount;
+		}
+	}
 }
 
 void InventoryManager::AttachPlayer(Player * _player)
@@ -61,6 +125,15 @@ void InventoryManager::DisplayStoneStat(UpgradeStone * stone)
 		break;
 	case UpgradeStone::UPGRADE_TYPE::UT_FIRERATE:
 		type += "Firerate";
+		break;
+	case UpgradeStone::UPGRADE_TYPE::UT_RANGE:
+		type += "Range";
+		break;
+	case UpgradeStone::UPGRADE_TYPE::UT_CRITCHANCE:
+		type += "Critical Chance";
+		break;
+	case UpgradeStone::UPGRADE_TYPE::UT_CRITDAMAGE:
+		type += "Critical Damage";
 		break;
 	}
 	stoneTypeText->setText(type);
@@ -136,6 +209,13 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 	origin = Director::getInstance()->getVisibleOrigin();
 	this->hudLayer = layer;
 
+	for (int i = 0; i < UpgradeStone::UPGRADE_TYPE::UT_COUNT; ++i)
+	{
+		stoneTypes.push_back(std::vector<UpgradeStone*>());
+	}
+	stoneTypeSort = 0;
+	highestOrLowest = true;
+
 	inventoryEnable = Button::create("ZigzagGrass_Mud_Round.png", "ZigzagForest_Square.png");
 	inventoryEnable->setPosition(Vec2(visibleSize.width - inventoryEnable->getContentSize().width, visibleSize.height / 4 * 3 + origin.y));
 	inventoryEnable->addTouchEventListener(CC_CALLBACK_2(InventoryManager::onInventoryEnable, this));
@@ -156,7 +236,7 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 	inventoryScrollView->setPosition(Vec2(visibleSize.width / 5 + origin.x, visibleSize.height / 5 + origin.y));
 	inventoryScrollView->setBackGroundImage("textures/background.tga");
 	inventoryScrollView->setEnabled(false);
-	inventoryScrollView->setVisible(false);
+	inventoryScrollView->setVisible(false); 
 	layer->addChild(inventoryScrollView);
 
 	stoneRowCount = 7;
@@ -229,6 +309,7 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 			AddStone(stone);
 		}
 	}
+	SortStone(true);
 }
 
 void InventoryManager::Update(float dt)
