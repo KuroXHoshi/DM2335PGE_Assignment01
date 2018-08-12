@@ -108,11 +108,11 @@ bool HelloWorld::init()
 	//joystick_bg_left->setName("joystick_bg_left");
 	//this->addChild(joystick_bg_left, 2);
 	
-	DrawNode* drawnode = DrawNode::create();
-	drawnode->drawDot(Vec2(0, 0), 20, Color4F(2, 99, 2, 2));
+	//DrawNode* drawnode = DrawNode::create();
+	//drawnode->drawDot(Vec2(0, 0), 20, Color4F(2, 99, 2, 2));
 	//drawnode->setPosition(Point(winSize.width / 2.1 + origin.x, winSize.height / 5 + origin.y));
-	drawnode->setName("drawnode");
-	this->addChild(drawnode,3);
+	//drawnode->setName("drawnode");
+	//this->addChild(drawnode,3);
 
 	//auto spriteNode = Node::create();
 	//spriteNode->setName("spriteNode");
