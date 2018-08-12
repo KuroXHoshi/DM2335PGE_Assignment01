@@ -5,14 +5,12 @@
 
 enum WEAPON_TYPES
 {
-	RIFLE,
-	SPOOLDOWN_RIFLE, //slowly shoots slower
+	RIFLE= 0,
 	SHOTGUN,
-
 	FLAMETHROWER,
-	LENZ,
 	SWARM_SUMMON,
 	SUCTION_GUN,
+	COUNT
 };
 
 

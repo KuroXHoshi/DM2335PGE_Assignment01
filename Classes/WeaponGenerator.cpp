@@ -29,9 +29,6 @@ Weapon * WeaponGenerator::GetWeapon(WEAPON_TYPES type, int factionSide)
 	case WEAPON_TYPES::RIFLE:
 		weapon->Set(17, 22, 1, 0, 1000, factionSide, "textures/Protagonist_Bullet.tga");
 		break;
-	case WEAPON_TYPES::SPOOLDOWN_RIFLE:
-		weapon->Set(15, 30, 2, 0, 1000, factionSide, "textures/Protagonist_Bullet.tga");
-		break;
 	case WEAPON_TYPES::SHOTGUN:
 		weapon->Set(85, 130, 1.5f, 1, 1500, factionSide, "textures/Protagonist_Bullet.tga");
 		weapon->range = 250;
@@ -42,9 +39,6 @@ Weapon * WeaponGenerator::GetWeapon(WEAPON_TYPES type, int factionSide)
 		weapon->Set(5, 10, 10, 2, 400, factionSide, "textures/Protagonist_Bullet.tga");
 		weapon->range = 400;
 		weapon->baseCritChance = 0.15f;
-		break;
-	case WEAPON_TYPES::LENZ:
-		weapon->Set(50, 100, 1.5f, 3, 1000, factionSide, "textures/Protagonist_Bullet.tga");
 		break;
 	case WEAPON_TYPES::SWARM_SUMMON:
 		weapon->Set(20, 35, 5, 4, 750, factionSide, "textures/Protagonist_Bullet.tga");
