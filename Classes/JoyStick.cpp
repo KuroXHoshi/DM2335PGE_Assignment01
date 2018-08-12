@@ -105,38 +105,37 @@ JoyStick* JoyStick::GetInstance()
 
 bool JoyStick::onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos2d::Event * event)
 {
-	for (int i = 0; i < touches.size(); ++i)
+	int touchId = touches.size()-1;
+	cocos2d::log("touch began");
+	EventTouch* e = (EventTouch*)event;
+	float distance = ((joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).distance(touches[touchId]->getLocation()));
+
+	//Vec2 hudpos = hudLayer->getPosition();
+	//Vec2 theJoyPos = joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition();
+	//CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
+	//Vec2 thePlayerPos = player->sprite->getPosition();
+
+	hudLayer->getChildByName("joystick_fg_left")->setPosition(GetTouchLocation(touches[touchId]->getLocation()));
+	//Vec2 theDotPos = this->getChildByName("drawnode")->getPosition();
+	if (distance < 70)
 	{
-		cocos2d::log("touch began");
-		EventTouch* e = (EventTouch*)event;
-		float distance = ((joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).distance(touches[i]->getLocation()));
-
-		//Vec2 hudpos = hudLayer->getPosition();
-		//Vec2 theJoyPos = joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition();
-		//CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
-		//Vec2 thePlayerPos = player->sprite->getPosition();
-
-		hudLayer->getChildByName("joystick_fg_left")->setPosition(GetTouchLocation(touches[i]->getLocation()));
-		//Vec2 theDotPos = this->getChildByName("drawnode")->getPosition();
+		cocos2d::log("left joy touched");
+		leftJoyHeld = true;
+		leftTouch = touches[touchId]->getID();
+		return true;
+	}
+	else
+	{
+		distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touches[touchId]->getLocation()));
 		if (distance < 70)
 		{
-			cocos2d::log("left joy touched");
-			leftJoyHeld = true;
-			leftTouch = touches[i]->getID();
+			cocos2d::log("right joy touched");
+			rightJoyHeld = true;
+			rightTouch = touches[touchId]->getID();
 			return true;
 		}
-		else
-		{
-			distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touches[i]->getLocation()));
-			if (distance < 70)
-			{
-				cocos2d::log("right joy touched");
-				rightJoyHeld = true;
-				rightTouch = touches[i]->getID();
-				return true;
-			}
-		}
 	}
+
 
 	return false;
 }
@@ -164,11 +163,11 @@ void JoyStick::onTouchesMoved(const std::vector<cocos2d::Touch*> &touches, cocos
 	{
 		if (leftJoyHeld)
 		{
-			float distance = ((joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).distance(touches[i]->getLocation()));
-			leftJoyDirection = (touches[i]->getLocation() - joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).getNormalized();
+			float distance = ((joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).distance(touches[leftTouch]->getLocation()));
+			leftJoyDirection = (touches[leftTouch]->getLocation() - joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).getNormalized();
 			if (distance < 70)
 			{
-				hudLayer->getChildByName("joystick_fg_left")->setPosition(touches[i]->getLocation());
+				hudLayer->getChildByName("joystick_fg_left")->setPosition(touches[leftTouch]->getLocation());
 			}
 			else
 			{
@@ -177,11 +176,11 @@ void JoyStick::onTouchesMoved(const std::vector<cocos2d::Touch*> &touches, cocos
 		}
 		else if (rightJoyHeld)
 		{
-			float distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touches[i]->getLocation()));
+			float distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touches[rightTouch]->getLocation()));
 			rightJoyDirection = (touches[i]->getLocation() - joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).getNormalized();
 			if (distance < 70)
 			{
-				hudLayer->getChildByName("joystick_fg_right")->setPosition(touches[i]->getLocation());
+				hudLayer->getChildByName("joystick_fg_right")->setPosition(touches[rightTouch]->getLocation());
 			}
 			else
 			{
