@@ -158,7 +158,6 @@ void Player::Start()
 	
 	InventoryManager::GetInstance()->AttachPlayer(this);
 	JoyStick::GetInstance()->AttachPlayer(this);
-
 	//this->physicsBody->setMass(1000.0f);
 }
 
@@ -285,10 +284,7 @@ void Player::FireWeapon(Vec2 target_)
 {
 	if (weapon != nullptr)
 	{
-		if (!audio->isEffectPlaying(shootingSoundId))
-		{
-			shootingSoundId = audio->playEffect("sounds/shoot.mp3", true);
-		}
+		audio->playEffect("sounds/shoot.mp3");
 		//aka screem size
 		auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -298,13 +294,5 @@ void Player::FireWeapon(Vec2 target_)
 
 		weapon->Discharge();
 
-	}
-}
-
-void Player::StopFireWeaponSound()
-{
-	if (audio->isEffectPlaying(shootingSoundId))
-	{
-		audio-(shootingSoundId);
 	}
 }
