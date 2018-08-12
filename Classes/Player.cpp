@@ -173,7 +173,7 @@ void Player::Start()
 	this->SetSprite("textures/player_1.tga", "Player");
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
-	this->sprite->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	this->sprite->setPosition(playingSize.width / 2, playingSize.height / 2);
 
 	this->sprite->runAction(RepeatForever::create(this->animate))->setTag(0);
 

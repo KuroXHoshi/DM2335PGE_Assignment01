@@ -1,6 +1,7 @@
 #include "DamageText.h"
 
 #include "GameController.h"
+#include "AndroidCompile.h"
 
 void DamageText::Start()
 {
@@ -12,7 +13,7 @@ void DamageText::Start()
 
 	textLabel->setAlignment(TextHAlignment::CENTER);
 
-	textLabel->setString(std::to_string(this->damage));
+	textLabel->setString(to_string(this->damage));
 	textLabel->setTextColor(Color4B(255, 255, 255, 255));
 	if (isCrit)
 	{
