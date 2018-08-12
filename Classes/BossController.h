@@ -13,13 +13,16 @@ public:
 	Player* player;
 
 	bool hasStarted = false;
-	float stopAtDistance = 250;
+	float stopAtDistance = 300;
 
 	int currState = 0;
 	float currStateET = 0.0f;
 	float stateChangeTime = 5.0f;
+	int stateCount = 3;
 
 	BossController();
+
+	//Weapon* weaps[5];
 public:
 	~BossController();
 	
@@ -28,4 +31,8 @@ public:
 	void Start();
 	void Update(double dt);
 	void End();
+
+	void State0(double dt);
+	void State1(double dt);
+	void State2(double dt);
 };

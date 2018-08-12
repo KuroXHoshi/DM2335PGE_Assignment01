@@ -27,7 +27,7 @@ Weapon * WeaponGenerator::GetWeapon(WEAPON_TYPES type, int factionSide)
 	switch (type)
 	{
 	case WEAPON_TYPES::RIFLE:
-		weapon->Set(17, 22, 1, 0, 1000, factionSide, "textures/Protagonist_Bullet.tga");
+		weapon->Set(13, 22, 2.5f, 0, 1000, factionSide, "textures/Protagonist_Bullet.tga");
 		break;
 	case WEAPON_TYPES::SHOTGUN:
 		weapon->Set(85, 130, 1.5f, 1, 1500, factionSide, "textures/Protagonist_Bullet.tga");
