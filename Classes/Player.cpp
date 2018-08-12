@@ -133,6 +133,39 @@ void Player::Update(double dt)
 		return aDist < bDist;
 	});
 
+
+	for (std::vector<UpgradeStone*>::iterator it = stonesInWorld.begin(); it != stonesInWorld.end(); )
+	{
+		UpgradeStone* us = *it;
+
+		//InventoryManager::GetInstance()->AddStone(us);
+		//it = stonesInWorld.erase(it);
+		//continue;
+
+		Vec2 pos = us->btn->getPosition();
+		
+		Vec2 stoneToMe = -pos + this->position;
+		Vec2 dir = stoneToMe.getNormalized();
+		float flySpd = 200;
+		float thisframe = flySpd * dt;
+		float dist = stoneToMe.lengthSquared();
+
+		if (dist > thisframe)
+		{
+			//fly normally
+			pos = pos +  dir * flySpd * dt;
+			us->btn->setPosition(pos);
+		}
+		else
+		{
+			//snap
+			pos = this->position;
+			InventoryManager::GetInstance()->AddStone(us);
+			it = stonesInWorld.erase(it);
+			continue;
+		}
+		++it;
+	}
 }
 
 void Player::Start()
