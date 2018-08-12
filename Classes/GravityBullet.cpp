@@ -128,7 +128,7 @@ void GravityBullet::GoThereExplode(double dt)
 
 	float norm = this->direction.cross(direct);
 
-	DBOUT("NORM " << norm << "  ANGLEBTW " << anglebtw);
+	//DBOUT("NORM " << norm << "  ANGLEBTW " << anglebtw);
 
 
 	float turnAngleInRad = turnAngleSpd / 180.0f * PI;

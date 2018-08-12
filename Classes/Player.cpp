@@ -6,7 +6,6 @@
 #include "Enemy.h"
 USING_NS_CC;
 
-#include <Windows.h>
 
 Player::Player()
 {
