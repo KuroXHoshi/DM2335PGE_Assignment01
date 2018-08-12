@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "Player.h"
+#include "AndroidCompile.h"
 
 using namespace cocos2d;
 
@@ -141,12 +142,12 @@ void InventoryManager::DisplayStoneStat(UpgradeStone * stone)
 		type += "Critical Damage";
 		break;
 	}
-	stoneTypeText->setText(type);
+	stoneTypeText->setString(type);
 	stoneTypeText->setVisible(true);
 
 	std::string text = "Effect: +";
-	text += std::to_string(stone->modififyingValue) + "x";
-	stoneValueText->setText(text);
+	text += to_string(stone->modififyingValue) + "x";
+	stoneValueText->setString(text);
 	printf("%s", text.c_str());
 	stoneValueText->setVisible(true);
 
@@ -201,9 +202,9 @@ void InventoryManager::onSort(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchE
 		highestOrLowest = !highestOrLowest;
 		SortStone(highestOrLowest);
 		if (highestOrLowest)
-			sortText->setText("Descending");
+			sortText->setString("Descending");
 		else
-			sortText->setText("Ascending");
+			sortText->setString("Ascending");
 	}
 }
 
@@ -218,19 +219,19 @@ void InventoryManager::onSortType(cocos2d::Ref * sender, cocos2d::ui::Widget::To
 		switch (stoneTypeSort)
 		{
 		case 0:
-			sortTypeText->setText("Firerate");
+			sortTypeText->setString("Firerate");
 			break;
 		case 1:
-			sortTypeText->setText("Damage");
+			sortTypeText->setString("Damage");
 			break;
 		case 2:
-			sortTypeText->setText("Range");
+			sortTypeText->setString("Range");
 			break;
 		case 3:
-			sortTypeText->setText("Critical Chance");
+			sortTypeText->setString("Critical Chance");
 			break;
 		case 4:
-			sortTypeText->setText("Critical Damage");
+			sortTypeText->setString("Critical Damage");
 			break;
 		}
 	}
@@ -395,7 +396,7 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 	sortButton->setEnabled(false);
 	layer->addChild(sortButton, 102);
 	sortText = Text::create();
-	sortText->setText("Descending");
+	sortText->setString("Descending");
 	sortText->setPosition(sortButton->getPosition());
 	sortText->setFontSize(30);
 	sortText->setColor(Color3B::WHITE);
@@ -411,7 +412,7 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 	sortType->setEnabled(false);
 	layer->addChild(sortType, 102);
 	sortTypeText = Text::create();
-	sortTypeText->setText("Firerate");
+	sortTypeText->setString("Firerate");
 	sortTypeText->setPosition(sortType->getPosition());
 	sortTypeText->setFontSize(30);
 	sortTypeText->setColor(Color3B::WHITE);
