@@ -316,7 +316,6 @@ void Player::FireWeapon(Vec2 target_)
 {
 	if (weapon != nullptr)
 	{
-		audio->playEffect("sounds/shoot.mp3");
 		//aka screem size
 		auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -324,7 +323,7 @@ void Player::FireWeapon(Vec2 target_)
 		weapon->direction.set(target_.x, target_.y);
 		weapon->direction.normalize();
 
-		weapon->Discharge();
+		weapon->Discharge(audio);
 
 	}
 }

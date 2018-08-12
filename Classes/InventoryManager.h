@@ -42,6 +42,10 @@ public:
 	cocos2d::ui::Text* sortText;
 	cocos2d::ui::Text* sortTypeText;
 
+	cocos2d::ui::Button* changeWeapon;
+	cocos2d::ui::Text* changeWeaponText;
+	int weap = 0;
+
 	inline int GetStoneCount() { int i = 0; for (auto it : stoneTypes) i += it.size(); return i; }
 
 	void AttachPlayer(Player*);
@@ -58,6 +62,7 @@ public:
 	void equipStone(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void onSort(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void onSortType(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void onChangeWeapon(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 	//sorting functions
 	void quickSort(std::vector<UpgradeStone*> &stones, int _first_index, int _last_index);

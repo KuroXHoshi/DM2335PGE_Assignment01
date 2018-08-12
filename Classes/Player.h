@@ -13,7 +13,6 @@ private:
 	EventListenerKeyboard* kbListener;
 	EventListenerMouse* mouseListener;
 	//Controls controls;
-	Weapon* weapon;
 	TAGENUM factionTag;
 	int health;
 	CocosDenshion::SimpleAudioEngine *audio;
@@ -38,4 +37,6 @@ public:
 	const int stoneModifierSize = 6;
 	UpgradeStone* stoneModifiers[6] = { nullptr, };
 	std::vector<UpgradeStone*> stonesInWorld;
+
+	Weapon* weapon;
 };
