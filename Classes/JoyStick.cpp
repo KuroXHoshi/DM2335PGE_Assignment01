@@ -73,11 +73,11 @@ void JoyStick::update(float dt_)
 		player->sprite->runAction(moveEvent)->setTag(1);
 
 		//sprite->stopActionByTag(0);
-		if (!player->sprite->getNumberOfRunningActionsByTag(0))
-		{
+		//if (!player->sprite->getNumberOfRunningActionsByTag(0))
+		//{
 			//player->sprite->stopActionByTag(0);
-			player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
-		}
+			//player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
+		//}
 	}
 	else
 	{
@@ -197,16 +197,17 @@ void JoyStick::onTouchesCancelled(const std::vector<cocos2d::Touch*> &touches, c
 {
 	for (int i = 0; i < touches.size(); ++i)
 	{
-		if (i == leftTouch)
+		if (touches[i]->getID() == leftTouch)
 		{
 			leftJoyHeld = false;
-			leftTouch = 9;
+			leftTouch = -1;
 		}
-		else if (i == rightTouch)
+		else if (touches[i]->getID() == rightTouch)
 		{
 			rightJoyHeld = false;
-			rightTouch = 9;
+			rightTouch = -1;
 		}
+		--joyStickId;
 	}
 }
 
