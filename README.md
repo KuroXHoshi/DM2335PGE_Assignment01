@@ -19,11 +19,11 @@ As I have already configured the current proj.android-studio folder, just copy a
 Next, open Android Studio software and open the proj.android-studio folder in the newly created project and build.  Currently, you are unable to debug and run using the emulator, you can only do this using your own android phone, it's the backend limitations of the emulator, nothing can be done at the moment unless I touch the source codes.
 
 If you want to setup your own, the files required to configure are:
-\proj.android-studio\app\jni\Android.mk
-\proj.android-studio\app\jni\Application.mk
-\proj.android-studio\gradle\wrapper\gradle-wrapper.properties
-\proj.android-studio\app\build.gradle
-\proj.android-studio\build.gradle
+- \proj.android-studio\app\jni\Android.mk
+- \proj.android-studio\app\jni\Application.mk
+- \proj.android-studio\gradle\wrapper\gradle-wrapper.properties
+- \proj.android-studio\app\build.gradle
+- \proj.android-studio\build.gradle
 
 Things to note when configuring are:
 - APP_ABI
