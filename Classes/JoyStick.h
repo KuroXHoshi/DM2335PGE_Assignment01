@@ -27,7 +27,7 @@ public:
 	virtual void onTouchMoved(cocos2d::Touch*, cocos2d::Event*);
 	virtual void onTouchCancelled(cocos2d::Touch*, cocos2d::Event*);
 
-
+	Vec2 GetTouchLocation(Vec2 touchLocation_);
 
 	EventListenerTouchOneByOne* GetEventListenerTouch();
 private:

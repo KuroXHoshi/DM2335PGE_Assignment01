@@ -23,7 +23,7 @@ void JoyStick::init(cocos2d::Layer* layer)
 	
 	auto joystick_bg_leftSprite = Sprite::create("textures/ui_joystick_bg.tga");
 	joystick_bg_leftSprite->setAnchorPoint(Vec2(0.5f, 0.5f));
-	joystick_bg_leftSprite->setPosition(Vec2(playingSize.width * 0.15, playingSize.height * 0.2));
+	joystick_bg_leftSprite->setPosition(Vec2(visibleSize.width * 0.15, visibleSize.height * 0.2));
 	joystick_bg_leftSprite->setName(joystick_bg_left->getName() + "sprite");
 	joystick_bg_leftSprite->retain();
 	joystick_bg_left->addChild(joystick_bg_leftSprite);
@@ -35,7 +35,7 @@ void JoyStick::init(cocos2d::Layer* layer)
 
 	auto joystick_bg_rightSprite = Sprite::create("textures/ui_joystick_bg.tga");
 	joystick_bg_rightSprite->setAnchorPoint(Vec2(0.5f, 0.5f));
-	joystick_bg_rightSprite->setPosition(Vec2(playingSize.width * 0.85, playingSize.height * 0.2));
+	joystick_bg_rightSprite->setPosition(Vec2(visibleSize.width * 0.85, visibleSize.height * 0.2));
 	joystick_bg_rightSprite->setName(joystick_bg_right->getName() + "sprite");
 	joystick_bg_rightSprite->retain();
 	joystick_bg_right->addChild(joystick_bg_rightSprite);
@@ -108,7 +108,7 @@ bool JoyStick::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * event)
 	//CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
 	//Vec2 thePlayerPos = player->sprite->getPosition();
 
-	hudLayer->getChildByName("joystick_fg_left")->setPosition(touch->getLocationInView());
+	hudLayer->getChildByName("joystick_fg_left")->setPosition(GetTouchLocation(touch->getLocation()));
 	//Vec2 theDotPos = this->getChildByName("drawnode")->getPosition();
 	if (distance < 70)
 	{
@@ -182,4 +182,16 @@ void JoyStick::onTouchCancelled(cocos2d::Touch *, cocos2d::Event *)
 EventListenerTouchOneByOne* JoyStick::GetEventListenerTouch()
 {
 	return eventListenerTouch;
+} 
+
+Vec2 JoyStick::GetTouchLocation(Vec2 touchLocation_)
+{
+	Size size = Director::getInstance()->getInstance()->getVisibleSize();
+
+	float propX = touchLocation_.x / 1024;
+	float propY = touchLocation_.y / 768;
+	//location.x = size.width * propX;
+	//location.y = size.height * propY;
+	Vec2 Return = Vec2(propX * size.width, propY * size.height);
+	return Return;
 }
