@@ -72,7 +72,6 @@ cocos2d/cocos/platform/android/java/res/
 .recommenders/
 
 # proj.android-studio
-proj.android-studio/
 .idea/
 *.iml
 proj.android-studio/app/assets/

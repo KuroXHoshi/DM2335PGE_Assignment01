@@ -26,7 +26,7 @@ void ShotgunShell::Start()
 		pellet->factionTag = this->factionTag;
 		pellet->SetSpriteStuffs(bulletTexture);
 
-		DBOUT(i << " dir: " << pelletDir.x << " " << pelletDir.y);
+		//DBOUT(i << " dir: " << pelletDir.x << " " << pelletDir.y);
 	}
 }
 

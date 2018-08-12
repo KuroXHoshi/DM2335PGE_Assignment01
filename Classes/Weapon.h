@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "UpgradeStone.h"
 #include "Projectile.h"
+#include "SimpleAudioEngine.h"
 
 class Weapon : public GameObject
 {
@@ -43,7 +44,7 @@ public:
 	virtual void Update(double dt);
 
 	//Call this function to Shoot weapon
-	virtual void Discharge();
+	virtual void Discharge(CocosDenshion::SimpleAudioEngine *audio = nullptr);
 
 	//Call this function to initialize the weapon
 	virtual void Set(int min_dmg, int max_dmg, double attacks_per_sec, int bulletType, float bulletSpeed, int factionSide, std::string bulletsrite = "Blue_Front1.png");
