@@ -121,7 +121,7 @@ bool JoyStick::onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos
 	{
 		cocos2d::log("left joy touched");
 		leftJoyHeld = true;
-		leftTouch = touches[touchId]->getID();
+		leftTouch = touchId;
 		return true;
 	}
 	else
@@ -131,7 +131,7 @@ bool JoyStick::onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos
 		{
 			cocos2d::log("right joy touched");
 			rightJoyHeld = true;
-			rightTouch = touches[touchId]->getID();
+			rightTouch = touchId;
 			return true;
 		}
 	}
@@ -144,12 +144,12 @@ void JoyStick::onTouchesEnded(const std::vector<cocos2d::Touch*> &touches, cocos
 {
 	for (int i = 0; i < touches.size(); ++i)
 	{
-		if (touches[i]->getID() == leftTouch)
+		if (i == leftTouch)
 		{
 			leftJoyHeld = false;
 			leftTouch = 9;
 		}
-		else if (touches[i]->getID() == rightTouch)
+		else if (i == rightTouch)
 		{
 			rightJoyHeld = false;
 			rightTouch = 9;
@@ -161,7 +161,7 @@ void JoyStick::onTouchesMoved(const std::vector<cocos2d::Touch*> &touches, cocos
 {
 	for (int i = 0; i < touches.size(); ++i)
 	{
-		if (leftJoyHeld)
+		if (leftTouch == i)
 		{
 			float distance = ((joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).distance(touches[leftTouch]->getLocation()));
 			leftJoyDirection = (touches[leftTouch]->getLocation() - joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).getNormalized();
@@ -174,7 +174,7 @@ void JoyStick::onTouchesMoved(const std::vector<cocos2d::Touch*> &touches, cocos
 				hudLayer->getChildByName("joystick_fg_left")->setPosition(joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition() + leftJoyDirection * 70);
 			}
 		}
-		else if (rightJoyHeld)
+		else if (rightTouch == i)
 		{
 			float distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touches[rightTouch]->getLocation()));
 			rightJoyDirection = (touches[rightTouch]->getLocation() - joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).getNormalized();
@@ -194,12 +194,12 @@ void JoyStick::onTouchesCancelled(const std::vector<cocos2d::Touch*> &touches, c
 {
 	for (int i = 0; i < touches.size(); ++i)
 	{
-		if (touches[i]->getID() == leftTouch)
+		if (i == leftTouch)
 		{
 			leftJoyHeld = false;
 			leftTouch = 9;
 		}
-		else if (touches[i]->getID() == rightTouch)
+		else if (i == rightTouch)
 		{
 			rightJoyHeld = false;
 			rightTouch = 9;
