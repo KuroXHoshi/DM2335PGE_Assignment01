@@ -2,7 +2,7 @@
 
 
 JoyStick* JoyStick::s_instance = nullptr;
-JoyStick::JoyStick() : leftJoyHeld(false), rightJoyHeld(false), leftTouch(0), rightTouch(0)
+JoyStick::JoyStick() : leftJoyHeld(false), rightJoyHeld(false), leftTouch(9), rightTouch(9)
 {
 }
 
@@ -74,13 +74,19 @@ void JoyStick::update(float dt_)
 
 		//sprite->stopActionByTag(0);
 		if (!player->sprite->getNumberOfRunningActionsByTag(0))
-		player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
+			player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
+	}
+	else
+	{
+		player->sprite->stopActionByTag(0);
+		player->sprite->setTexture("textures/player_1.tga");
 	}
 	if (rightJoyHeld)
 	{
 		player->LookAt(-rightJoyDirection);
 		player->FireWeapon(rightJoyDirection);
 	}
+
 }
 
 void JoyStick::AttachPlayer(Player* _player)
@@ -105,8 +111,8 @@ bool JoyStick::onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos
 		EventTouch* e = (EventTouch*)event;
 		float distance = ((joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).distance(touches[i]->getLocation()));
 
-		Vec2 hudpos = hudLayer->getPosition();
-		Vec2 theJoyPos = joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition();
+		//Vec2 hudpos = hudLayer->getPosition();
+		//Vec2 theJoyPos = joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition();
 		//CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
 		//Vec2 thePlayerPos = player->sprite->getPosition();
 
@@ -142,10 +148,12 @@ void JoyStick::onTouchesEnded(const std::vector<cocos2d::Touch*> &touches, cocos
 		if (touches[i]->getID() == leftTouch)
 		{
 			leftJoyHeld = false;
+			leftTouch = 9;
 		}
 		else if (touches[i]->getID() == rightTouch)
 		{
 			rightJoyHeld = false;
+			rightTouch = 9;
 		}
 	}
 }
@@ -190,10 +198,12 @@ void JoyStick::onTouchesCancelled(const std::vector<cocos2d::Touch*> &touches, c
 		if (touches[i]->getID() == leftTouch)
 		{
 			leftJoyHeld = false;
+			leftTouch = 9;
 		}
 		else if (touches[i]->getID() == rightTouch)
 		{
 			rightJoyHeld = false;
+			rightTouch = 9;
 		}
 	}
 }

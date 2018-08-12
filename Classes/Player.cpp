@@ -75,11 +75,11 @@ void Player::Update(double dt)
 		if (!sprite->getNumberOfRunningActionsByTag(0))
 		sprite->runAction(RepeatForever::create(animate))->setTag(0);
 	}
-	if (sprite->getNumberOfRunningActionsByTag(0) && !anyKeyHeld() && sprite->getName() == "Playersprite")
-	{
-		sprite->stopAllActions();
-		sprite->setTexture("textures/player_1.tga");
-	}
+	//if (sprite->getNumberOfRunningActionsByTag(0) && !anyKeyHeld() && sprite->getName() == "Playersprite")
+	//{
+	//	sprite->stopAllActions();
+	//	sprite->setTexture("textures/player_1.tga");
+	//}
 	//physicsBody->onAdd(); // bandaid fix for animation
 	//physicsBody->setVelocity(Vec2::ZERO);
 
