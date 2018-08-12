@@ -22,7 +22,7 @@ public:
 	void AttachPlayer(Player*);
 	static JoyStick* GetInstance();
 
-	virtual bool onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos2d::Event*);
+	virtual void onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos2d::Event*);
 	virtual void onTouchesEnded(const std::vector<cocos2d::Touch*> &touches, cocos2d::Event*);
 	virtual void onTouchesMoved(const std::vector<cocos2d::Touch*> &touches, cocos2d::Event*);
 	virtual void onTouchesCancelled(const std::vector<cocos2d::Touch*> &touches, cocos2d::Event*);

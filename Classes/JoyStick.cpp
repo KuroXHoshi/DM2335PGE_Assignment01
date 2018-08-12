@@ -73,8 +73,11 @@ void JoyStick::update(float dt_)
 		player->sprite->runAction(moveEvent)->setTag(1);
 
 		//sprite->stopActionByTag(0);
-		if (!player->sprite->getNumberOfRunningActionsByTag(0))
+		if (!player->sprite->getActionByTag(0))
+		{
+			player->sprite->stopActionByTag(0);
 			player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
+		}
 	}
 	else
 	{
@@ -103,7 +106,7 @@ JoyStick* JoyStick::GetInstance()
 	return s_instance;
 }
 
-bool JoyStick::onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos2d::Event * event)
+void JoyStick::onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos2d::Event * event)
 {
 	int touchId = touches.size()-1;
 	cocos2d::log("touch began");
@@ -115,14 +118,13 @@ bool JoyStick::onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos
 	//CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
 	//Vec2 thePlayerPos = player->sprite->getPosition();
 
-	hudLayer->getChildByName("joystick_fg_left")->setPosition(GetTouchLocation(touches[touchId]->getLocation()));
+	//hudLayer->getChildByName("joystick_fg_left")->setPosition(GetTouchLocation(touches[touchId]->getLocation()));
 	//Vec2 theDotPos = this->getChildByName("drawnode")->getPosition();
 	if (distance < 70)
 	{
 		cocos2d::log("left joy touched");
 		leftJoyHeld = true;
 		leftTouch = touchId;
-		return true;
 	}
 	else
 	{
@@ -132,12 +134,8 @@ bool JoyStick::onTouchesBegan(const std::vector<cocos2d::Touch*> &touches, cocos
 			cocos2d::log("right joy touched");
 			rightJoyHeld = true;
 			rightTouch = touchId;
-			return true;
 		}
 	}
-
-
-	return false;
 }
 
 void JoyStick::onTouchesEnded(const std::vector<cocos2d::Touch*> &touches, cocos2d::Event *event)
