@@ -40,11 +40,12 @@ int Weapon::GetDamage()
 	return this->min_damage + (rand() % (this->max_damage - this->min_damage));
 }
 
-void Weapon::Discharge()
+void Weapon::Discharge(CocosDenshion::SimpleAudioEngine *audio)
 {
 	if (!(attackspeed_timer >= attackspeed_triggerTime))
 		return;
-
+	if(audio != nullptr)
+	audio->playEffect("sounds/shoot.mp3");
 	Projectile* proj = WeaponGenerator::GetInstance()->GetProjectile(this);
 
 	//AudioPlayer::GetInstance()->PlaySound2D("PewPew", 0.2);
