@@ -39,5 +39,6 @@ private:
 	int rightTouch;
 	Vec2 leftJoyDirection;
 	Vec2 rightJoyDirection;
+	int joyStickId;
 };
 

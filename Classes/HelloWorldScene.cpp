@@ -147,8 +147,12 @@ bool HelloWorld::init()
 
 	cocos2d::Vector<SpriteFrame*> animFrames;
 	animFrames.reserve(2);
-	animFrames.pushBack(SpriteFrame::create("textures/player_2.tga", Rect(0, 0, 39, 43)));
-	animFrames.pushBack(SpriteFrame::create("textures/player_3.tga", Rect(0, 0, 39, 40)));
+	auto spriteFrame = SpriteFrame::create("textures/player_2.tga", Rect(0, 0, 39, 43));
+	spriteFrame->setAnchorPoint(Vec2(0.5f, 0.5f));
+	animFrames.pushBack(spriteFrame);
+	auto spriteFrame2 = SpriteFrame::create("textures/player_3.tga", Rect(0, 0, 39, 40));
+	spriteFrame2->setAnchorPoint(Vec2(0.5f, 0.5f));
+	animFrames.pushBack(spriteFrame2);
 	//animFrames.pushBack(SpriteFrame::create("Blue_Front3.png", Rect(0, 0, 65, 81)));
 	//animFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
 
