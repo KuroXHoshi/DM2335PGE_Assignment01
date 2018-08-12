@@ -166,7 +166,8 @@ void Player::LookAt(Vec2 target_)
 	//physicsBody->()
 	if (!sprite)
 		return;
-	sprite->setRotation(-90 + atan2(target_.y,target_.x) * 180 / 3.14159265f);
+	//sprite->setRotation(-90 + atan2(target_.y,target_.x) * 180 / 3.14159265f);
+	sprite->setRotation(atan2(target_.x, target_.y) * 180 / 3.14159265f);
 	//physicsBody->setRotationOffset(sprite->getRotation());
 }
 
@@ -220,19 +221,19 @@ void Player::onMousePressed(cocos2d::Event * event_)
 	EventMouse* e = (EventMouse*)event_;
 	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
 	{
-		if (weapon != nullptr)
-		{
-			audio->playEffect("sounds/shoot.mp3");
-			//aka screem size
-			auto visibleSize = Director::getInstance()->getVisibleSize();
+		//if (weapon != nullptr)
+		//{
+		//	audio->playEffect("sounds/shoot.mp3");
+		//	//aka screem size
+		//	auto visibleSize = Director::getInstance()->getVisibleSize();
 
-			weapon->position.set(sprite->getPosition());
-			weapon->direction.set(e->getCursorX() - visibleSize.width * 0.5f, e->getCursorY() - visibleSize.height * 0.5f);
-			weapon->direction.normalize();
+		//	weapon->position.set(sprite->getPosition());
+		//	weapon->direction.set(e->getCursorX() - visibleSize.width * 0.5f, e->getCursorY() - visibleSize.height * 0.5f);
+		//	weapon->direction.normalize();
 
-			weapon->Discharge();
+		//	weapon->Discharge();
 
-		}
+		//}
 
 	}
 }
@@ -265,7 +266,7 @@ void Player::onMouseReleased(cocos2d::Event * event_)
 void Player::onMouseMove(cocos2d::Event * event_)
 {
 	EventMouse* eventMouse = (EventMouse*)event_;
-	LookAt(eventMouse->getLocation() - Director::getInstance()->getVisibleSize() * 0.5f);
+	//LookAt(eventMouse->getLocation() - Director::getInstance()->getVisibleSize() * 0.5f);
 }
 
 EventListenerKeyboard* Player::GetKbListener()
@@ -276,4 +277,22 @@ EventListenerKeyboard* Player::GetKbListener()
 EventListenerMouse * Player::GetMouseListener()
 {
 	return mouseListener;
+}
+
+
+void Player::FireWeapon(Vec2 target_)
+{
+	if (weapon != nullptr)
+	{
+		audio->playEffect("sounds/shoot.mp3");
+		//aka screem size
+		auto visibleSize = Director::getInstance()->getVisibleSize();
+
+		weapon->position.set(sprite->getPosition());
+		weapon->direction.set(target_.x, target_.y);
+		weapon->direction.normalize();
+
+		weapon->Discharge();
+
+	}
 }

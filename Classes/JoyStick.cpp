@@ -2,7 +2,7 @@
 
 
 JoyStick* JoyStick::s_instance = nullptr;
-JoyStick::JoyStick() : leftJoyHeld(false)
+JoyStick::JoyStick() : leftJoyHeld(false), rightJoyHeld(false)
 {
 }
 
@@ -29,11 +29,29 @@ void JoyStick::init(cocos2d::Layer* layer)
 
 	layer->addChild(joystick_bg_left);
 
-	DrawNode* drawnode = DrawNode::create();
-	drawnode->drawDot(Vec2(0, 0), 20, Color4F(2, 99, 2, 2));
+	joystick_bg_right = Node::create();
+	joystick_bg_right->setName("joystick_bg_right");
+
+	auto joystick_bg_rightSprite = Sprite::create("textures/ui_joystick_bg.tga");
+	joystick_bg_rightSprite->setAnchorPoint(Vec2(0.5f, 0.5f));
+	joystick_bg_rightSprite->setPosition(Vec2(visibleSize.width * 0.85, visibleSize.height * 0.2));
+	joystick_bg_rightSprite->setName(joystick_bg_right->getName() + "sprite");
+	joystick_bg_rightSprite->retain();
+	joystick_bg_right->addChild(joystick_bg_rightSprite);
+
+	layer->addChild(joystick_bg_right);
+
+	DrawNode* joystick_fg_left = DrawNode::create();
+	joystick_fg_left->drawDot(Vec2(0, 0), 20, Color4F(2, 99, 2, 2));
 	//drawnode->setPosition(Point(winSize.width / 2.1 + origin.x, winSize.height / 5 + origin.y));
-	drawnode->setName("drawnode");
-	layer->addChild(drawnode, 3);
+	joystick_fg_left->setName("joystick_fg_left");
+	layer->addChild(joystick_fg_left, 3);
+
+	DrawNode* joystick_fg_right = DrawNode::create();
+	joystick_fg_right->drawDot(Vec2(0, 0), 20, Color4F(2, 99, 2, 2));
+	//drawnode->setPosition(Point(winSize.width / 2.1 + origin.x, winSize.height / 5 + origin.y));
+	joystick_fg_right->setName("joystick_fg_right");
+	layer->addChild(joystick_fg_right, 3);
 
 	eventListenerTouch = EventListenerTouchOneByOne::create();
 
@@ -56,7 +74,11 @@ void JoyStick::update(float dt_)
 		//sprite->stopActionByTag(0);
 		if (!player->sprite->getNumberOfRunningActionsByTag(0))
 		player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
-
+	}
+	if (rightJoyHeld)
+	{
+		player->LookAt(-rightJoyDirection);
+		player->FireWeapon(rightJoyDirection);
 	}
 }
 
@@ -85,15 +107,28 @@ bool JoyStick::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * event)
 	//CCPoint theTouchLoc = convertToWorldSpace(touch->getLocation());
 	//Vec2 thePlayerPos = player->sprite->getPosition();
 
-	hudLayer->getChildByName("drawnode")->setPosition(touch->getLocation());
+	hudLayer->getChildByName("joystick_fg_left")->setPosition(touch->getLocation());
 	//Vec2 theDotPos = this->getChildByName("drawnode")->getPosition();
 	if (distance < 70)
 	{
-		cocos2d::log("button");
+		cocos2d::log("left joy touched");
 		leftJoyHeld = true;
 		leftTouch = touch->getID();
 		return true;
 	}
+	else
+	{
+		distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touch->getLocation()));
+		if (distance < 70)
+		{
+			cocos2d::log("right joy touched");
+			rightJoyHeld = true;
+			rightTouch = touch->getID();
+			return true;
+		}
+	}
+
+
 	return true;
 }
 
@@ -102,6 +137,10 @@ void JoyStick::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event)
 	if (touch->getID() == leftTouch)
 	{
 		leftJoyHeld = false;
+	}
+	else if (touch->getID() == rightTouch)
+	{
+		rightJoyHeld = false;
 	}
 }
 
@@ -113,11 +152,24 @@ void JoyStick::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
 		leftJoyDirection = (touch->getLocation() - joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).getNormalized();
 		if (distance < 70)
 		{
-			hudLayer->getChildByName("drawnode")->setPosition(touch->getLocation());
+			hudLayer->getChildByName("joystick_fg_left")->setPosition(touch->getLocation());
 		}
 		else
 		{
-			hudLayer->getChildByName("drawnode")->setPosition(joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition() + leftJoyDirection * 70);
+			hudLayer->getChildByName("joystick_fg_left")->setPosition(joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition() + leftJoyDirection * 70);
+		}
+	}
+	else if (rightJoyHeld)
+	{
+		float distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touch->getLocation()));
+		rightJoyDirection = (touch->getLocation() - joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).getNormalized();
+		if (distance < 70)
+		{
+			hudLayer->getChildByName("joystick_fg_right")->setPosition(touch->getLocation());
+		}
+		else
+		{
+			hudLayer->getChildByName("joystick_fg_right")->setPosition(joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition() + rightJoyDirection * 70);
 		}
 	}
 }
