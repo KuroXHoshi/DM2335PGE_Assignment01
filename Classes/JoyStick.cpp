@@ -175,8 +175,16 @@ void JoyStick::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
 	}
 }
 
-void JoyStick::onTouchCancelled(cocos2d::Touch *, cocos2d::Event *)
+void JoyStick::onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event)
 {
+	if (touch->getID() == leftTouch)
+	{
+		leftJoyHeld = false;
+	}
+	else if (touch->getID() == rightTouch)
+	{
+		rightJoyHeld = false;
+	}
 }
 
 EventListenerTouchOneByOne* JoyStick::GetEventListenerTouch()
@@ -186,12 +194,13 @@ EventListenerTouchOneByOne* JoyStick::GetEventListenerTouch()
 
 Vec2 JoyStick::GetTouchLocation(Vec2 touchLocation_)
 {
-	Size size = Director::getInstance()->getInstance()->getVisibleSize();
-
+	Size size = Director::getInstance()->getVisibleSize();
+	float asd = Director::getInstance()->getContentScaleFactor();
 	float propX = touchLocation_.x / 1024;
 	float propY = touchLocation_.y / 768;
 	//location.x = size.width * propX;
 	//location.y = size.height * propY;
-	Vec2 Return = Vec2(propX * size.width, propY * size.height);
+	//Vec2 Return = Vec2(propX, Director::getInstance()->getContentScaleFactor());
+	Vec2 Return = Vec2(touchLocation_.x, touchLocation_.y);
 	return Return;
 }
