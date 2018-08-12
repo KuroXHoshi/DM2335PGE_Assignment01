@@ -73,12 +73,18 @@ void JoyStick::update(float dt_)
 
 		//sprite->stopActionByTag(0);
 		if (!player->sprite->getNumberOfRunningActionsByTag(0))
-		player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
+		{
+			player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
+		}
 	}
 	if (rightJoyHeld)
 	{
 		player->LookAt(-rightJoyDirection);
 		player->FireWeapon(rightJoyDirection);
+	}
+	else
+	{
+		player->StopFireWeaponSound();
 	}
 }
 
@@ -136,6 +142,7 @@ void JoyStick::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event)
 {
 	if (touch->getID() == leftTouch)
 	{
+		//hudLayer->getChildByName("joystick_fg_left")->setPosition(touch->getLocation());
 		leftJoyHeld = false;
 	}
 	else if (touch->getID() == rightTouch)

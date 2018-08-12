@@ -17,7 +17,8 @@ private:
 	TAGENUM factionTag;
 	int health;
 	CocosDenshion::SimpleAudioEngine *audio;
-	
+	int shootingSoundId;
+
 public:
 	Player();
 	void Update(double dt);
@@ -33,6 +34,7 @@ public:
 	EventListenerKeyboard* GetKbListener();
 	EventListenerMouse* GetMouseListener();
 	void FireWeapon(Vec2 target_);
+	void StopFireWeaponSound();
 
 	//Upgrade Stones to affect the multipliers on equiped weaps
 	const int stoneModifierSize = 6;
