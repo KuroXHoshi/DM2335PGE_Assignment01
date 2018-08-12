@@ -14,6 +14,7 @@ public:
 	cocos2d::Layer* hudLayer;
 	static JoyStick* s_instance;
 	Node* joystick_bg_left;
+	Node* joystick_bg_right;
 	cocos2d::Size visibleSize;
 	cocos2d::Vec2 origin;
 	Player* player;
@@ -31,8 +32,10 @@ private:
 	JoyStick();
 	EventListenerTouchOneByOne* eventListenerTouch;
 	bool leftJoyHeld;
+	bool rightJoyHeld;
 	int leftTouch;
 	int rightTouch;
 	Vec2 leftJoyDirection;
+	Vec2 rightJoyDirection;
 };
 

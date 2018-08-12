@@ -15,6 +15,10 @@ public:
 	bool hasStarted = false;
 	float stopAtDistance = 250;
 
+	int currState = 0;
+	float currStateET = 0.0f;
+	float stateChangeTime = 5.0f;
+
 	BossController();
 public:
 	~BossController();

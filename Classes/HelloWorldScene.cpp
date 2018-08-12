@@ -507,6 +507,13 @@ bool HelloWorld::OnContactBegin(PhysicsContact & contact)
 						GameController::GetInstance()->RemoveOneEnemy();
 					}
 
+					//generate a upgrade stone
+					int randMod = rand() % 5 + 1;
+					UpgradeStone* us = UpgradeStone::GenerateStone(randMod, Size(50, 50));
+					us->btn->setPosition(enemy->position);
+					this->addChild(us->btn);
+
+					GameController::GetInstance()->player->stonesInWorld.push_back(us);
 				}
 			}
 			else

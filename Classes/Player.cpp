@@ -6,7 +6,6 @@
 #include "Enemy.h"
 USING_NS_CC;
 
-#include <Windows.h>
 
 Player::Player()
 {
@@ -134,6 +133,39 @@ void Player::Update(double dt)
 		return aDist < bDist;
 	});
 
+
+	for (std::vector<UpgradeStone*>::iterator it = stonesInWorld.begin(); it != stonesInWorld.end(); )
+	{
+		UpgradeStone* us = *it;
+
+		//InventoryManager::GetInstance()->AddStone(us);
+		//it = stonesInWorld.erase(it);
+		//continue;
+
+		Vec2 pos = us->btn->getPosition();
+		
+		Vec2 stoneToMe = -pos + this->position;
+		Vec2 dir = stoneToMe.getNormalized();
+		float flySpd = 200;
+		float thisframe = flySpd * dt;
+		float dist = stoneToMe.lengthSquared();
+
+		if (dist > thisframe)
+		{
+			//fly normally
+			pos = pos +  dir * flySpd * dt;
+			us->btn->setPosition(pos);
+		}
+		else
+		{
+			//snap
+			pos = this->position;
+			InventoryManager::GetInstance()->AddStone(us);
+			it = stonesInWorld.erase(it);
+			continue;
+		}
+		++it;
+	}
 }
 
 void Player::Start()
@@ -166,7 +198,8 @@ void Player::LookAt(Vec2 target_)
 	//physicsBody->()
 	if (!sprite)
 		return;
-	sprite->setRotation(-90 + atan2(target_.y,target_.x) * 180 / 3.14159265f);
+	//sprite->setRotation(-90 + atan2(target_.y,target_.x) * 180 / 3.14159265f);
+	sprite->setRotation(atan2(target_.x, target_.y) * 180 / 3.14159265f);
 	//physicsBody->setRotationOffset(sprite->getRotation());
 }
 
@@ -220,19 +253,19 @@ void Player::onMousePressed(cocos2d::Event * event_)
 	EventMouse* e = (EventMouse*)event_;
 	if (e->getMouseButton() == cocos2d::EventMouse::MouseButton::BUTTON_LEFT)
 	{
-		if (weapon != nullptr)
-		{
-			audio->playEffect("sounds/shoot.mp3");
-			//aka screem size
-			auto visibleSize = Director::getInstance()->getVisibleSize();
+		//if (weapon != nullptr)
+		//{
+		//	audio->playEffect("sounds/shoot.mp3");
+		//	//aka screem size
+		//	auto visibleSize = Director::getInstance()->getVisibleSize();
 
-			weapon->position.set(sprite->getPosition());
-			weapon->direction.set(e->getCursorX() - visibleSize.width * 0.5f, e->getCursorY() - visibleSize.height * 0.5f);
-			weapon->direction.normalize();
+		//	weapon->position.set(sprite->getPosition());
+		//	weapon->direction.set(e->getCursorX() - visibleSize.width * 0.5f, e->getCursorY() - visibleSize.height * 0.5f);
+		//	weapon->direction.normalize();
 
-			weapon->Discharge();
+		//	weapon->Discharge();
 
-		}
+		//}
 
 	}
 }
@@ -265,7 +298,7 @@ void Player::onMouseReleased(cocos2d::Event * event_)
 void Player::onMouseMove(cocos2d::Event * event_)
 {
 	EventMouse* eventMouse = (EventMouse*)event_;
-	LookAt(eventMouse->getLocation() - Director::getInstance()->getVisibleSize() * 0.5f);
+	//LookAt(eventMouse->getLocation() - Director::getInstance()->getVisibleSize() * 0.5f);
 }
 
 EventListenerKeyboard* Player::GetKbListener()
@@ -276,4 +309,21 @@ EventListenerKeyboard* Player::GetKbListener()
 EventListenerMouse * Player::GetMouseListener()
 {
 	return mouseListener;
+}
+
+
+void Player::FireWeapon(Vec2 target_)
+{
+	if (weapon != nullptr)
+	{
+		//aka screem size
+		auto visibleSize = Director::getInstance()->getVisibleSize();
+
+		weapon->position.set(sprite->getPosition());
+		weapon->direction.set(target_.x, target_.y);
+		weapon->direction.normalize();
+
+		weapon->Discharge(audio);
+
+	}
 }

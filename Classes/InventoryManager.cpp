@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 #include "Player.h"
 #include "AndroidCompile.h"
+#include "WeaponGenerator.h"
 
 using namespace cocos2d;
 
@@ -237,6 +238,18 @@ void InventoryManager::onSortType(cocos2d::Ref * sender, cocos2d::ui::Widget::To
 	}
 }
 
+void InventoryManager::onChangeWeapon(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchEventType type)
+{
+	if (type == Widget::TouchEventType::ENDED)
+	{
+		++weap;
+		if (weap == WEAPON_TYPES::COUNT)
+			weap = 0;
+		player->weapon = WeaponGenerator::GetInstance()->GetWeapon((WEAPON_TYPES)weap, 0);
+	}
+
+}
+
 void InventoryManager::quickSort(std::vector<UpgradeStone*>& stones, int _first_index, int _last_index)
 {
 	if (_first_index < _last_index) {
@@ -418,6 +431,20 @@ void InventoryManager::Init(cocos2d::Layer* layer)
 	sortTypeText->setColor(Color3B::WHITE);
 	sortTypeText->setVisible(false);
 	layer->addChild(sortTypeText, 102);
+
+	changeWeapon = Button::create("textures/ui_healthbar1.tga"); 
+	changeWeapon->setPosition(Vec2(visibleSize.width / 2, 0 + visibleSize.height / 10));
+	changeWeapon->setAnchorPoint(Vec2(0.5, 0.5));
+	changeWeapon->setScaleX((inventoryScrollView->getContentSize().width / 2 / sortType->getContentSize().width));
+	changeWeapon->setScaleY((inventoryScrollView->getContentSize().height / 6 / sortType->getContentSize().height));
+	changeWeapon->addTouchEventListener(CC_CALLBACK_2(InventoryManager::onChangeWeapon, this));
+	layer->addChild(changeWeapon, 102);
+	changeWeaponText = Text::create();
+	changeWeaponText->setString("Change Weapon");
+	changeWeaponText->setPosition(changeWeapon->getPosition());
+	changeWeaponText->setFontSize(25);
+	changeWeaponText->setColor(Color3B::BLACK);
+	layer->addChild(changeWeaponText, 103);
 }
 
 void InventoryManager::Update(float dt)
