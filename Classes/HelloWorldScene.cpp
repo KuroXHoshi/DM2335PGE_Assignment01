@@ -155,7 +155,7 @@ bool HelloWorld::init()
 	animFrames.pushBack(spriteFrame2);
 	//animFrames.pushBack(SpriteFrame::create("Blue_Front3.png", Rect(0, 0, 65, 81)));
 	//animFrames.pushBack(SpriteFrame::create("Blue_Front1.png", Rect(0, 0, 65, 81)));
-
+	
 	Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.5f);
 	animateIdle = Animate::create(animation);
 	animateIdle->retain();	

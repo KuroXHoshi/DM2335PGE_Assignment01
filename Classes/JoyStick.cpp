@@ -73,15 +73,15 @@ void JoyStick::update(float dt_)
 		player->sprite->runAction(moveEvent)->setTag(1);
 
 		//sprite->stopActionByTag(0);
-		if (!player->sprite->getActionByTag(0))
+		if (!player->sprite->getNumberOfRunningActionsByTag(0))
 		{
-			player->sprite->stopActionByTag(0);
+			//player->sprite->stopActionByTag(0);
 			player->sprite->runAction(RepeatForever::create(player->animate))->setTag(0);
 		}
 	}
 	else
 	{
-		player->sprite->stopActionByTag(0);
+		player->sprite->stopAllActionsByTag(0);
 		player->sprite->setTexture("textures/player_1.tga");
 	}
 	if (rightJoyHeld)
@@ -164,7 +164,7 @@ void JoyStick::onTouchesMoved(const std::vector<cocos2d::Touch*> &touches, cocos
 {
 	for (int i = 0; i < touches.size(); ++i)
 	{
-		if (leftJoyHeld)
+		if (leftJoyHeld && touches[i]->getID() == leftTouch)
 		{
 			float distance = ((joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).distance(touches[i]->getLocation()));
 			leftJoyDirection = (touches[touches[i]->getID()]->getLocation() - joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition()).getNormalized();
@@ -177,7 +177,7 @@ void JoyStick::onTouchesMoved(const std::vector<cocos2d::Touch*> &touches, cocos
 				hudLayer->getChildByName("joystick_fg_left")->setPosition(joystick_bg_left->getChildByName("joystick_bg_leftsprite")->getPosition() + leftJoyDirection * 70);
 			}
 		}
-		else if (rightJoyHeld)
+		else if (rightJoyHeld && touches[i]->getID() == rightTouch)
 		{
 			float distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touches[touches[i]->getID()]->getLocation()));
 			rightJoyDirection = (touches[touches[i]->getID()]->getLocation() - joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).getNormalized();
