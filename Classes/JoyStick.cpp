@@ -178,7 +178,7 @@ void JoyStick::onTouchesMoved(const std::vector<cocos2d::Touch*> &touches, cocos
 		}
 		else if (rightJoyHeld && touches[i]->getID() == rightTouch)
 		{
-			float distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touches[touches[i]->getID()]->getLocation()));
+			float distance = ((joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).distance(touches[i]->getLocation()));
 			rightJoyDirection = (touches[i]->getLocation() - joystick_bg_right->getChildByName("joystick_bg_rightsprite")->getPosition()).getNormalized();
 			if (distance < 70)
 			{
