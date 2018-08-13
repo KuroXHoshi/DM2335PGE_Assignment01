@@ -4,6 +4,7 @@
 #include "WeaponGenerator.h"
 #include "GameController.h"
 #include "Enemy.h"
+#include "UserInterface.h"
 USING_NS_CC;
 
 
@@ -190,6 +191,7 @@ void Player::Start()
 	
 	InventoryManager::GetInstance()->AttachPlayer(this);
 	JoyStick::GetInstance()->AttachPlayer(this);
+	UserInterface::GetInstance()->AttachPlayer(this);
 	//this->physicsBody->setMass(1000.0f);
 }
 

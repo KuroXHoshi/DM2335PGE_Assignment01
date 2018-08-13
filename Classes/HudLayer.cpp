@@ -1,6 +1,7 @@
 #include "HudLayer.h"
 #include "InventoryManager.h"
 #include "JoyStick.h"
+#include "UserInterface.h"
 
 using namespace cocos2d;
 
@@ -11,6 +12,7 @@ bool HudLayer::init()
 	
 	InventoryManager::GetInstance()->Init(this);
 	JoyStick::GetInstance()->init(this);
+	UserInterface::GetInstance()->init(this);
 	this->scheduleUpdate();
 
 	return true;
@@ -20,4 +22,5 @@ void HudLayer::update(float delta)
 {
 	InventoryManager::GetInstance()->Update(delta);
 	JoyStick::GetInstance()->update(delta);
+	UserInterface::GetInstance()->update(delta);
 }
