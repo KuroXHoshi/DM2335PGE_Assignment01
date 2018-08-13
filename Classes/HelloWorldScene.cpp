@@ -78,7 +78,7 @@ bool HelloWorld::init()
 	touchListener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
 	touchListener->onTouchCancelled = CC_CALLBACK_2(HelloWorld::onTouchCancelled, this);
 
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+	//_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
 	player = new Player();
 	//this->addChild(player->spriteNode);
