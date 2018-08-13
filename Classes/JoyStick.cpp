@@ -156,7 +156,6 @@ void JoyStick::onTouchesEnded(const std::vector<cocos2d::Touch*> &touches, cocos
 			rightJoyHeld = false;
 			rightTouch = -1;
 		}
-		--joyStickId;
 	}
 }
 
@@ -207,7 +206,6 @@ void JoyStick::onTouchesCancelled(const std::vector<cocos2d::Touch*> &touches, c
 			rightJoyHeld = false;
 			rightTouch = -1;
 		}
-		--joyStickId;
 	}
 }
 
